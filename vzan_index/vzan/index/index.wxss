@@ -1,112 +1,13 @@
-.gw-lr-public {
-    width: 88px;
-    height: 32px;
-    border-radius: 16px;
-    border: 1px solid #3cbaff;
-    margin-top: 30px;
-}
-
-.gw-login-bt {
-    background: #fff;
-    color: #3cbaff;
-}
-
-.gw-register-bt {
-    margin-right: 10px;
-    color: #fff;
-    background: #3cbaff;
-}
-
-.user_img, .pw_img {
-    width: 20px;
-    height: 20px;
-    margin-top: 12px;
-    background: url(http://i.pengxun.cn/manager/content/images/pop_login_bg.png) no-repeat;
-    margin-right: 6px;
-}
-
-.user_img {
-    background-position: -240px -147px;
-}
-
-.pw_img {
-    background-position: -266px -146px;
-}
-div {
-    display: block;
-}
-.wrong_id {
-    top: 220px;
-}
-
-.tc {
-    text-align: center;
-}
-
-.wrong_id, .wrong_pw, .wrong_np_id, .no_uid, .no_pw {
-    display: block;
-    visibility: hidden;
-    position: absolute;
-    left: 400px;
-    height: 35px;
-    background: url(http://i.pengxun.cn/manager/content/images/pop_login_bg.png) no-repeat;
-    background-position: right -491px;
-    color: #FFF;
-    line-height: 30px;
-    padding-right: 10px;
-    padding-left: 3px;
-    font-family: "宋体",Tahoma,Verdana,sans-serif,simsun;
-    font-size: 12px;
-}
-
-.no_pw, .wrong_pw {
-    top: 300px;
-}
-
-.no_uid {
-    top: 230px;
-}
-
-.thickbox {
-    height: 400px;
-    width: 450px;
-}
-
-.thickbox, .thickbox2 {
-    background: #fff none repeat scroll 0 0;
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    display: none;
-    overflow: hidden;
-    padding: 10px 20px;
-    position: relative;
-    z-index: 999;
-}
-
-.colse_btn {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-}
-.icon-hot{background: url(http://i.pengxun.cn/manager/images/gw-hot.png?v=0.01) no-repeat;display: block;height: 20px;position: absolute;right: -29px;top: -15px;width: 30px;z-index: 2;animation:icon-hot 0.6s linear 0s normal none infinite running;-webkit-animation:icon-hot  0.6s linear 0s normal none infinite running;}
-
-	/*@keyframes icon-hot{
-	from {top:-15px;}
-	to {top:-10px;}}*/
-
-.m-a{margin: 0 auto;width: 1040px;}
-.gw-logo{
-    width: 64px;
-    height: 40px;
+.gw-logo {
+    width:64px;
+    height:40px;
     background: url(http://i.pengxun.cn/manager/content/images/ngw-01.jpg) no-repeat -5px -40px;
-    margin: 17px 0 0 0;}
-.gw-nav{
-    margin-left: 80px;
-    padding-top: 38px;
-    color: #333333;}
-.gw-nav a {
-    margin: 0 18px;
-    height: 36px;
-    margin-left: 36px;
-    display: inline-block;
 }
+.gw-nav{
+    margin-left: 8px;
+    padding-top: 15px;
+    padding-right: 5px;
+}
+.fl {float:left}
+
+navigator {display: block; margin: 5px}

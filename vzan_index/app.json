@@ -1,6 +1,7 @@
 {
     "pages":[
-        "vzan/index/index"
+        "vzan/index/index",
+        "vzan/account/account"
     ],
     "window":{
         "navigationBarBackgroundColor":"#FFFFFF",
