@@ -1,7 +1,6 @@
 {
     "pages":[
-        "vzan/index/index",
-        "vzan/account/account"
+         "vzan/cathedral/cathedral"
     ],
     "window":{
         "navigationBarBackgroundColor":"#FFFFFF",
@@ -9,14 +8,18 @@
         "backgroundColor":"#ADD8E6",
         "enablePullDownRefresh":true
     },
-    "tarBar":{
+    "tabBar":{
         "color":"F5F5F5",
         "backgroundColor":"#FFFFFF",
         "selectedColor":"#ADD8E6",
         "list":[{
-            "pathPath":"vzan/index/index",
+            "pagePath":"vzan/index/index",
             "text":"首页"
+        },{
+            "pagePath":"vzan/account/account",
+            "text":"账户"
         }
+
         ]
     },
     "debug":true
