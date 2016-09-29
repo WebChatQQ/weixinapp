@@ -16,5 +16,9 @@ Page({
   },
   onUnload:function(){
     // 页面关闭
+  },
+  videoError:function(e){
+    console.info("Video Error");
+    console.info(e);
   }
 })
