@@ -1,23 +1,20 @@
 <view class="liveWrap">
-   
    <view class="videoWrap">
-    <view>
-        <view class="radio-info">
-            <navication class="radio-focus">关注</navication>
-            <view class="radio-logo">
-                <image src="http://oss.vzan.cc/image/jpg/2016/9/12/070256ae07119de6cc4f1aab9dffd43b0e6d90.jpg"></image>
+        <view class="lss-radio-info">
+            <navication class="lss-radio-focus">关注</navication>
+            <view class="lss-radio-logo">
+                <image style="width:64px;height:64px" src="http://oss.vzan.cc/image/jpg/2016/9/12/070256ae07119de6cc4f1aab9dffd43b0e6d90.jpg"></image>
             </view>
-            <view class="radio-desc">
-                <text class="radio-title">奇早囔潍坊（9.30）美女主播正在发红包</text>
-                <text cass="radio-status">直播暂未开始，请稍后再来。</text>
+            <view class="lss-radio-desc">
+                <text class="lss-radio-title">奇早囔潍坊（9.30）美女主播正在发红包</text>
+                <text class="lss-radio-status">直播暂未开始，请稍后再来。</text>
             </view>
         </view>
-        <view class="radio-operate">
-            <view class="swf-box">
+        <view class="lss-radio-operate">
+            <view class="lss-swf-box">
                 <video src="http://cdn.aodianyun.com/lss/lssradioplayer/vvMedia.swf"></video>
             </view>
         </view>
-    </view>
    </view>
    
    <view class="outWrap">

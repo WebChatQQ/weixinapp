@@ -1,7 +1,7 @@
 {
     "pages":[
-         "vzan/index/index",
-         "vzan/audio/audio"
+         "vzan/index/index"
+         
     ],
     "window":{
         "navigationBarBackgroundColor":"#FFFFFF",
