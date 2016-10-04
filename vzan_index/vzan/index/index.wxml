@@ -1,5 +1,6 @@
 <view class="body">
     <view class="videowrap">
+
         <view class="lss-radio-container">
             <view class="lss-radio-info">
                 <button class="lss-radio-focus">关注</button>
@@ -28,5 +29,28 @@
                 </view>
             </view>
         </view>
+
+    <view class="outwrap">
+        <view class="infoWrap">
+            <view class="liveHeader">
+                <navication class="backtolive_btn">直播间</navication>
+            </view>
+
+            
+            <view class="danmu_bar on">
+                <view class="main">
+                    <view class="allcount">观看
+                    <view class="allcountbefore" ></view>
+                    <view style="display:inline-block">21716</view>
+                    </view>
+                </view>
+            </view>
+            <view class="clear"></view>
+        </view>
+        <!-- 直播 -->
+        <view class="bubble"><text class="bubble-content">欢迎进入直播间，请文明发言，营造和谐文明上网环境人人有责。</text></view>
     </view>
+
+    </view>
+
 </view>
