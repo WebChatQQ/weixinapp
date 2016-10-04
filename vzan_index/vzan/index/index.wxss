@@ -8,10 +8,10 @@
 }
 .videowrap {
     width:750rpx;
-    padding: 24rpx;
-    padding-right: 24rpx;
+    padding-top: 0.1rpx;
 }
 .lss-radio-container {
+    margin: 24rpx;
     background:linear-gradient(rgba(13, 31, 37, 0.5), rgba(7, 9, 13, 0.71));
     height:312rpx;
     box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.4);
@@ -24,13 +24,12 @@
     display: inline;
     position: absolute;
     top:60rpx;
-    right:24rpx;
+    right:48rpx;
     color:#fff;
     background-color:#00b3f6;
     padding:12rpx 24rpx;
-    border-radius: 4rpx;
+    border-radius: 10rpx;
     line-height: 1.6;
-
     font-size:12px;
 }
 .lss-radio-logo {
@@ -73,21 +72,22 @@
     height:30px;
     background: url("http://cdn.aodianyun.com/lss/lssradioplayer/img/play.png");
     float:left;
-    margin-left:16px;
+    margin-left:8px;
 }
 .i {
-    margin-right:12rpx;
+    margin-right:10rpx;
     line-height: 30px;
     margin-top:5px;
     font-size:12px;
     font-family: "微软雅黑";
     color:#999;
-    display: inline-block;
+    display: block;
+    float:left;
 }
 .lss-timeline-wrap {
     position:relative;
     width: 250.4rpx;
-    padding-top:10px;
+    padding-top:9px;
     display: inline-block;
     height:11.5px;
 }
@@ -124,4 +124,87 @@
     line-height: 64.8rpx;
     background-color: #f89633;
     padding:0;
+    margin:0;
+}
+
+.outwrap {
+    width:100%;
+    position:absolute;
+    top:360rpx;
+    bottom:0;
+}
+.clear {
+    clear:both;
+}
+
+.liveHeader {
+    float:left;
+    padding:12rpx;
+}
+.backtolive_btn {
+    padding:6rpx 21.6rpx 6rpx 12rpx;
+    line-height: 48rpx;
+    color:#fff;
+    background:rgba(0, 0, 0, 0.5);
+    border-radius:36rpx;
+    font-family: "微软雅黑";
+    font-size:12px;
+    display:inline-block;
+}
+.backtolive_btn::before{
+    content:"";
+    width: 50rpx;
+    height: 50rpx;
+    background:url("http://i.pengxun.cn/zhibo/_bw/img/live_logo.png") no-repeat;
+    background-size: 1800rpx;
+    display: inline-block;
+    background-position: -1585rpx -1px;
+    vertical-align: top;
+}
+.danmu_bar {
+    float:right;
+    padding:12rpx;
+}
+.main {
+    position:relative;
+    display: inline-block;
+    right:24rpx;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius:72rpx;
+}
+.allcount {
+    padding: 0 12rpx;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 57rpx;
+    color:#fff;
+    font-family: "微软雅黑";
+    font-size:12px;
+    max-width: 100%;
+}
+.allcountbefore {
+    display:inline-block;
+    width:50rpx;
+    height:50rpx;
+    margin:12rpx 0 0;
+    vertical-align: top;
+    background:url("http://i.pengxun.cn/zhibo/_bw/img/live_logo.png") no-repeat;
+    background-position:-768rpx -4px;
+    background-size: 1800rpx;
+}
+.bubble {
+    background:rgba(204, 204, 204, 0.5);
+    border-radius:5px;
+    display:inline-block;
+    padding:12rpx 24rpx;
+    margin:0 24rpx;
+}
+.bubble-content{
+    font-family:"微软雅黑";
+    font-size:12px;
+    font-weight:normal;
+    color:#fff;
+    text-align:left;
+    line-height:12px;
 }
