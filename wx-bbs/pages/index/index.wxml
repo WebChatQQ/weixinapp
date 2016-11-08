@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="body">
+  <view>
+    <view class="head">
+      <view class="index-head-logo">
+        <image class="index-head-logo-img" src="http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg"></image>
+        <text class="index-head-logo-f">
+          话题  7179 | 访问 984328
+        </text>
+      </view>
+      <view class="head-banner"></view>
+    </view>
+    <view class="index-head-bottom">
+        <view class="flex"><view class="index-sign"></view>签到</view>
+        <view class="flex"><view class="index-focus"></view>关注</view>
+    </view>
+    <view class="head-announcement">
+      <view><view class="announcement-icon02"></view><text></text></view>
+      <view><view class="announcement-icon02"></view><view></view></view>
+    </view>
+  </view>
+  <view class="index-heading-scrol">
+    <view class="index-heading-content">
+      <view class="fl">全部</view>
+      <view class="fl">热帖</view>
+      <view class="fl">运营日报</view>
+      <view class="fl">操作指南</view>
+      <view class="fl">常见问题</view>
+      <view class="fl">微赞故事</view>
+      <view class="fl">更新进度</view>
+    </view>
+    <view class="index-heading-more">· · ·</view>
+  </view>
+  <view id="art-content"></view>
+  <view>网络比较慢，请重新尝试</view>
+  <view>已加载全部数据</view>
+</view>

@@ -8,10 +8,10 @@
 }
 .videowrap {
     width:750rpx;
-    padding-top: 0.1rpx;
 }
 .lss-radio-container {
     margin: 24rpx;
+    margin-top: 24rpx;
     background:linear-gradient(rgba(13, 31, 37, 0.5), rgba(7, 9, 13, 0.71));
     height:312rpx;
     box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.4);
@@ -24,12 +24,13 @@
     display: inline;
     position: absolute;
     top:60rpx;
-    right:48rpx;
+    right:24rpx;
     color:#fff;
     background-color:#00b3f6;
     padding:12rpx 24rpx;
-    border-radius: 10rpx;
+    border-radius: 4rpx;
     line-height: 1.6;
+
     font-size:12px;
 }
 .lss-radio-logo {
@@ -72,10 +73,10 @@
     height:30px;
     background: url("http://cdn.aodianyun.com/lss/lssradioplayer/img/play.png");
     float:left;
-    margin-left:8px;
+    margin-left:16px;
 }
 .i {
-    margin-right:10rpx;
+    margin-right:12rpx;
     line-height: 30px;
     margin-top:5px;
     font-size:12px;
@@ -139,10 +140,10 @@
 
 .liveHeader {
     float:left;
-    padding:12rpx;
+    padding:24rpx;
 }
 .backtolive_btn {
-    padding:6rpx 21.6rpx 6rpx 12rpx;
+    padding:9.6rpx 21.6rpx 9.6rpx 12rpx;
     line-height: 48rpx;
     color:#fff;
     background:rgba(0, 0, 0, 0.5);
@@ -163,7 +164,7 @@
 }
 .danmu_bar {
     float:right;
-    padding:12rpx;
+    padding:24rpx;
 }
 .main {
     position:relative;
