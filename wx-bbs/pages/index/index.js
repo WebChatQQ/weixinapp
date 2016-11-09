@@ -1,10 +1,12 @@
+var articleList = require("../../data/index-list.js")
+
 //index.js
 //获取应用实例
 var app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    articles: []
   },
   //事件处理函数
   bindViewTap: function() {
@@ -22,5 +24,19 @@ Page({
         userInfo:userInfo
       })
     })
+    this.ready();
+  },
+  more_bankuai: function () {
+    console.log ("获取更多版块");
+  },
+  // 加载数据
+  ready: function () {
+    console.log ("获取初始数值");
+    console.log (articleList);
+
+    this.setData({
+      articles:articleList.articles
+    })
+    console.log (this.data.articles);
   }
 })

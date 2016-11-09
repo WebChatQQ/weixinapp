@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="body">
-  <view>
+  <view class="border-slice">
     <view class="head">
       <view class="index-head-logo">
         <image class="index-head-logo-img" src="http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg"></image>
@@ -20,18 +20,77 @@
     </view>
   </view>
   <view class="index-heading-scrol">
-    <view class="index-heading-content">
-      <view class="fl">全部</view>
-      <view class="fl">热帖</view>
-      <view class="fl">运营日报</view>
-      <view class="fl">操作指南</view>
-      <view class="fl">常见问题</view>
-      <view class="fl">微赞故事</view>
-      <view class="fl">更新进度</view>
-    </view>
-    <view class="index-heading-more">· · ·</view>
+    <scroll-view class="index-heading-content" scroll-x="true" style="width:100%">
+      <view class="fl bankuai"><text>全部</text></view>
+      <view class="fl bankuai"><text>热帖</text></view>
+      <view class="fl bankuai"><text>运营日报</text></view>
+      <view class="fl bankuai"><text>操作指南</text></view>
+      <view class="fl bankuai"><text>常见问题</text></view>
+      <view class="fl bankuai"><text>微赞故事</text></view>
+      <view class="fl bankuai"><text>更新进度</text></view>
+    </scroll-view>
+    <!--<view class="index-heading-more" bindtap="more_bankuai">· · ·</view>-->
   </view>
-  <view id="art-content"></view>
+  <scroll-view class="art-content">
+    <block wx:for="{{articles}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+      <view class="border-slice">
+        <!-- 贴主信息-->
+        <view>
+            <view style="padding:15px 12px 8px; float:left">
+              <image style="width:40px;height:40px;overflow:hidden;" src="{{item.image}}"></image>
+            </view>
+            <view style="padding:15px 0px 0px; overflow:hidden; height:40px;">
+              <view style="height:20px">
+                <text class="index-poster-name">{{item.name}}</text>
+                <text class="index-poster-kind">{{item.level}}</text>
+              </view>
+              <view style="height:20px">
+                <text class="index-post-info">{{item.time}}</text>
+                <text class="index-post-info">浏览{{item.pv}}</text>
+              </view>
+            </view>
+        </view>
+        <view style="clear:both"></view>
+        <!-- 帖子正文 -->
+        <view>
+          <view class="article-content-container">
+            <a href="../logs" class="article-content-title" >创业众筹，大家有经验出经验有经济出个经济 多多给力帮帮忙。</a>
+            <a class="section-theme">运营交流</a>
+            <a class="article-content">为什么发不了为什么发不了为什么发为什么发不了为什么发不了为什么发为什么发不了为什么发不了为什么发为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了为什么发不了</a>
+            <block wx:for="{{item.photos}}" wx:for-item="image">
+              <image mode="aspectFit" style="width:{{image.width}}; height:{{image.height}}" src="{{image.src}}" class="article-image"></image>
+            </block>
+          </view>
+          <!-- 转评赞 -->
+          <view class="article-recomment">
+            <!-- 转发 -->
+            <view class="fr res"><view class="icon-zhuan"></view><em class="em">转</em> </view>
+            <view class="fr res"><view class="icon-ping"></view><em class="em">评</em> </view>
+            <view class="fr res"><view class="icon-zan"></view><em class="em">赞</em> </view>
+            <view style="clear:both"></view>
+          </view>
+        </view>
+        <!-- 回复信息 -->
+        <block wx:for="{{item.recomments}}" wx:for-item="recomment">
+          <view class="res-info">
+            <!-- 头像 -->
+            <view><image style="width:35px;height:35px;padding:6px;" src="http://wx.qlogo.cn/mmopen/wcLBdiaDTlstdU3ydbkUaSc1sKekk8T0l2hQztEAlYR09fcaic7sXK67icKD5vicAzfzP8xyPvZwqya2U9rbrOvE3w7UyCrO29UB/132" ></image></view>
+            <view style="padding:6px;">
+              <view >
+                <view class="res-content-name">名称</view>
+                <view class="res-content-time">时间</view>
+                <view style="clear:both"></view>
+              </view>
+              <view class="res-content">
+              <text wx:if="{{recomment.directUserId}}">回复<text style="color:#5a85ce;max-width:110px;">@{{recomment.directUser}} : </text></text>
+              <text>回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复复信息回复信息回复信息回复信息回复回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息回复信息</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </scroll-view>
   <view>网络比较慢，请重新尝试</view>
   <view>已加载全部数据</view>
 </view>
