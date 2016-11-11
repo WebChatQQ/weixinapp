@@ -26,6 +26,9 @@
   color: #fff;
 }
 
+page {
+  -ms-overflow-style: none;
+}
 .flex {
   flex:1;
 }
@@ -80,44 +83,50 @@
   background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 62% 2%;
   background-size:552%;
   vertical-align: -6px;
-  height: 24px;
-  width:24px;
+  height: 48rpx;
+  width:48rpx;
   display: inline-block;
 }
-.index-heading-scrol view {
-  float:left;
+.index-heading-content view {
+  display: inline-block;
   padding:0 14rpx;
   font-size: 30rpx;
   font-family: "Microsoft YaHei",Arial;
 }
 .index-heading-scrol {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-bottom:10px;
+  padding: 5rpx 0;  
   width: 100%;
+  border-bottom:20rpx solid #eee;
   overflow: hidden;
-  white-space: nowrap;
-  border-bottom:10px solid #eee;
+  display: flex;
+}
+.index-heading-content::-webkit-scrollbar {
+  display: none;
 }
 .index-heading-content {
-    transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);
-    transition-duration: 0ms;
-    transform: translate(0px, 0px) translateZ(0px);
-    overflow: hidden;
     display: inline-block;
-    white-space: nowrap;
     width: 100%;
     height: 30px;
+    white-space: nowrap;
+    overflow-y:hidden;
+}
+.scrollview-hide {
+  position: relative;
+  top: -14px;
+  height: 7px;
+  widows: 100%;
+  background-color: #fff;
 }
 .index-heading-more {
-  height: 22px;
-  position: absolute;
-  right: 0px;
-  width: 40px;
+  height: 60rpx;
+  width: 80rpx;
   background-color: #fff;
-  cursor:pointer;
   font-size: 31.2rpx;
   text-align: center;
+  line-height: 60rpx;
+  opacity:0.2;
+  -webkit-filter:blur(0.1px);
+  filter:blur(0.1px);
 }
 .bankuai {
   margin: 5px 5px;
@@ -125,8 +134,12 @@
   width: 60px;
   text-align: center;
 }
+
 .fl text {
   color:#000;
+}
+.aricle-user-wrap {
+  position: relative;
 }
 .index-poster-name {
   color:#5a85ce;
@@ -152,6 +165,18 @@
   margin-top: 3px;
   color: #858585;
 }
+.index-poster-arrow {
+  border-width: 0 2rpx 2rpx 0;
+  border-style: solid;
+  border-color: #c8c8cd;
+  position: absolute;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  top: 0;
+  right: 30rpx;
+  height: 14rpx;
+  width: 14rpx;
+}
 .article-content-container{
   color: black;
   line-height: 150%;
@@ -162,15 +187,15 @@
 }
 .section-theme {
   color:#17b5ee;
-  border: 1px solid #17b5ee;
   border-radius: 2px;
   font-size: 25rpx;
-  line-height: 12px;
+  line-height: 25rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 5px;
 }
+
 .article-content {
  margin-left: 2px;
  font-family: "Microsoft YaHei",Arial;
@@ -219,17 +244,24 @@
   float:right;
 }
 .res {
-  width: 33%;
+  width: 20%;
   text-align: center;
-  border-right: 1px solid #eee;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
   height: 30px;
   line-height: 30px;
 }
 .res-info {
   display: flex;
-  padding-left: 13px;
+  padding-left: 2px;
+  border-bottom: 1px solid #d6d6d6;
+  width: 100%;
+}
+.comment-content-image-wrap {
+  display: inline-block;
+}
+.comment-content-msg-wrap {
+  display: inline-block;
+  padding: 6px;
+  width: 100%;
 }
 .res-content-name {
   color: #5a85ce;
@@ -255,5 +287,68 @@
   font-family: "Microsoft YaHei",Arial;
   overflow: hidden;
   text-overflow: ellipsis;
-  height:60px;
+}
+.praise-logo {
+  display: flex;
+  padding: 5px 0px;
+  border-bottom: 1px solid #d6d6d6;
+}
+.praise-logo-icon {
+  top: 0;
+  left: 0;
+  margin-top: 4px;
+  margin-left: 12px;
+  width: 15px;
+  height: 15px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -105px;
+  background-size: 100%;
+}
+.praise-logo-container {
+  width: 93%;
+  margin-left: 5px;
+}
+.praise-logo-img-container {
+  padding: 2px 2px;
+  display: inline-block;
+}
+.comment-container {
+  display: flex;
+}
+.comment-icon {
+  top: 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: 12px;
+  width: 15px;
+  height: 15px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -90px;
+  background-size: 100%;
+}
+.comment-content {
+  width: 93%;
+}
+.comment-image{
+  display:flex;  
+}
+.comment-image view {
+  padding-right: 5px;
+}
+.comment-voice-container {
+  margin-top: 4px;
+}
+.audio-wrap {
+  width:150px;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  padding: 3px 0;
+  float:left;
+}
+.audio-time-wrap {
+ height: 30px;
+ line-height: 30px;
+ padding-left: 10px;
+ font-family: "Microsoft YaHei",Arial; 
+ float: left;
+ font-size: 26rpx; 
 }
