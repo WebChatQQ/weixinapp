@@ -14,7 +14,8 @@ Page({
       "bankuaiSelected":""
     },
     typeList:[],
-    currentTypeId:0
+    currentTypeId:0,
+    hot:false
   },
   //事件处理函数
   bindViewTap: function() {
@@ -83,9 +84,11 @@ Page({
     console.log(typeId);
     console.log(hot);
     this.setData({
-      currentTypeId:1,
+     // currentTypeId:typeId,
       articles:this.data.articles
-    })
+    });
+    console.log(this.data.currentTypeId);
+
   },
   // 展开箭头
   openArrow: function(event) {
@@ -110,5 +113,13 @@ Page({
           console.info(res);
         }
     });
+  },
+  // 播放声音
+  playAudio: function(event) {
+    console.info("播放声音");
+    var voiceId = event.target.dataset.voiceId + "";
+    var audioContext = wx.createAudioContext("test");
+    audioContext.play();
   }
+
 })

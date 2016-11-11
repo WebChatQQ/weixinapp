@@ -25,20 +25,22 @@
   <view class="index-heading-scrol">
     <view class="index-heading-content" scroll-x="true" style="width:100%">
       
-      <view wx:if="{{currentTypeId == 0}}" style="background-color:#17b5ee" 
-      class="fl bankuai " bindtap="toBankuai" data-type-id="0"><text>全部</text></view>
+      <view wx:if="{{currentTypeId == 0}}" wx:if="{{hot == false}}" style="background-color:#17b5ee" 
+      class="fl bankuai " catchtap="toBankuai" data-type-id="0"><text>全部</text></view>
+
+      <view wx:if="{{currentTypeId != 0}}" class="f1 bankuai" catchtap="toBankuai" data-type-id="0"><text>全部</text></view>
       
-      <view wx:else class="f1 bankuai" bindtap="toBankuai" data-type-id="0"><text>全部</text></view>
-      
-      <view wx:if="{{currentTypeId == 0}}" wx:if="{{hot == 1}}" style="background-color:#17b5ee" class="fl bankuai" 
-      bindtap="toBankuai" data-type-id="0" data-hot="true"><text>热帖</text></view>
+      <view wx:if="{{currentTypeId == 0}}" wx:if="{{hot == true}}" style="background-color:#17b5ee" class="fl bankuai" 
+      catchtap="toBankuai" data-type-id="0" data-hot="true"><text>热帖</text></view>
+
+      <view wx:else class="fl bankuai" catchtap="toBankuai" data-type-id="0" data-hot="true"><text>热帖</text></view>
 
       <block wx:for="{{typeList}}" wx:for-item="type">
         <view wx:if="{{currentTypeId == type.ArticleTypeID}}" wx:if="{{type.ArticleTypeID != 0}}" tyle="background-color:#17b5ee" 
-        class="fl bankuai " bindtap="toBankuai" data-type-id="{{type.ArticleTypeID}}">
+        class="fl bankuai " catchtap="toBankuai" data-type-id="{{type.ArticleTypeID}}">
             <text>{{type.ArticleTypeName}}</text>
         </view>
-        <view wx:elif="{{type.ArticleTypeID != 0}}" class="fl bankuai" bindtap="toBankuai" data-type-id="{{type.IArticleTypeIDd}}">
+        <view wx:elif="{{type.ArticleTypeID != 0}}" class="fl bankuai" catchtap="toBankuai" data-type-id="{{type.ArticleTypeID}}">
             <text>{{type.ArticleTypeName}}</text>
         </view>
       </block>
@@ -125,7 +127,7 @@
                     </view>
                     <!-- 语音 -->
                     <view wx:if="{{comment.Voice}}" class="comment-voice-container">
-                      <view class="audio-wrap" bindtap="audioPlay" data-vioceId="{{comment.Voice.Id}}">
+                      <view class="audio-wrap" catchtap="playAudio" data-vioce-id="{{comment.Voice.Id}}">
                         <image style="width:22px; height:22px;margin-left:4px" src="{{audioIcon}}"></image>            
                         <audio  class="audio" id="{{comment.Voice.Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46"></audio>
                       </view>
@@ -147,9 +149,9 @@
   </scroll-view>
 </view>
 
-<!--<view class="comment-voice-container">
+<view class="comment-voice-container">
    <view class="audio-wrap">
-      <audio  class="audio" name="此时此刻"   poster="http://i.pengxun.cn/content/images/voice/voiceplaying.png" 
+      <audio  class="audio" name="此时此刻" controls   poster="http://i.pengxun.cn/content/images/voice/voiceplaying.png" 
       src="http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46"></audio>
   </view>
-</view>-->
+</view>
