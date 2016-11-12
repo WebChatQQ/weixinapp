@@ -189,10 +189,10 @@ Page({
       var h = 0;
       var hongbao = "";
       var rspan = 1;      
-      // app.getMoreArticle(pn, typeId, h, hongbao, rspan, function(res){
-      //     var articleList = res.ArtList;
-      //     that.data.articles = that.data.articles(articleList);
-      // })
+      app.getMoreArticle(pn, typeId, h, hongbao, rspan, function(res){
+          var articleList = res.ArtList;
+          that.data.articles = that.data.articles(articleList);
+      })
       var tmp = this.data.typeList;
       var typeList = tmp;
       for (var i=0 ; i<typeList.length ; i++) {

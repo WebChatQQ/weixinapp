@@ -17,9 +17,21 @@ function formatNumber(n) {
 }
 
 function getData() {
-  articles:{
-    
-  }
+  wx.request({
+    url: 'http://vzan.com/f/s-1',
+    data: {},
+    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    // header: {}, // 设置请求的 header
+    success: function(res){
+      // success
+    },
+    fail: function() {
+      // fail
+    },
+    complete: function() {
+      // complete
+    }
+  })
 }
 
 // 举报
