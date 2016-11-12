@@ -22,36 +22,14 @@ function getData() {
   }
 }
 
-function getArticles(typeId, pn) {
-  wx.request({
-    url: 'http://vzan.com/f/getarticlebottom-1',
-    data: {
-      "pageIndex":pn,
-      "typeId":typeId,
-      "h":"",
-      "hongbao":"",
-      "from":"qq",
-      "rspan":"1"
-    },
-    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    header: {
-      "content-type":"application/json;charset=utf-8"
-      }, // 设置请求的 header
-    success: function(res){
-      
-    },
-    fail: function() {
-      // fail
-    },
-    complete: function() {
-      // complete
-    }
-  })
-
+// 举报
+function tipOff(user) {
+    console.info("举报");
 }
 
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  tipOff: tipOff
 }
 
