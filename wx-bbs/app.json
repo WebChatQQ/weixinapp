@@ -21,11 +21,6 @@
       "selectedIconPath": "images/index.png"
     },{
       "pagePath": "",
-      "text": "版块",
-      "iconPath": "images/地块32x32.png",
-      "selectedIconPath": "images/地块32x32hl.png"
-    },{
-      "pagePath": "",
       "text": "t发帖",
       "iconPath": "images/发帖32x32.png",
       "selectedIconPath": "images/发帖32x32hl.png"

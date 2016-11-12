@@ -95,6 +95,7 @@
             <view class="fr res"><view class="icon-zan"></view><em class="em">赞 {{item.Praise}}</em> </view>
             <view class="fr res"><view class="icon-ping"></view><em class="em">评 {{item.CommentCount}}</em> </view>
             <view class="fr res"><view class="icon-zhuan"></view><em class="em">转</em> </view>
+             <view class="fr res"><view class="icon-reward"></view><em class="em">赏 {{item.Praise}}</em> </view>
             <view style="clear:both"></view>
           </view>
         </view>
