@@ -100,7 +100,7 @@
           </view>
         </view>
         <!-- 点赞头像-->
-        <view class="praise-logo">
+        <view wx:if="{{item.PraiseUsers}}" class="praise-logo">
           <view style="width:7%"><view class="praise-logo-icon"></view></view>
           <view class="praise-logo-container">
             <block wx:for="{{item.PraiseUsers}}" wx:for-item="praiseUser" wx:key="Id">

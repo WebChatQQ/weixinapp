@@ -1,6 +1,3 @@
-
-var app = getApp();
-
 Page({
   data:{
     
@@ -10,6 +7,13 @@ Page({
   },
   onReady:function(){
     // 页面渲染完成
+    var app = getApp();
+    console.log(app);
+    var types = app.globalData.types;
+    console.log(types);
+    wx.showActionSheet({
+        itemList:["","","",""]
+    });
   },
   onShow:function(){
     // 页面显示
