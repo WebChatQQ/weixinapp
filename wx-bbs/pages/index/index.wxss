@@ -132,7 +132,7 @@ page {
 .bankuai {
   margin: 5px 5px;
   border: 1px solid #17b5ee;
-  width: 60px;
+  width: 77px;
   text-align: center;
 }
 
@@ -163,7 +163,6 @@ page {
   font-size:24rpx;
   font-family: "Microsoft YaHei",Arial;
   margin-right: 10px;
-  margin-top: 3px;
   color: #858585;
 }
 .index-poster-arrow {
@@ -195,6 +194,7 @@ page {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 5px;
+  border: 1px solid #17b5ee;
 }
 
 .article-content {
@@ -298,6 +298,26 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.reward-logo {
+  display: flex;
+  padding: 5px 0px;
+  border-bottom: 1px solid #d6d6d6;
+}
+.reward-logo-icon {
+    top: 0;
+    left: 0;
+    margin: 4px 0;
+    margin-left: 12px;
+    width: 15px;
+    height: 15px;
+    border: 0;
+    background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -15px;
+    background-size: 100%;
+}
+.reward-logo-img-container {
+  padding: 2px 2px;
+  display: inline-block;
+}
 .praise-logo {
   display: flex;
   padding: 5px 0px;
@@ -348,7 +368,7 @@ page {
 }
 .audio-wrap {
   width:150px;
-  height: 22px;
+  height: 30px;
   border-radius: 5px;
   border: 1px solid #d6d6d6;
   padding: 3px 0;
@@ -365,3 +385,19 @@ page {
 .selected {
   background:#17b5ee;
 }
+
+
+
+
+
+/* 状态 */
+.zaned {
+    vertical-align: -3px;
+    width: 16px;
+    border: 0;
+    height: 16px;
+    background: url(http://i.pengxun.cn//content/images/imgpost2/01/zaned.png) no-repeat;
+    background-size: 16px 16px;
+    display: inline-block;
+}
+

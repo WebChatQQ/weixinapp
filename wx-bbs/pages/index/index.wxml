@@ -51,10 +51,10 @@
       <view class="border-slice">
         <!-- 贴主信息-->
         <view>
-            <view style="padding:15px 12px 8px; float:left">
+            <view style="padding:30rpx 24rpx 16rpx; float:left">
               <image style="width:40px;height:40px;overflow:hidden;" src="{{item.User.Headimgurl}}"></image>
             </view>
-            <view style="padding:15px 0px 0px; overflow:hidden; height:80rpx;">
+            <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">
               <view class="aricle-user-wrap">
                 <text class="index-poster-name">V.{{item.User.NickName}}</text>
                 <text class="index-poster-kind">V.{{item.User.Level}}</text>
@@ -75,6 +75,16 @@
                 <a class="section-theme" bindtap="toBankuai">{{item.ArticleTypeName}}</a>
                 <a class="article-content">{{item.ContentDesc}}</a>
             </view>
+            <!-- 语音 -->
+            <view wx:if="{{item.Voice}}" class="comment-voice-container">
+              <view class="audio-wrap" catchtap="playAudio" data-v-id="{{item.Voice.Id}}">
+                <image style="width:22px; height:22px;margin-left:4px" src="{{audioIcon}}"></image>            
+                <audio  class="audio" id="{{item.Voice.Id}}" 
+                poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" 
+                src="{{item.Voice.TransFilePath}}"></audio>
+              </view>
+              <view class="audio-time-wrap"><text>{{item.Voice.VoiceTime}}"</text></view>
+            </view>
             <!-- 图片 -->
             <block wx:for="{{item.Images}}" wx:for-item="image" wx:key="thumbnail">
               <view>
@@ -92,11 +102,20 @@
           <!-- 转评赞 -->
           <view>
             <!-- 转发 -->
-            <view class="fr res"><view class="icon-zan"></view><em class="em">赞 {{item.Praise}}</em> </view>
+            <view class="fr res"><view class="icon-zan {{item.IsPraise == 0?'':'zaned'}}"></view><em style="color:{{item.IsPraise == 0?'':'#5a85ce'}}" class="em">赞 {{item.Praise}}</em> </view>
             <view class="fr res"><view class="icon-ping"></view><em class="em">评 {{item.CommentCount}}</em> </view>
             <view class="fr res"><view class="icon-zhuan"></view><em class="em">转</em> </view>
              <view class="fr res"><view class="icon-reward"></view><em class="em">赏 {{item.Praise}}</em> </view>
             <view style="clear:both"></view>
+          </view>
+        </view>
+         <!-- 赞赏头像 -->
+        <view wx:if="{{item.RewardUsers}}" class="reward-logo">
+          <view style="width:7%"><view class="reward-logo-icon"></view></view>
+          <view class="praise-logo-container">
+            <block wx:for="{{item.RewardUsers}}" wx:for-item="rewardUser" wx:key="Id">
+              <view class="reward-logo-img-container"><image style="width:35px; height:35px;" src="{{rewardUser.Headimgurl}}"></image></view>
+            </block>
           </view>
         </view>
         <!-- 点赞头像-->
@@ -116,7 +135,7 @@
                 <view class="res-info">
                   <!-- 头像 -->
                   <view class="comment-content-image-wrap">
-                    <image style="width:35px;height:35px;padding:6px" src="{{comment.ComUser.Headimgurl}}" ></image>
+                    <image style="width:47px;height:47px;padding:6px" src="{{comment.ComUser.Headimgurl}}" ></image>
                   </view>
                   <view class="comment-content-msg-wrap">
                     <view>

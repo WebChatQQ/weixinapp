@@ -2,10 +2,48 @@
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
     this.getTypes();
+    this.login();
+  },
+  login:function() {
+    var that = this;
+      wx.login({
+        success: function(res){
+          console.log(res);
+          wx.getUserInfo({
+            success: function(res){
+              console.log(res);
+              that.decode(res.encryptedData,res.signature, res.iv);
+              wx.request({
+                url: 'https://api.weixin.qq.com/sns/jscode2session',
+                data: {
+                  "appid":"wx61575c2a72a69def",
+                  "secret":"442cc056f5824255611bef6d3afe8d33",
+                  "js_code":res.code,
+                  "grant_type":"authorization_code"
+                },
+                method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                // header: {}, // 设置请求的 header
+                success: function(res){
+                  console.log("session_key");
+                  console.log(res)
+                },
+                complete: function() {
+                  console.log("end");
+                }
+              })
+            }
+          })
+        }
+      })
+  },
+
+
+  decode:function(encryptedData, signature, iv) {
+      encryptedData = atob(encryptedData);
+      signature = atob(signature);
+      console.log(encryptedData);
+      console.log(signature);
   },
   getUserInfo:function(cb){
     var that = this
@@ -17,6 +55,7 @@ App({
         success: function () {
           wx.getUserInfo({
             success: function (res) {
+              console.log(res);
               that.globalData.userInfo = res.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
             }
