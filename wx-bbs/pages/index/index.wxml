@@ -69,7 +69,7 @@
         <view style="clear:both"></view>
         <!-- 帖子正文 -->
         <view>
-          <view class="article-content-container">
+          <view class="article-content-container" catchtap="toArticleDetail" data-article-id="{{item.Id}}">
             <view href="../logs" class="article-content-title" >{{item.Title}}</view>
             <view>
                 <a class="section-theme" bindtap="toBankuai">{{item.ArticleTypeName}}</a>

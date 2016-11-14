@@ -1,49 +1,82 @@
+var crypt =  require("./utils/crypt.js");
+var util = require("./utils/util.js");
+var api = require("./utils/api.js")
 //app.js
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
     this.getTypes();
     this.login();
+    this.cry();
   },
+  cry: function() {
+    var encryptedData="o08s4F6vTrWJwm8a1ew/xztqDXLoUM2sA1sY1J34jeCLAn0BXAgNpTp/+tWm6iQb00AqxeJygp35YT55ylzd0Myk/DcgJMEk1wxPW2ggjGz3h6cuNLG+A+23821pJI7ANDsDgEM9ZBUruyfFIRT6DrhDBdeCqTA9hz/QRLjL2clZWWnhaO9CicIDddR+vOSZNKN7tTeIPRN0cj5FVzK+bD08VN7pf40+e6uwlrO7XgjsYFLySA6275i6FzDXsjufwsfyR+NzJWUTavPgDIIknfOZz/wxpJgHFX+VQkZt6Bb+rLwAOvrQlhR/CgtAzm26pXFC027MZpgqJ2ZJXiSaty4gN65f7edRlkfow1fnqHah5yzWj9I35y1j7w3mQiDtDWJ9lj/pkjuMthDpJstaQHfHO4iISOmmq/CRi/7V4C8gdY9b5SKnTsZ4WjKGO5cAkc8+yl44KUpVB3lhztYiljbO0TABlSclv4mpEOsyL7UgOcxJHxh+9UpXyg9+HdyJF7mh3FIJuxdZxDxYfa3nkA=="
+    var iv = "jyRsYcuwW8rnMAvsykzEqQ==";
+    var sessionKey = "7zLyHTjsApZJhyYMoXcynw==";
+    var re = crypt.decryptUserInfo(encryptedData, sessionKey, iv);
+    console.log(re);
+  },
+
+
   login:function() {
     var that = this;
-      wx.login({
-        success: function(res){
-          console.log(res);
-          wx.getUserInfo({
-            success: function(res){
-              console.log(res);
-              that.decode(res.encryptedData,res.signature, res.iv);
-              wx.request({
-                url: 'https://api.weixin.qq.com/sns/jscode2session',
-                data: {
-                  "appid":"wx61575c2a72a69def",
-                  "secret":"442cc056f5824255611bef6d3afe8d33",
-                  "js_code":res.code,
-                  "grant_type":"authorization_code"
-                },
-                method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                // header: {}, // 设置请求的 header
+    wx.login({
+      success: function(res){
+        console.log(res);
+        // 通过code获取用户session_key和open_id
+        var code = res.code;
+        //获取sessionKey
+        wx.request({
+          url: 'https://URL',
+          data: {},
+          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+          // header: {}, // 设置请求的 header
+          success: function(res){
+              var sessionKey = res.sessionKey;
+              var openid = res.openid;
+              that.globalData.sessionKey = sessionKey;
+              that.globalData.openId = openid;
+
+              // 获取用户信息
+              wx.getUserInfo({
                 success: function(res){
-                  console.log("session_key");
-                  console.log(res)
-                },
-                complete: function() {
-                  console.log("end");
+                    that.globalData.userInfo = res.userInfo;
+                    // 解密用户信息
+                    var encryptedData = res.encryptedData;
+                    var iv = res.iv;
+
+                    var str = crypt.decryptUserInfo(encryptedData, sessionKey, iv);
+                    var decryStr = JSON.parse(str);
+                    var openId = decryStr.openId;
+                    var unionId = decryStr.unionId;
+                    var watermark = decryStr.watermark;
+                    that.globalData.unionId = unionId;
+                    that.globalData.openId = openId;
+                    that.globalData.watermark = watermark;
+                    // 更新数据
+                    that.update();
+                    // 登陆服务器
+                    var data = {};
+                    data.verifyModel = util.primaryLoginArgs();
+                    
+                    var wechatInfo = {};
+                    wechatInfo.openid = openId;
+                    wechatInfo.nickname = res.userInfo.nickName;
+                    wechatInfo.sex = res.userInfo.gender;
+                    wechatInfo.province = res.userInfo.province;
+                    wechatInfo.city = res.userInfo.city;
+                    wechatInfo.country = res.userInfo.country;
+                    wechatInfo.headimgurl = res.avatarUrl;
+                    wechatInfo.unionid = unionId;
+
+                    data.wechatInfo = wechatInfo;
+                    util.login(data);
                 }
               })
-            }
-          })
-        }
-      })
-  },
-
-
-  decode:function(encryptedData, signature, iv) {
-      encryptedData = atob(encryptedData);
-      signature = atob(signature);
-      console.log(encryptedData);
-      console.log(signature);
+          }
+        })
+      }
+    })
   },
   getUserInfo:function(cb){
     var that = this
@@ -57,6 +90,7 @@ App({
             success: function (res) {
               console.log(res);
               that.globalData.userInfo = res.userInfo
+
               typeof cb == "function" && cb(that.globalData.userInfo)
             }
           })
@@ -107,17 +141,15 @@ App({
         if (typeof cb == "function") {
           cb(res);
         }
-      },
-      fail: function() {
-        // fail
-      },
-      complete: function() {
-        // complete
       }
     })
   },
   globalData:{
     userInfo:null,
+    openId:null,
+    watermark:null,
+    unionId:null,
+    sessionKey:null,
     types:[],
     voice:{}
   },

@@ -1,6 +1,10 @@
 var index = require("../../data/index-list.js")
 var util = require("../../utils/util.js")
 var comobj = require("../../obj/comobj.js")
+var crypt = require("../../utils/crypt.js")
+var api = require("../../utils/api.js")
+
+
 //index.js
 //获取应用实例
 var app = getApp()
@@ -42,13 +46,10 @@ Page({
   },
   // 加载数据
   ready: function () {
-    console.log ("ready: 获取初始数值");
-    console.log ("ready: " + index);
     this.setData({
       articles:index.articles.slice(0,10),
       typeList:index.typeList
     })
-    console.log ("ready " + this.data.articles);
   },
   moreArticle: function (event) {
     console.log ("moreArticle: 加载更多");
@@ -211,5 +212,32 @@ Page({
         scrollLeft:-900
       })
       console.log(this.data.currentTypeId);
+  },
+
+  showIndexPage: function() {
+
+  },
+  // 展示首页信息
+  showHeadInfo: function() {
+    var verifyModel = util.primaryLoginArgs();
+    var mid = 1;
+    var data = {"verifyModel":verifyModel, "mid":mid}; 
+    api.headInfo(data, function(res) {
+      if (res.result == "false") {
+        // TODO 异常处理
+        return 
+      }
+      
+
+    });
   }
+
+
+  
+
+
 })
+
+
+
+
