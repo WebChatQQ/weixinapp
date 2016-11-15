@@ -230,8 +230,15 @@ Page({
       
 
     });
+  },
+  toArticleDetail: function() {
+    wx.navigateTo({
+      url: '/pages/articledetail/articledetail',
+      success: function(res){
+        // success
+      }
+    })
   }
-
 
   
 
