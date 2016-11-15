@@ -1,4 +1,4 @@
-.user-info-container{padding: 10px 15px; width: 100%; display: flex; border-width: 10px; border-bottom-style: none; border-bottom-color: rgb(245, 245, 245); position: relative; }
+.user-info-container{overflow-y:hidden;padding: 10px 15px; width: 100%; display: flex; border-width: 10px; border-bottom-style: none; border-bottom-color: rgb(245, 245, 245); position: relative; }
 .user-info-wrap{height: 60px; width: 60%; margin-left: 10px; margin-right: 10px; }
 .user-img-wrap{height: 60px; width: 60px; border-radius: 5px; }
 .user-edit-wrap{height: 60px; width: 63px; display: flex; position: absolute; right: 10px; }

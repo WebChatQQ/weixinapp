@@ -1,21 +1,20 @@
-
-
-
 <!--index.wxml-->
 <view class="body">
   <view class="border-slice">
     <view class="head">
       <view class="index-head-logo">
-        <image class="index-head-logo-img" src="http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg"></image>
+        <!-- <image class="index-head-logo-img" src="http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg"></image> -->
+        <image class="index-head-logo-img" src="{{headInfo.logoUrl}}"></image>
         <text class="index-head-logo-f">
-          话题  7179 | 访问 984328
+          话题  {{headInfo.articleCount}} | 访问 {{headInfo.clickCount}}
         </text>
       </view>
-      <view class="head-banner"></view>
+      <!-- <view class="head-banner"></view> -->
+      <view class="head-banner" style="background:url({{headInfo.backMap}}) no-repeat"></view>
     </view>
-    <view class="index-head-bottom">
-        <view class="flex"><view class="index-sign"></view>签到</view>
-        <view class="flex"><view class="index-focus"></view>关注</view>
+    <view wx:if="!{{headInfo.isSign=='true' && headInfo.isConcern=='true'}}" class="index-head-bottom">
+          <view wx:if="{{headInfo.isSign == 'false'}}"  class="flex"><view class="index-sign"></view>签到</view>
+          <view wx:if="{{headInfo.isConcern == 'false'}}" class="flex"><view class="index-focus"></view>关注</view>
     </view>
     <view class="head-announcement">
       <view><view class="announcement-icon02"></view><text></text></view>
@@ -56,7 +55,7 @@
             </view>
             <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">
               <view class="aricle-user-wrap">
-                <text class="index-poster-name">V.{{item.User.NickName}}</text>
+                <text class="index-poster-name">{{item.User.NickName}}</text>
                 <text class="index-poster-kind">V.{{item.User.Level}}</text>
                 <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view>
               </view>
@@ -88,7 +87,7 @@
             <!-- 图片 -->
             <block wx:for="{{item.Images}}" wx:for-item="image" wx:key="thumbnail">
               <view>
-                <image mode="left" style="max-height:200px; max-width:100%" src="{{image.thumbnail}}" class="article-image"></image>
+                <image catchtap="showBigImg" data-src="{{image.filepath}}"  mode="left" style="max-height:200px; max-width:100%" src="{{image.thumbnail}}" class="article-image"></image>
               </view>
             </block>
             <!-- 视频 

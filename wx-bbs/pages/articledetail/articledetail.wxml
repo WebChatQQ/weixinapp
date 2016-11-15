@@ -34,6 +34,16 @@
                     赏
                 </button>
                 <text class="reward-text-num">共1人, 1次赞赏</text>
+                <view class="reward-img-wrap">
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    <image style="width:35px; height:35px; margin:2px 2px" src="http://oss.vzan.cc/image/jpg/2016/8/27/1543491ac65e55f7514229ad461e3cbd8b5503.jpg"/>
+                    
+                </view>
             </view>
         </view>
     </view>

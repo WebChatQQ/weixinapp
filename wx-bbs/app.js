@@ -8,6 +8,7 @@ App({
     this.getTypes();
     this.login();
     this.cry();
+   
   },
   cry: function() {
     var encryptedData="o08s4F6vTrWJwm8a1ew/xztqDXLoUM2sA1sY1J34jeCLAn0BXAgNpTp/+tWm6iQb00AqxeJygp35YT55ylzd0Myk/DcgJMEk1wxPW2ggjGz3h6cuNLG+A+23821pJI7ANDsDgEM9ZBUruyfFIRT6DrhDBdeCqTA9hz/QRLjL2clZWWnhaO9CicIDddR+vOSZNKN7tTeIPRN0cj5FVzK+bD08VN7pf40+e6uwlrO7XgjsYFLySA6275i6FzDXsjufwsfyR+NzJWUTavPgDIIknfOZz/wxpJgHFX+VQkZt6Bb+rLwAOvrQlhR/CgtAzm26pXFC027MZpgqJ2ZJXiSaty4gN65f7edRlkfow1fnqHah5yzWj9I35y1j7w3mQiDtDWJ9lj/pkjuMthDpJstaQHfHO4iISOmmq/CRi/7V4C8gdY9b5SKnTsZ4WjKGO5cAkc8+yl44KUpVB3lhztYiljbO0TABlSclv4mpEOsyL7UgOcxJHxh+9UpXyg9+HdyJF7mh3FIJuxdZxDxYfa3nkA=="
@@ -151,7 +152,8 @@ App({
     unionId:null,
     sessionKey:null,
     types:[],
-    voice:{}
+    voice:{},
+    sysInfo:{},
   },
   setGlobalData: function(data) {
     this.globalData = data;

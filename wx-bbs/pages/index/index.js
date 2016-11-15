@@ -15,23 +15,45 @@ Page({
     pageIndex:1,
     pageSize:2,
     audioIcon:"http://i.pengxun.cn/content/images/voice/voiceplaying.png",
-    css:{
-      "bankuaiSelected":""
-    },
     typeList:[],
     currentTypeId:0,
     hot:0,
-    scrollLeft:0
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+    scrollLeft:0,
+    headInfo:{
+      "backMap":"http://i.pengxun.cn/images/bms1/050_app[1].jpg",
+      "logoUrl":"http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg",
+      "articleCount":23131,
+      "clickCount":1231,
+      "isSign":"true",
+      "isConcern":"false"
+    },
+    categories:[{
+        "id" : 0,
+        "title" : "全部"
+      },{
+        "if" : 3132,
+        "title" : "运营日报"
+      },{
+        "id" : 875,
+        "title" : "操作指南"
+      },{
+        "id" : 2038,
+        "title" : "常见问题"
+      },{
+        "id" : 2033,
+        "title" : "微赞故事"
+      },{
+        "id" : 1,
+        "title" : "更新进度"
+      }]
+    },
+
   onLoad: function () {
     console.log('onLoad')
     var that = this
+
+    var sysInfo = wx.getSystemInfoSync();
+
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
       //更新数据
@@ -217,20 +239,190 @@ Page({
   showIndexPage: function() {
 
   },
-  // 展示首页信息
+  // 展示首页Head信息
   showHeadInfo: function() {
+    var that = this;
     var verifyModel = util.primaryLoginArgs();
-    var mid = 1;
-    var data = {"verifyModel":verifyModel, "mid":mid}; 
+    var data = {
+      "deviceType": verifyModel.deviceType,
+      "uid": verifyModel.uid,
+      "versionCode":verifyModel.versionCode,
+      "timestamp": verifyModel.timestamp,
+      "sign":verifyModel.sign,
+      "id":"3"
+    }; 
     api.headInfo(data, function(res) {
       if (res.result == "false") {
         // TODO 异常处理
         return 
+      } 
+      headInfo = {
+        "backMap":res.obj.BackMap,
+        "logoUrl":res.obj.LogoUrl,
+        "articleCount":res.obj.ArticleCount,
+        "clickCount":res.obj.ClickCount,
+        "isSign":res.obj.IsSign,
+        "isConcern":res.obj.IsConcern
       }
-      
-
+      var categories = [];
+      for (var i = 0; i < res.Categories.length; i++) {
+          categories.push({
+            "id":res.Categories[i].Id,
+            "title":res.Categories[i].Title
+          })
+      }
+      app.globalData.headInfo = headInfo;
+      app.globalData.categories = categories;
+      app.globalData.update();
     });
   },
+  /**
+   * 展示首页帖子
+   */
+  getIndexArticles: function() {
+      var that = this;
+      data = {
+          "deviceType": verifyModel.deviceType,
+          "uid": verifyModel.uid,
+          "versionCode":verifyModel.versionCode,
+          "timestamp": verifyModel.timestamp,
+          "sign":verifyModel.sign,
+          "id":"3",
+          "keyWord":null,
+          pageIndex:that.pageIndex
+      }
+      api.articles(data, function(res){
+          var that = this;
+          var articles = [];
+          for (var i = 0; i < res.objArray.length; i++) {
+            var article = res.objArray[i]
+            var rewardUsers = []; // 打赏用户列表
+            var praiseUsers = []; // 点赞用户列表
+
+            var comments = []; // 评论列表
+            var images = [];
+
+            // 打赏
+            for (var r = 0; r < res.objArray[i].RewardUsers.length; r++) {
+              var rewardUser = res.objArray[i].RewardUsers[r]
+              rewardUsers.push({
+                  "Id":rewardUser.Id,
+                  "Headimgurl":rewardUser.Headimgurl,
+                  "NickName":rewardUser.NickName
+              });
+            }
+
+            // 点赞
+            for (var p = 0; p < res.objArray[i].PraiseUsers.length; p++) {
+              var praiseUser = res.objArray[i].PraiseUsers[p]
+              praiseUsers.push({
+                  "Id":praiseUser.Id,
+                  "Headimgurl":praiseUser.Headimgurl,
+                  "NickName":praiseUser.NickName
+              });
+            }
+
+            // 评论
+            for(var c = 0; c < res.objArray[i].articleComments.length; c++) {
+                var commentImgs = []; // 评论图片列表
+                var comment = res.objArray[i].articleComments[i];
+                for (var ci = 0; c < res.objArray[i].articleComments[c].Images.length; ci++) {
+                  var img = res.objArray[i].articleComments[c].Images[ci];
+                  commentImgs.push({
+                      "Thumbnail":img.Thumbnail,
+                      "filepath":img.filepath
+                  })
+                }
+                comments.push({
+                  "Id": comment.Id,
+                  "IsShowBest":comment.IsShowBest,
+                  "CreateDate":comment.CreateDate,
+                  "Content":comment.Content,
+                  "ContentHtml":comment.ContentHtml,
+                  "ComUser":{
+                    "Id":comment.ComUser.Id,
+                    "Headimgurl":comment.ComUser.Headimgurl,
+                    "NickName":comment.ComUser.NickName,
+                    "Level":comment.ComUser.Level
+                  },
+                  "DUser":{
+                    "Id":comment.DUser.Id,
+                    "Headimgurl":comment.DUser.Headimgurl,
+                    "NickName":comment.DUser.NickName,
+                    "Level":comment.DUser.Level
+                  },
+                  "Voice":{
+                    "Id":comment.Voice.Id,
+                    "DownLoadFile":comment.Voice.DownLoadFile,
+                    "VoiceTime":comment.Voice.VoiceTime,
+                    "TransFilePath":comment.Voice.TransFilePath,
+                  },
+                  "Images":commentImgs
+                })
+            }
+            
+            // 图片
+            for (var im = 0; im < res.objArray[im].Images; im++) {
+              var image = res.objArray[im].images[im];
+              images.push({
+                  "thumbnail":image.thumbnail,
+                  "filepath":image.filepath
+              })
+            }
+
+              articles.push({
+                  "Id":article.Id,
+                  "Title":article.Title,
+                  "CreateDate":article.CreateDate,
+                  "Click":article.Click,
+                  "ContentDesc":article.ContentDesc,
+                  "Content":article.Content,
+                  "ContentDescAll":article.ContentDescAll,
+                  "Address":article.Address,
+                  "IsPraise":article.IsPraise,
+                  "Praise":article.Praise,
+                  "Reward":article.Reward,
+                  "CommentCount":article.CommentCount,
+                  "ShareCount":article.ShareCount,
+                  "IsNew":article.IsNew,
+                  "ArticleTypeID":article.ArticleTypeID,
+                  "ArticleTypeName":article.ArticleTypeName,
+                  "VideoList":article.VideoList,
+                  "IsAdv":article.IsAdv,
+                  "IsTop":article.IsTop,
+                  "IsSubTop":article.IsSubTop,
+                  "IsHot":article.IsHot,
+                  "IsGuerdon":article.IsGuerdon,
+                  "GuerdonMoney":article.GuerdonMoney,
+                  "User":{
+                      "Id":article.User.Id,
+                      "Headimgurl":article.User.Headimgurl,
+                      "NickName":article.User.NickName,
+                      "Level":article.User.Level
+                  },
+                  "RewardUsers":rewardUsers,
+                  "PraiseUsers":praiseUsers,
+                  "ArticleComments":comments,
+                  "Voice":{
+                    "Id":article.Voice.Id,
+                    "DownLoadFile":article.Voice.DownLoadFile,
+                    "VoiceTime":article.Voice.VoiceTime,
+                    "TransFilePath":article.Voice.TransFilePath
+                  },
+                  "Images":images,
+                  "Video":null
+              })
+          }
+
+          // 设置Articles
+          that.setData({
+            articles:articles,
+            pageIndex:that.pageIndex+1
+          })
+          
+      });
+  },
+
   toArticleDetail: function() {
     wx.navigateTo({
       url: '/pages/articledetail/articledetail',
@@ -239,10 +431,16 @@ Page({
       }
     })
   }
-
+  , 
+  showBigImg: function(e) { // 展示大图
+    var src = e. currentTarget.dataset.src;
+    wx.previewImage({
+       current: src, // 当前显示图片的链接，不填则默认为 urls 的第一张
+       urls: [src],
+    })
+    return false;
+  }
   
-
-
 })
 
 

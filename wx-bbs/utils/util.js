@@ -44,9 +44,10 @@ function tipOff(user) {
 
 // 登陆必要参数
 function primaryLoginArgs() {
+    var sysInfo = wx.getSystemInfoSync();
     var uid = app.globalData.unionId;
     var versionCode = 1;
-    var deviceType = "qq";
+    var deviceType = sysInfo.model;
     var timestamp = ( new Date() ).getTime();
     var sign = crypt.getVerifyModel(uid, versionCode, deviceType, timestamp);
     var verifyModel = {};

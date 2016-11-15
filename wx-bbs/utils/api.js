@@ -23,7 +23,10 @@ function login(data) {
  */
 function headInfo(data, cb) {
     wx.request({
-      url: 'https://URL/minisnsapp/getMinisnsHeadInfo',
+      url: 'https://apptest.vzan.com/minisnsapp/getMinisnsHeadInfo',
+      head:{
+          "Content-Type": "multipart/form-data;"
+      },
       data: data,
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
@@ -39,12 +42,15 @@ function headInfo(data, cb) {
 }
 
 /**
- * 获取论坛首页帖子
+ * 获取论坛帖子
  */
-function indexMinisnsMsg(data, cb) {
+function articles(data, cb) {
     wx.request({
       url: 'https://URL/minisnsapp/getArtListByMinisnsId',
       data: data,
+      head:{
+          "Content-Type": "multipart/form-data;"
+      },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       success: function(res){
@@ -89,6 +95,6 @@ function getRequest(data, cbObj) {
 module.exports = {
   login:login,
   headInfo:headInfo,
-  indexMinisnsMsg:indexMinisnsMsg,
+  articles:articles,
   getRequest:getRequest
 }

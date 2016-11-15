@@ -85,7 +85,7 @@
 .art-title{line-height: 180%;font-weight: bold;font-size:43rpx;max-width: 100%!important;word-wrap: break-word;font-family: "Microsoft YaHei",Arial}
 .art-content-dec-container{width: 100%; margin-bottom: 10px; }
 .art-content-dec{    max-width: 100%!important;line-height: 165%;font-size: 38rpx; font-family: "Microsoft YaHei",Arial;}
-.reward-btn{border-radius: 5px; margin-bottom: 10px; }
+.reward-btn{border-radius: 5px; margin-bottom: 5px; }
 .reward-btn-wrap{padding-left: 25%; padding-right: 25%; text-align: center; margin-bottom: 10px; }
 .art-write-container{height: 40px; background-color: rgb(245, 245, 245); position: relative; }
 .art-write-wrap{position: absolute; width: 51px; height: 40px; right: 0px; margin-right: 10px; text-align: center; line-height: 40px; }
@@ -150,3 +150,9 @@
     padding-right: 5px;
     display:inline-block;
 }
+.reward-img-wrap{
+    width: 100%;
+    display:inline-block;
+}
+
+

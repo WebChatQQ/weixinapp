@@ -147,6 +147,9 @@ page {
   font-weight:bold;
   font-size:31rpx;
   font-family: "Microsoft YaHei",Arial;
+  width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .index-poster-kind {
   background-color: #5bc3ff;
