@@ -423,22 +423,28 @@ Page({
       });
   },
 
-  toArticleDetail: function() {
+  toArticleDetail: function(event) {
+    var articleId = event.currentTarget.dataset.articleId;
     wx.navigateTo({
-      url: '/pages/articledetail/articledetail',
-      success: function(res){
-        // success
-      }
+      url: '/pages/articledetail/articledetail?id=' + articleId,
     })
   }
   , 
   showBigImg: function(e) { // 展示大图
-    var src = e. currentTarget.dataset.src;
+    var src = e.currentTarget.dataset.src;
     wx.previewImage({
        current: src, // 当前显示图片的链接，不填则默认为 urls 的第一张
        urls: [src],
     })
     return false;
+  },
+  // 签到
+  sign: function() {
+
+  },
+  // 关注
+  concern: function() {
+    
   }
   
 })
