@@ -7,6 +7,7 @@ var that;
 var recordTimeInterval;
 Page({
   data:{
+    minisnsId:1,
     emoij:0,
     title:"",
     artContent:"",
@@ -222,17 +223,41 @@ Page({
     }, 1000)
     wx.startRecord({
       success: function(res){
+        // 上传到服务器
+        wx.uploadFile({
+          url: 'https://String',
+          filePath: res.tempFilePath,
+          name:'file',
+          // header: {}, // 设置请求的 header
+          formData: {"minisnsId":minisnsId,"userid":}, // HTTP 请求中其他额外的 form data
+          success: function(res){
+            // success
+          },
+          fail: function() {
+            // fail
+          },
+          complete: function() {
+            // complete
+          }
+        })
+
+
         that.setData({
             hasRecorded:1,
             recording:0,
             tempRecordFile:res.tempFilePath,
-            recordTime:0
+            recordTime:0,
+            voice:{
+              Id:1,
+              src:res.tempFilePath
+            }
         })
       },
       complete: function() {
           that.setData({ recording:0, voiceSelected:0, formatedRecordTime:"00:00:00" })
           clearInterval(recordTimeInterval);
           console.info("StartRecord: 录音完成");
+          
       }
     })
   },

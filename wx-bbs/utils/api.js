@@ -18,6 +18,20 @@ function login(data) {
 }
 
 /**
+ * 获取用户信息
+ */
+function userinfo(data, cb){
+  wx.request({
+    url: 'https://apptest.vzan.com/minisnsapp/userinfo',
+    data: data,
+    method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    // header: {}, // 设置请求的 header
+    success: function(res){
+      cb(res)
+    }
+  })
+}
+/**
  * 获取论坛顶部内容
  * 
  */
@@ -60,6 +74,8 @@ function articles(data, cb) {
       }
     })
 }
+
+
 
 /**
  * 

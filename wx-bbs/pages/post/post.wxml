@@ -44,7 +44,7 @@
             <image style="width:22px; height:22px;margin-left:4px" src="{{audioIcon}}"></image>            
             <audio  class="audio" id="{{voice.Id}}" 
             poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" 
-            src="{{item.Voice.TransFilePath}}"></audio>
+            src="{{voice.src}}"></audio>
             </view>
             <view wx:if="{{voice.voiceTime}}" class="audio-time-wrap"><text>{{voice.voiceTime}}"</text></view>
             <view style="clear:both"></view>

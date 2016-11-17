@@ -46,7 +46,7 @@ App({
                     var encryptedData = res.encryptedData;
                     var iv = res.iv;
 
-                    var str = crypt.decryptUserInfo(encryptedData, sessionKey, iv);
+                    var str = crypt.decryptUserInfo(encryptedData, sessionKey, iv); // 解密用户信息
                     var decryStr = JSON.parse(str);
                     var openId = decryStr.openId;
                     var unionId = decryStr.unionId;
@@ -57,8 +57,9 @@ App({
                     // 更新数据
                     that.update();
                     // 登陆服务器
+                    var verifyModel = util.primaryLoginArgs();
                     var data = {};
-                    data.verifyModel = util.primaryLoginArgs();
+                    data.verifyModel = verifyModel; 
                     
                     var wechatInfo = {};
                     wechatInfo.openid = openId;
@@ -69,9 +70,25 @@ App({
                     wechatInfo.country = res.userInfo.country;
                     wechatInfo.headimgurl = res.avatarUrl;
                     wechatInfo.unionid = unionId;
-
                     data.wechatInfo = wechatInfo;
-                    util.login(data);
+                    api.login(data);
+
+                    // 获取登陆用户信息
+                    var userinfodata = {fid:1, verifyModel: verifyModel}
+                    api.userinfo(data, function(res) {
+                        var userinfo = res.obj;
+                        that.setData({
+                            _user: userinfo._LookUser,
+                            _minisns : userinfo._Minisns, // 论坛
+                            _myArtCount: userinfo._MyArtCount, // 文章数
+                            _myMinisnsCount: userinfo._MyMinisnsCount, // 关注论坛数
+                            isConcern:userinfo.IsConcern, // 
+                            concernCount:userinfo.ConcernCount, // 粉丝人数
+                            myConcernCount:userinfo.MyConcernCount,// 关注人数
+                        })
+                        wx.setStorageSync('user', res.obj._LookUser);// 保存用户信息
+                        wx.setStorageSync('minisns', res.obj._Minisns); // 论坛信息
+                    })
                 }
               })
           }
