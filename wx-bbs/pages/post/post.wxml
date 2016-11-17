@@ -50,6 +50,15 @@
             <view style="clear:both"></view>
         </view>
 
+         <!-- 发视频 -->
+        <view wx:if="{{vedio}}" class="comment-voice-container">
+            <view style="position:relative;max-height:80px; width:20%; margin:5px; display:inline-block; vertical-align:middel">
+                <view class="img-remove" data-id="{{vedio.Id}}" catchtap="removeVedio"></view>
+                <image style="width:100%;max-height:80px;" src="{{vedio.src}}"/>
+            </view>
+        </view>
+
+
         <view class="post-submit-container" >
             <view class="post-position-wrap" >
                 <image class="post-position-icon"  mode="scaleToFill" src="http://qty83k.creatby.com/materials/origin/0024e9b38e605192d94951ce3dffe8ae_origin.png" style="background-size: 100% 100%; background-position: 0% 0%; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0024e9b38e605192d94951ce3dffe8ae_origin.png); "/>
@@ -75,11 +84,11 @@
         <view class="post-icon-voice"></view>
         <text class="post-icon-desc" >语音</text>
     </view>
-    <view class="post-icon-emoj-wrap" >
+    <view class="post-icon-emoj-wrap" catchtap="selectVdeio">
         <view class="post-icon-vedio" ></view>
         <text class="post-icon-desc" >视频</text>
     </view>
-    <view class="post-icon-emoj-wrap" >
+    <view class="post-icon-emoj-wrap" catchtap="selectReward">
         <view class="post-icon-reward"></view>
         <text class="post-icon-desc" >悬赏</text>
     </view>
@@ -390,14 +399,16 @@
     <view style="clear:both"></view>
 </view>
 <view class="post-type-container" >
-    <text class="post-type-wrap" >运营日报</text>
-    <text class="post-type-wrap" >运营交流</text>
-    <text class="post-type-wrap" >改进建议</text>
-    <text class="post-type-wrap" >操作指南</text>
-    <text class="post-type-wrap" >常见问题</text>
-    <text class="post-type-wrap" >微赞故事</text>
-    <text class="post-type-wrap" >更新进度</text>
-    <text class="post-type-wrap" >公众号运营</text>
+    <block wx:for="{{typeList}}" wx:for-item="type" wx:key="{{typeList.id}}">
+        <text class="post-type-wrap" catchtap="selectType" data-id="{{type.id}}" >{{type.name}}</text>
+        <!-- <text class="post-type-wrap" >运营交流</text>
+        <text class="post-type-wrap" >改进建议</text>
+        <text class="post-type-wrap" >操作指南</text>
+        <text class="post-type-wrap" >常见问题</text>
+        <text class="post-type-wrap" >微赞故事</text>
+        <text class="post-type-wrap" >更新进度</text>
+        <text class="post-type-wrap" >公众号运营</text> -->
+    </block>
 </view>
 
 </view>

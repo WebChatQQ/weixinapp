@@ -7,11 +7,17 @@ var that;
 var recordTimeInterval;
 Page({
   data:{
+      typeList:[
+      {"id":1,"name":"运营日报"},
+      {"id":2,"name":"操作指南"},
+      {"id":3,"name":"常见问题"}
+    ],
     minisnsId:1,
     emoij:0,
     title:"",
     artContent:"",
-    location:{
+    choosedType:null,
+    address:{
       "hidlat":"",
       "hidlng":"",
       "hidspeed":"",
@@ -39,7 +45,6 @@ Page({
     recordTime : 0,
     formatedRecordTime:"00:00:00",
     voiceSelected:0,
-    tempRecordFile:""
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -73,12 +78,12 @@ Page({
       voiceSelected:0,
       tempRecordFile:"",
       locationMsg:"点击确定位置",
-
     })
   },
 
   // 提交 TODO
   submit: function(event) {
+    var that = this;
     var detail = event.detail;
     console.info(detail);
     var content = detail.value.artContent;
@@ -91,9 +96,31 @@ Page({
       })
       return false;
     }
-    that.setData({
-      artContent:content
+    that.setData({ artContent:content, title:title })
+    var requestData={
+      id:that.data.minisnsId,
+      txtContentAdd:that.data.artContent,
+      hidrecordId:that.data.voice.id,
+      txtTitle:that.data.title,
+      hvideo:that.data.vdeio.src,
+      choosedType:that.data.choosedType,
+      hImgIds:that.data.selectedImgs,
+      hidlat:that.data.address.hidlat,
+      hidlng:that.data.address.hidlng,
+      hidspeed:that.data.address.hidspeed,
+      hidaddress:that.data.address.hidaddress
+    }
+    // 发帖
+    wx.request({
+      url: 'https://URL',
+      data: {},
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function(res){
+        // success
+      }
     })
+
 
     console.info("提交");
   },
@@ -110,9 +137,11 @@ Page({
         var latitude = res.latitude;
         var longitude = res.longitude; 
         var address = res.address;
-        that.data.location.hidlat = latitude;
-        that.data.location.hidlng = longitude;
-        that.data.location.hidaddress = address;
+        that.setData( {
+          address: {"hidlat":latitude,"hidlng":longitude,"hidaddress":address},
+          locationMsg:address
+        });
+        console.log(that.address);
       }
     })
     // wx.getLocation({
@@ -148,9 +177,7 @@ Page({
       console.log(title);
       console.log(code);
       var content = that.data.artContent + code;
-      that.setData({
-        artContent:content
-      })
+      that.setData({ artContent:content })
   },
   // 获取图片
   selectImg: function(event) {
@@ -161,29 +188,22 @@ Page({
       success: function(res){
           var imgs = res.tempFilePaths;
           var exisImgs = that.data.selectedImgs;
-
+          var user = wx.getStorageSync('user');
           for(var i = 0; i<imgs.length; i++) {
             // 上传图片
-            // wx.uploadFile({
-            //   url: 'https://String',
-            //   filePath:imgs[i],
-            //   name:'name',
-            //   // header: {}, // 设置请求的 header
-            //   // formData: {}, // HTTP 请求中其他额外的 form data
-            //   success: function(res){
-            //     // success
-            //   }
-            // })
-
-            var img = {
-              "src":imgs[i],
-              "id": exisImgs.length
-            }
-            exisImgs.push(img);
+            wx.uploadFile({
+              url: 'https://String',
+              filePath:imgs[i],
+              name:'file',
+              // header: {}, // 设置请求的 header
+              formData: {"minisnsId":that.data.minisnsId,"userid":user.id}, // HTTP 请求中其他额外的 form data
+              success: function(res){
+                 var img = {"src": res.url, "id": res.id};
+                 exisImgs.push(img);
+              }
+            })
           }
-          that.setData({
-            selectedImgs:exisImgs
-          })
+          that.setData({ selectedImgs:exisImgs })
       }
     })
   },
@@ -223,41 +243,28 @@ Page({
     }, 1000)
     wx.startRecord({
       success: function(res){
+        var user = wx.getStorageSync('user');
         // 上传到服务器
         wx.uploadFile({
           url: 'https://String',
           filePath: res.tempFilePath,
           name:'file',
           // header: {}, // 设置请求的 header
-          formData: {"minisnsId":minisnsId,"userid":}, // HTTP 请求中其他额外的 form data
+          formData: {"minisnsId":that.data.minisnsId,"userid":user.id}, // HTTP 请求中其他额外的 form data
           success: function(res){
-            // success
+             that.setData({voice:{id:res.id,src:res.url}})
           },
-          fail: function() {
-            // fail
-          },
-          complete: function() {
-            // complete
-          }
         })
-
-
         that.setData({
             hasRecorded:1,
             recording:0,
-            tempRecordFile:res.tempFilePath,
             recordTime:0,
-            voice:{
-              Id:1,
-              src:res.tempFilePath
-            }
         })
       },
       complete: function() {
           that.setData({ recording:0, voiceSelected:0, formatedRecordTime:"00:00:00" })
           clearInterval(recordTimeInterval);
           console.info("StartRecord: 录音完成");
-          
       }
     })
   },
@@ -268,12 +275,22 @@ Page({
     console.info("结束录音")
     wx.stopRecord({
       success: function(res){
-          var recordTime = that.data.recordTime + 1;
+          // 上传录音
+          var user = wx.getStorageSync('user');
+          wx.uploadFile({
+            url: 'https://String',
+            filePath:res.tempFilePath,
+            name:"file",
+            // header: {}, // 设置请求的 header
+            formData: {"minisnsId":that.data.minisnsId, "userid":user.id}, // HTTP 请求中其他额外的 form data
+            success: function(res){
+               that.setData({voice:{id:res.id, src:res.url}})
+            }
+          })
           that.setData( {
             recording:0,
             hasRecorded:1,
-            tempRecordFile:res.tempFilePath,
-            formatedRecordTime: util.formatTime(recordTime)
+            formatedRecordTime: util.formatTime(that.data.recordTime)
           } )
           console.info("录音完成")
       },
@@ -283,7 +300,43 @@ Page({
     })
     that.setData({voiceSelected:0, recording:0,hasRecorded:1,recordTime:0,formatedRecordTime:"00:00:00"})  
     clearInterval(recordTimeInterval);
+  },
+  /**
+   * 上传视频
+   */
+  selectVdeio: function(event) {
+     var that = this;
+      wx.chooseVideo({
+        sourceType: ['album', 'camera'], // album 从相册选视频，camera 使用相机拍摄
+        // maxDuration: 60, // 拍摄视频最长拍摄时间，单位秒。最长支持60秒
+        camera: ['front', 'back'],
+        success: function(res){
+            var user = wx.getStorageSync('user') 
+            // 上传到服务器
+            wx.uploadFile({
+              url: 'https://String',
+              filePath:res.tempFilePath,
+              name:'file',
+              // header: {}, // 设置请求的 header
+              formData: {"minisnsId":that.data.minisnsId, "userid":user.id}, // HTTP 请求中其他额外的 form data
+              success: function(r){
+                that.setData({voice:{id:r.id, src:r.url, duration:res.duration }})
+              }
+            })
+        }
+      })
+  },
+  // 悬赏
+  selectReward:function(event) {
+    var that = this;
+    wx.showModal({
+      title:"提示",
+      content:"敬请期待"
+    });
+  },
+  // 选择板块
+  selectType: function(event) {
+    var id = event.currentTarget.dataset.id;
+    this.setData({choosedType:id});
   }
-
-
 })
