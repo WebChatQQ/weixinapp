@@ -40,7 +40,7 @@ function formatNumber(n) {
 
 function getData() {
   wx.request({
-    url: 'http://vzan.com/f/s-1',
+    url: 'http://apptest.vzan.com/f/s-1',
     data: {},
     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
     // header: {}, // 设置请求的 header
@@ -62,13 +62,12 @@ function tipOff(user) {
 }
 
 // 登陆必要参数
-function primaryLoginArgs() {
+function primaryLoginArgs(unionid) {
     var sysInfo = wx.getSystemInfoSync();
-    var uid = app.globalData.unionId;
     var versionCode = 1;
     var deviceType = sysInfo.model;
     var timestamp = ( new Date() ).getTime();
-    var sign = crypt.getVerifyModel(uid, versionCode, deviceType, timestamp);
+    var sign = crypt.getVerifyModel(unionid, versionCode, deviceType, timestamp);
     var verifyModel = {};
     verifyModel.deviceType = deviceType;
     verifyModel.timestamp = timestamp;
@@ -81,7 +80,7 @@ function primaryLoginArgs() {
 function login(data) {
     // 登陆服务器
     wx.request({
-      url: 'https://URL/minisnsapp/loginByWeiXin',
+      url: 'https://apptest.vzan.com/minisnsapp/loginByWeiXin',
       data: data,
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       header: {}, // 设置请求的 header
@@ -90,6 +89,7 @@ function login(data) {
       }
     })
 }
+
 
 module.exports = {
   formatTime: formatTime,

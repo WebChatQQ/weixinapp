@@ -131,7 +131,7 @@ page {
 }
 .bankuai {
   margin: 5px 5px;
-  border: 1px solid #17b5ee;
+  /*border: 1px solid #17b5ee;*/
   width: 77px;
   text-align: center;
 }
@@ -386,7 +386,8 @@ page {
  font-size: 26rpx; 
 }
 .selected {
-  background:#17b5ee;
+  color:#17b5ee;
+  border-bottom: 1px solid #17b5ee;
 }
 
 

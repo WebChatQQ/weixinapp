@@ -7,60 +7,70 @@ App({
     //调用API从本地缓存中获取数据
     this.getTypes();
     this.login();
-    this.cry();
-   
+    this.decrypt();
+    this.getUserInfo();
   },
-  cry: function() {
-    var encryptedData="o08s4F6vTrWJwm8a1ew/xztqDXLoUM2sA1sY1J34jeCLAn0BXAgNpTp/+tWm6iQb00AqxeJygp35YT55ylzd0Myk/DcgJMEk1wxPW2ggjGz3h6cuNLG+A+23821pJI7ANDsDgEM9ZBUruyfFIRT6DrhDBdeCqTA9hz/QRLjL2clZWWnhaO9CicIDddR+vOSZNKN7tTeIPRN0cj5FVzK+bD08VN7pf40+e6uwlrO7XgjsYFLySA6275i6FzDXsjufwsfyR+NzJWUTavPgDIIknfOZz/wxpJgHFX+VQkZt6Bb+rLwAOvrQlhR/CgtAzm26pXFC027MZpgqJ2ZJXiSaty4gN65f7edRlkfow1fnqHah5yzWj9I35y1j7w3mQiDtDWJ9lj/pkjuMthDpJstaQHfHO4iISOmmq/CRi/7V4C8gdY9b5SKnTsZ4WjKGO5cAkc8+yl44KUpVB3lhztYiljbO0TABlSclv4mpEOsyL7UgOcxJHxh+9UpXyg9+HdyJF7mh3FIJuxdZxDxYfa3nkA=="
-    var iv = "jyRsYcuwW8rnMAvsykzEqQ==";
-    var sessionKey = "7zLyHTjsApZJhyYMoXcynw==";
+  decrypt: function() {
+    var encryptedData = 
+	'CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZM'+
+	'QmRzooG2xrDcvSnxIMXFufNstNGTyaGS'+
+	'9uT5geRa0W4oTOb1WT7fJlAC+oNPdbB+'+
+	'3hVbJSRgv+4lGOETKUQz6OYStslQ142d'+
+	'NCuabNPGBzlooOmB231qMM85d2/fV6Ch'+
+	'evvXvQP8Hkue1poOFtnEtpyxVLW1zAo6'+
+	'/1Xx1COxFvrc2d7UL/lmHInNlxuacJXw'+
+	'u0fjpXfz/YqYzBIBzD6WUfTIF9GRHpOn'+
+	'/Hz7saL8xz+W//FRAUid1OksQaQx4CMs'+
+	'8LOddcQhULW4ucetDf96JcR3g0gfRK4P'+
+	'C7E/r7Z6xNrXd2UIeorGj5Ef7b1pJAYB'+
+	'6Y5anaHqZ9J6nKEBvB4DnNLIVWSgARns'+
+	'/8wR2SiRS7MNACwTyrGvt9ts8p12PKFd'+
+	'lqYTopNHR1Vf7XjfhQlVsAJdNiKdYmYV'+
+	'oKlaRv85IfVunYzO0IKXsyl7JCUjCpoG'+
+	'20f0a04COwfneQAGGwd5oa+T8yO5hzuy'+
+	'Db/XcxxmK01EpqOyuxINew=='
+    var iv = "r7BXXKkLb8qrSNn05n0qiA==";
+    var sessionKey = "tiihtNczf5v6AKRyjwEUhQ==";
     var re = crypt.decryptUserInfo(encryptedData, sessionKey, iv);
-    console.log(re);
+    console.log("解密用户信息", re);
   },
-
 
   login:function() {
     var that = this;
     wx.login({
-      success: function(res){
-        console.log(res);
+      success: function(loginRes){
+        console.log(loginRes);
         // 通过code获取用户session_key和open_id
-        var code = res.code;
+        var code = loginRes.code;
+        url = "https://api.weixin.qq.com/sns/jscode2session?"+
+        "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
+        "js_code="+ code +"&grant_type=authorization_code"
         //获取sessionKey
         wx.request({
-          url: 'https://URL',
+          url: url,
           data: {},
           method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
           // header: {}, // 设置请求的 header
-          success: function(res){
-              var sessionKey = res.sessionKey;
-              var openid = res.openid;
-              that.globalData.sessionKey = sessionKey;
-              that.globalData.openId = openid;
-
+          success: function(session){
+              console.log("从服务器获取的SessionKey", session.data.session_key, "从服务器获取的openid", session.data.openid);
               // 获取用户信息
               wx.getUserInfo({
                 success: function(res){
+                    console.log("解密用户信息", res.ecryptedData);
                     that.globalData.userInfo = res.userInfo;
                     // 解密用户信息
-                    var encryptedData = res.encryptedData;
-                    var iv = res.iv;
-
-                    var str = crypt.decryptUserInfo(encryptedData, sessionKey, iv); // 解密用户信息
-                    var decryStr = JSON.parse(str);
-                    var openId = decryStr.openId;
-                    var unionId = decryStr.unionId;
-                    var watermark = decryStr.watermark;
-                    that.globalData.unionId = unionId;
-                    that.globalData.openId = openId;
-                    that.globalData.watermark = watermark;
-                    // 更新数据
-                    that.update();
+                    var str = crypt.decryptUserInfo(res.encryptedData, session.data.session_key, res.iv); // 解密用户信息
+                    var userInfo = JSON.parse(str);
                     // 登陆服务器
-                    var verifyModel = util.primaryLoginArgs();
+                    var verifyModel = util.primaryLoginArgs(userInfo.unionId);
+                    wx.request({
+                      url: 'https://apptest.vzan.com/minisnsapp/loginByWeiXin',
+                      data: {},
+                      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                    })
                     var data = {};
                     data.verifyModel = verifyModel; 
-                    
+
                     var wechatInfo = {};
                     wechatInfo.openid = openId;
                     wechatInfo.nickname = res.userInfo.nickName;
@@ -98,22 +108,16 @@ App({
   },
   getUserInfo:function(cb){
     var that = this
+    wx.getUserInfo({
+      success: function(res){
+          console.log("微信返回的加密用户信息，", res)
+      }
+    })
     if(this.globalData.userInfo){
       typeof cb == "function" && cb(this.globalData.userInfo)
     }else{
       //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res);
-              that.globalData.userInfo = res.userInfo
-
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
-        }
-      })
+      that.login();
     }
   },
   getTypes: function() {
