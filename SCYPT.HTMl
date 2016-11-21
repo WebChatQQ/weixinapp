@@ -26,9 +26,9 @@ function greeter(person) {
 }
 var user = "某某某";
 
-  var hash = CryptoJS.MD5("deviceType=ios9.0&timestamp=1478765065&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&versionCode=1.0");
+  var hash = CryptoJS.MD5("deviceType=iPhone 6&timestamp=1479697820949&uid=oW2wBwaOWQ2A7RLzG3fcpmfTgnPU&versionCode=1");
 
-  console.log( (hash.toString(CryptoJS.enc.Hex)).toUpperCase());
+  console.log("Md5", (hash.toString(CryptoJS.enc.Hex)).toUpperCase());
 
   //CryptoJS.DES.encrypt("5d428c7ca7c1d091cfa3b9b11a9b4645");
   var keyhex = CryptoJS.enc.Utf8.parse("vzanlive");
@@ -82,15 +82,16 @@ console.log(encrypted.ciphertext.toString(CryptoJS.enc.Hex))
  	 "nTQ5i1CKeepYnvP3gOykO7mPU5jly0mv" +
  	 "xDX9sjjZ/fJRRlMzbh3fEQ==";
  	encryptedData="M7OiqnBAAE3FZDG9E/W74yKi1flHK8qTkK77bQWo4G4QhcR6yBKXg6ozxot4nBqKJPSbnPt6uq/g/JMEtNFR8zsKwwHbBfJu7doB9t119Y3gIuQZRke6IBWInrxyMg42hYWmxWSIuZxMdQLnsg2Atgf4Xn28RlpwmHbTmVZnOa9EcwCyDr5ustFtzns/eWmGOuZZeDHfAItGAGhro9kmwS5J/ut99U+ANFqUOASd8peYf6jdnYIc+asbhaqb5Xqz7TgrSSBw/5liWILngaLcXvLJvldrVbTeBee7lPcf82rIw6nT/H9OkxraW8WE60PN8zy6fohafyODpV9KggxqKd86vJeJJ57wq6xV+DY5pNupA3iUt/fT77HS47wgJTtUxLnZ9X+rGxcIS8ezKkpwACeu8vxAGZgDOGeBDPRhSsryH4HptanCChrv9u9IU5LHTs25fgkMlwofOTzOcToy84KkoYARLbeTa2jnHPcSaijrP6eganhS0E8c4Z4aG3hxH5cN3SbG1r+8id4s5bwt7w=="
-    var iv = "EGagj6bAJYRuh0OosqrjsQ==";
+    var iv = "MemH64etXSCsi++UDSCGLw==";
     var sessionKey = "lWOEjl56KoIQeiT+d/SaNA==";
 
-	encrypted = CryptoJS.enc.Base64.parse(encryptedData);
+	// encrypted = CryptoJS.enc.Base64.parse(encryptedData);
     key  = CryptoJS.enc.Base64.parse(sessionKey);
     iv   = CryptoJS.enc.Base64.parse(iv);
-    key = CryptoJS.enc.Utf8.parse(key.toString(CryptoJS.enc.Hex));
+    key = CryptoJS.enc.Hex.parse(key.toString(CryptoJS.enc.Hex));
     // key = key.toString(CryptoJS.enc.Hex);
     iv = CryptoJS.enc.Hex.parse(iv.toString(CryptoJS.enc.Hex));
+    encrypted = CryptoJS.enc.Hex.parse(encrypted.toString(CryptoJS.enc.Hex));
     var decrypted = CryptoJS.AES.decrypt({ciphertext: encrypted}, key,{
         iv:iv,
         mode:CryptoJS.mode.CBC,

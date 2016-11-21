@@ -257,7 +257,7 @@ page {
   float:right;
 }
 .res {
-  width: 25%;
+  width: 33%;
   text-align: center;
   height: 30px;
   line-height: 30px;
@@ -390,10 +390,6 @@ page {
   border-bottom: 1px solid #17b5ee;
 }
 
-
-
-
-
 /* 状态 */
 .zaned {
     vertical-align: -3px;
@@ -404,4 +400,64 @@ page {
     background-size: 16px 16px;
     display: inline-block;
 }
+.recommend-emoij{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -234px; background-size: 100%; height: 26px; width: 26px; }
+.recommend-container{
+  padding: 10px 10px 0px 10px;
+  background-color: #fafafa;
+}
 
+.recommend-line-container{
+  height: 40px;
+  margin-top: 5px;
+}
+.recommend-icon-container{
+  float: left;
+}
+.recommend-submit-container{
+  float: right;
+}
+.recommend-wrap{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+}
+.recommend-cancle-wrap{
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  color: #858585;
+  background: #fff;
+  font-size: 12px;
+  width: 40px;
+  height: 20px; 
+  line-height: 18px;
+  text-align: center;
+}
+.recommend-submit-wrap {
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  width: 40px;
+  height: 20px; 
+  line-height: 18px;
+  text-align: center;
+  background: #17b5ee;
+}
+.recommend-img{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -286px; background-size: 100%; height: 26px; width: 26px; }
+.recommend-voice{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -338px; background-size: 100%; height: 26px; width: 26px;}
+.recommend-text{
+    position: relative;
+    font-size: 14px;
+    text-align: justify;
+    width: 100%;
+}
+.img-remove{
+    position:absolute;
+    width: 16px;
+    height: 16px;
+    display: block;
+    background: rgba(0,0,0,.5) url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-03.png) no-repeat 0 -16px;
+    background-size: 100%;
+    top: 0;
+    right: 0;
+}

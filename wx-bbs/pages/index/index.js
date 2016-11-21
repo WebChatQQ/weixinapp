@@ -19,6 +19,15 @@ Page({
     currentTypeId:0,
     hot:0,
     scrollLeft:0,
+    praised:{}, // 是否已经点赞
+    showRecommend:{
+      id:""
+    },
+    emoij:{
+      id:""
+    },
+    commentText:"",
+    selectedImgs:[],
     headInfo:{
       "backMap":"http://i.pengxun.cn/images/bms1/050_app[1].jpg",
       "logoUrl":"http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg",
@@ -445,8 +454,263 @@ Page({
   // 关注
   concern: function() {
     
+  },
+  /**
+   * 对帖子点赞
+   */
+  praise:function(e){
+      var that = this;
+      var unionid = app.globalData._user.unionid;
+      var id = e.currentTarget.dataset.id;
+      var verifyModel = util.primaryLoginArgs(unionid);
+      var data = {"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+        "uid": unionid, "versionCode":verifyModel.versionCode,"sign":verifyModel.sign,
+        "artId":e.currentTarget.dataset.id}
+      wx.request({
+        url: 'https://apptest.vzan.com//minisnsapp/articlepraise',
+        data: data,
+        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        header: {"Content-Type": "multipart/form-data"}, // 设置请求的 header
+        success: function(res){
+          var tmp = that.data.articles;
+          // 修改状态
+          if(res.result==true) {
+              for(var i=0; i < tmp.length; i++) {
+                if (tmp[i].Id==id) {
+                  tmp[i].IsPraise=true;
+                }
+              }
+              that.setData({articles:tmp})
+          }
+        },
+        fail: function() {
+          // fail
+        },
+        complete: function() {
+            console.log("点赞请求结束")
+            
+        }
+      })
+      // 测试用
+      var tmp = that.data.articles;
+      // 修改状态
+      for(var i=0; i < tmp.length; i++) {
+        if (tmp[i].Id==id) {
+          tmp[i].IsPraise=true;
+        }
+      }
+      that.setData({articles:tmp})
+  },
+  /**
+   * 评论
+   */
+  showReComment:function(e){
+      var that = this;
+      var id = e.currentTarget.dataset.id;
+      var existId = that.data.showRecommend.id;
+      var emoij = that.data.emoij;
+      var commentText = that.data.commentText;
+      var selectedImgs = that.data.selectedImgs;
+      if (existId == id){ // 打开，关闭
+        id = "";
+      }
+      if (existId != id) { // 打开新的
+        emoij = {id:""},
+        commentText = "";
+        selectedImgs = [];
+      } 
+      // var tmp = that.data.articles;
+      that.setData({showRecommend:{id:id}, emoij:emoij, commentText:commentText, selectedImgs:selectedImgs})
+  },
+  /**
+   * 转发
+   */
+  zhuan:function(){
+
+  },
+  /**
+   * 赏
+   */
+  reward:function(){
+    wx.request({
+      url: 'https://xiuxun.top/wx/eee/',
+      data: {},
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function(res){
+        console.log("测试.top")
+      },
+      fail: function() {
+        // fail
+      },
+      complete: function() {
+        // complete
+      }
+    })
+  },
+  /**
+   * 选择Emoij
+   */
+  selectEmoij:function(e){
+
+      var id = e.currentTarget.dataset.id;
+      var eid = this.data.emoij.id;
+      if (eid == id) {
+        id="";
+      }
+      this.setData({emoij:{id:id}})
+  },
+  /**
+   * 保存评论的内容
+   */
+  saveTextValue:function(e) {
+      var content = e.detail.value;
+      this.setData({commentText:content});
+  },
+  /**
+   * 保存选择的表情
+   */
+  emoijSelected:function(e){
+      var code = e.currentTarget.dataset.code;
+      var tmp = this.data.commentText;
+      tmp = tmp + code;
+      this.setData({commentText:tmp});
+  },
+
+  /**
+   * 选择图片
+   */
+  selectImg: function(e) {
+      var id = e.currentTarget.dataset.id;
+      var that = this;
+      var minisId = app.globalData._minisns.Id;
+      var userId = app.globalData._user.Id;
+      wx.chooseImage({
+        count: 9, // 最多可以选择的图片张数，默认9
+        sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
+        success: function(res){
+          var tmp = res.tempFilePaths;
+          for(var i=0; i<tmp.length; i++) {
+                // 上传图片
+              wx.uploadFile({
+                url: 'https://apptest.vzan.com/minisnsapp/SaveImage',
+                filePath:tmp[i],
+                name:'file',
+                // header: {}, // 设置请求的 header
+                formData: {minisnsId:minisId,userid:userId}, // HTTP 请求中其他额外的 form data
+                success: function(res){
+                  // 刷新页面
+                  var rtmp = that.data.selectedImgs;
+                  rtmp.concat({id:res.id,src:res.url});
+                  that.setData({selectedImgs:rtmp});
+                }
+              })
+              // 模拟上传成功
+              var rtmp = that.data.selectedImgs;
+              rtmp = rtmp.concat({id:0,src:"http://oss.vzan.cc/image/jpg/2016/6/29/104132817bf9689a7340798e7927d447ef56d7.jpg"});
+              that.setData({selectedImgs:rtmp});
+          }
+        }
+      })
+  },
+    // 删除图片
+  removeImg: function(event){
+    var that = this;
+    var id = event.currentTarget.dataset.id;
+    var imgs = that.data.selectedImgs;
+    for (var i=0; i<imgs.length; i++) {
+      if(imgs[i].id == id) {
+        imgs.splice(i,1)
+        break;
+      }
+    }
+    that.setData({selectedImgs:imgs})
+  },
+  /**
+   * 取消评论
+   */
+  commentCancle:function(e) {
+    console.log("取消评论")
+    this.setData({
+        showRecommend:{
+          id:""
+        },
+        emoij:{
+          id:""
+        },
+        commentText:"",
+        selectedImgs:[],
+    })
+  },
+  /**
+   * 提交评论
+   */
+  commentSubmit:function(e){
+      var that = this;
+      var id = e.currentTarget.dataset.id;
+      var minisId = app.globalData._minisns.Id;
+
+      var imgs = [];
+      for (var i=0; i < this.data.selectedImgs.length; i++) {
+        imgs.push(this.data.selectedImgs[i].id);
+      }
+      var content = this.data.commentText;
+      var verifyModel = util.primaryLoginArgs(unionid);
+      var data = {"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+        "uid": unionid, "versionCode":verifyModel.versionCode,"sign":verifyModel.sign,
+        "artId":id,"comment":content,"images":imgs}
+      wx.request({
+        url: 'https://apptest.vzan.com/minisnsapp/commentartbyid',
+        data: {},
+        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function(res){
+          if(res.result == true) {
+            // TODO刷新数据
+            var url = "https://apptest.vzan.com/minisnsapp/getcmt-"+id;
+            wx.request({
+              url: url,
+              data: {fid:minisId,pageIndex:1},
+              method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+              // header: {}, // 设置请求的 header
+              success: function(res){
+                for (var i=0; i<that.articles.length;i++) {
+                    var tmp = that.articles[i];
+                    if (tmp.Id==id) {
+                      var list = [];
+                      for(var j = 0; j < res.CommentList.length; j++) {
+                        var comment = res.CommentList[j];
+                         list.push({"Id": comment.Id, "CreateDate": comment.CreateDate, "Content": comment.Content,
+                              "CommentCount": 0,
+                              "ComUser": { "Id": comment.User.Id,"Headimgurl": comment.User.Headimgurl,"NickName": comment.User.Nickname,},
+                              "DUser": { "Id":comment.PUserId,"NickName":comment.PUserName,},
+                              "Voice": comment.Voice,
+                              "Images": comment.Images
+                        })
+                      }
+                      break;
+                    }
+                }
+              }
+            })
+            that.reload();
+          }
+        }
+      })
+      console.log("提交评论 -- END");
+  },
+  /**
+   * 重新加载数据
+   */
+  reload:function(){
   }
-  
+
+
+
+
+
+
 })
 
 

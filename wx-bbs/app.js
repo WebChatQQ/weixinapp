@@ -42,7 +42,7 @@ App({
         console.log(loginRes);
         // 通过code获取用户session_key和open_id
         var code = loginRes.code;
-        url = "https://api.weixin.qq.com/sns/jscode2session?"+
+        var url = "https://api.weixin.qq.com/sns/jscode2session?"+
         "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
         "js_code="+ code +"&grant_type=authorization_code"
         //获取sessionKey
@@ -56,35 +56,35 @@ App({
               // 获取用户信息
               wx.getUserInfo({
                 success: function(res){
-                    console.log("解密用户信息", res.ecryptedData);
+                    console.log("解密前用户信息", res.encryptedData);
                     that.globalData.userInfo = res.userInfo;
                     // 解密用户信息
                     var str = crypt.decryptUserInfo(res.encryptedData, session.data.session_key, res.iv); // 解密用户信息
                     var userInfo = JSON.parse(str);
+                    console.log("解密后用户信息", userInfo);
                     // 登陆服务器
                     var verifyModel = util.primaryLoginArgs(userInfo.unionId);
-                    wx.request({
-                      url: 'https://apptest.vzan.com/minisnsapp/loginByWeiXin',
-                      data: {},
-                      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                    })
+                    console.log("登陆服务器必要参数 ", verifyModel);
                     var data = {};
-                    data.verifyModel = verifyModel; 
+                    data.deviceType=verifyModel.deviceType;
+                    data.sign=verifyModel.sign;
+                    data.timestamp=verifyModel.timestamp;
+                    data.uid=verifyModel.uid;
+                    data.versionCode=verifyModel.versionCode;
 
-                    var wechatInfo = {};
-                    wechatInfo.openid = openId;
-                    wechatInfo.nickname = res.userInfo.nickName;
-                    wechatInfo.sex = res.userInfo.gender;
-                    wechatInfo.province = res.userInfo.province;
-                    wechatInfo.city = res.userInfo.city;
-                    wechatInfo.country = res.userInfo.country;
-                    wechatInfo.headimgurl = res.avatarUrl;
-                    wechatInfo.unionid = unionId;
-                    data.wechatInfo = wechatInfo;
+                    data.openid = userInfo.openId;
+                    data.nickname = userInfo.nickName;
+                    data.sex = userInfo.gender;
+                    data.province = userInfo.province;
+                    data.city = userInfo.city;
+                    data.country = userInfo.country;
+                    data.headimgurl = userInfo.avatarUrl;
+                    data.unionid = userInfo.unionId;
                     api.login(data);
 
                     // 获取登陆用户信息
-                    var userinfodata = {fid:1, verifyModel: verifyModel}
+                    var userinfodata = {"fid":1,"deviceType":verifyModel.deviceType, 
+                      "uid":verifyModel.uid, "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode};
                     api.userinfo(data, function(res) {
                         var userinfo = res.obj;
                         that.setData({
@@ -96,9 +96,18 @@ App({
                             concernCount:userinfo.ConcernCount, // 粉丝人数
                             myConcernCount:userinfo.MyConcernCount,// 关注人数
                         })
-                        wx.setStorageSync('user', res.obj._LookUser);// 保存用户信息
-                        wx.setStorageSync('minisns', res.obj._Minisns); // 论坛信息
+                        wx.setStorageSync('_user', res.obj._LookUser);// 保存用户信息
+                        wx.setStorageSync('_minisns', res.obj._Minisns); // 论坛信息
                     })
+                    // 测试用
+                    that.setGlobalData({"_user":
+                      {"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
+                      "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false}
+                    })
+                    that.globalData._minisns={"Id":1};
+                    wx.setStorageSync('_minisns', {"id":1})
+                    wx.setStorageSync('_user',  {"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
+                      "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false});// 保存用户信息
                 }
               })
           }
@@ -107,18 +116,18 @@ App({
     })
   },
   getUserInfo:function(cb){
-    var that = this
-    wx.getUserInfo({
-      success: function(res){
-          console.log("微信返回的加密用户信息，", res)
-      }
-    })
-    if(this.globalData.userInfo){
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }else{
-      //调用登录接口
-      that.login();
-    }
+    var that = this;
+    // var that = this
+    // wx.getUserInfo({
+    //   success: function(res){
+    //   }
+    // })
+    // if(this.globalData.userInfo){
+    //   typeof cb == "function" && cb(this.globalData.userInfo)
+    // }else{
+    //   //调用登录接口
+    //   that.login();
+    // }
   },
   getTypes: function() {
       var that = this;

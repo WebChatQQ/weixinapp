@@ -7,12 +7,17 @@
 function login(data) {
     // 登陆服务器
     wx.request({
-      url: 'https://URL/minisnsapp/loginByWeiXin',
+      url: 'https://apptest.vzan.com/minisnsapp/loginByWeiXin',
       data: data,
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: {}, // 设置请求的 header
+      header: {
+          "Content-Type": "multipart/form-data" 
+      }, // 设置请求的 header
       success: function(res){
-        // success
+         console.log("loginByWeiXin 成功", res);
+      },
+      complete: function(){
+          console.log("loginByWeiXin 结束");
       }
     })
 }
@@ -25,7 +30,9 @@ function userinfo(data, cb){
     url: 'https://apptest.vzan.com/minisnsapp/userinfo',
     data: data,
     method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    // header: {}, // 设置请求的 header
+    header:{
+          "Content-Type": "multipart/form-data;"
+      }, // 设置请求的 header
     success: function(res){
       cb(res)
     }
@@ -38,7 +45,7 @@ function userinfo(data, cb){
 function headInfo(data, cb) {
     wx.request({
       url: 'https://apptest.vzan.com/minisnsapp/getMinisnsHeadInfo',
-      head:{
+      header:{
           "Content-Type": "multipart/form-data;"
       },
       data: data,
@@ -112,5 +119,6 @@ module.exports = {
   login:login,
   headInfo:headInfo,
   articles:articles,
-  getRequest:getRequest
+  getRequest:getRequest,
+  userinfo:userinfo,
 }

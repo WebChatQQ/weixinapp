@@ -25,11 +25,20 @@ function decryptUserInfo(encrypted,key,iv){//解密
 }
 
 /**
+ * MD5加密
+ */
+function MD5(msg) { // md5
+    
+    var hash = ( CryptoJS.MD5(msg) ).toString(CryptoJS.enc.Hex);
+    return hash.toUpperCase();
+}
+
+/**
  * 登陆加密
  */ 
 function getVerifyModel(uid, versionCode, deviceType, timestamp) { // 登陆加密
     // 排序
-    var argsArray=["uid=" + uid, "versionCode"+versionCode, "deviceType"+deviceType, "timestamp"+timestamp];
+    var argsArray=["uid=" + uid, "versionCode="+versionCode, "deviceType="+deviceType, "timestamp="+timestamp];
     argsArray = argsArray.sort();
     var msg = "";
     for ( var i=0; i < argsArray.length - 1; i++) {
@@ -37,19 +46,13 @@ function getVerifyModel(uid, versionCode, deviceType, timestamp) { // 登陆加�
     }
     msg = msg + argsArray[argsArray.length - 1];
     // MD5
-    var md5 = md5(msg);
-    console.log(md5);
+    var md5 = MD5(msg);
+    console.log("MD5加密：", msg, md5);
     // 对MD5结果DES加密
     return des(msg);
 }
 
-/**
- * MD5加密
- */
-function md5(msg) { // md5
-    var hash = ( CryptoJS.MD5(msg) ).toString(CryptoJS.enc.Hex);
-    return hash.toUpperCase();
-}
+
 /**
  * DES 加密
  */

@@ -66,12 +66,13 @@ function primaryLoginArgs(unionid) {
     var sysInfo = wx.getSystemInfoSync();
     var versionCode = 1;
     var deviceType = sysInfo.model;
-    var timestamp = ( new Date() ).getTime();
+    var timestamp = ( new Date() ).getTime() / 1000;
+    var timestamp = Math.round(timestamp);
     var sign = crypt.getVerifyModel(unionid, versionCode, deviceType, timestamp);
     var verifyModel = {};
     verifyModel.deviceType = deviceType;
     verifyModel.timestamp = timestamp;
-    verifyModel.uid = uid;
+    verifyModel.uid = unionid;
     verifyModel.versionCode= versionCode;
     verifyModel.sign=sign;
     return verifyModel;
