@@ -2,121 +2,21 @@ var crypt =  require("./utils/crypt.js");
 var util = require("./utils/util.js");
 var api = require("./utils/api.js")
 //app.js
+var that;
+var inited = false;// 初始化过程
+var fid = 3;
 App({
   onLaunch: function () {
+    that = this;
     //调用API从本地缓存中获取数据
-    this.getTypes();
-    this.login();
-    this.decrypt();
-    this.getUserInfo();
-  },
-  decrypt: function() {
-    var encryptedData = 
-	'CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZM'+
-	'QmRzooG2xrDcvSnxIMXFufNstNGTyaGS'+
-	'9uT5geRa0W4oTOb1WT7fJlAC+oNPdbB+'+
-	'3hVbJSRgv+4lGOETKUQz6OYStslQ142d'+
-	'NCuabNPGBzlooOmB231qMM85d2/fV6Ch'+
-	'evvXvQP8Hkue1poOFtnEtpyxVLW1zAo6'+
-	'/1Xx1COxFvrc2d7UL/lmHInNlxuacJXw'+
-	'u0fjpXfz/YqYzBIBzD6WUfTIF9GRHpOn'+
-	'/Hz7saL8xz+W//FRAUid1OksQaQx4CMs'+
-	'8LOddcQhULW4ucetDf96JcR3g0gfRK4P'+
-	'C7E/r7Z6xNrXd2UIeorGj5Ef7b1pJAYB'+
-	'6Y5anaHqZ9J6nKEBvB4DnNLIVWSgARns'+
-	'/8wR2SiRS7MNACwTyrGvt9ts8p12PKFd'+
-	'lqYTopNHR1Vf7XjfhQlVsAJdNiKdYmYV'+
-	'oKlaRv85IfVunYzO0IKXsyl7JCUjCpoG'+
-	'20f0a04COwfneQAGGwd5oa+T8yO5hzuy'+
-	'Db/XcxxmK01EpqOyuxINew=='
-    var iv = "r7BXXKkLb8qrSNn05n0qiA==";
-    var sessionKey = "tiihtNczf5v6AKRyjwEUhQ==";
-    var re = crypt.decryptUserInfo(encryptedData, sessionKey, iv);
-    console.log("解密用户信息", re);
+    // this.getTypes();
+    // this.login();
+    // this.getUserInfo();
+    this.init();
   },
 
-  login:function() {
-    var that = this;
-    wx.login({
-      success: function(loginRes){
-        console.log(loginRes);
-        // 通过code获取用户session_key和open_id
-        var code = loginRes.code;
-        var url = "https://api.weixin.qq.com/sns/jscode2session?"+
-        "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
-        "js_code="+ code +"&grant_type=authorization_code"
-        //获取sessionKey
-        wx.request({
-          url: url,
-          data: {},
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
-          success: function(session){
-              console.log("从服务器获取的SessionKey", session.data.session_key, "从服务器获取的openid", session.data.openid);
-              // 获取用户信息
-              wx.getUserInfo({
-                success: function(res){
-                    console.log("解密前用户信息", res.encryptedData);
-                    that.globalData.userInfo = res.userInfo;
-                    // 解密用户信息
-                    var str = crypt.decryptUserInfo(res.encryptedData, session.data.session_key, res.iv); // 解密用户信息
-                    var userInfo = JSON.parse(str);
-                    console.log("解密后用户信息", userInfo);
-                    // 登陆服务器
-                    var verifyModel = util.primaryLoginArgs(userInfo.unionId);
-                    console.log("登陆服务器必要参数 ", verifyModel);
-                    var data = {};
-                    data.deviceType=verifyModel.deviceType;
-                    data.sign=verifyModel.sign;
-                    data.timestamp=verifyModel.timestamp;
-                    data.uid=verifyModel.uid;
-                    data.versionCode=verifyModel.versionCode;
-
-                    data.openid = userInfo.openId;
-                    data.nickname = userInfo.nickName;
-                    data.sex = userInfo.gender;
-                    data.province = userInfo.province;
-                    data.city = userInfo.city;
-                    data.country = userInfo.country;
-                    data.headimgurl = userInfo.avatarUrl;
-                    data.unionid = userInfo.unionId;
-                    api.login(data);
-
-                    // 获取登陆用户信息
-                    var userinfodata = {"fid":1,"deviceType":verifyModel.deviceType, 
-                      "uid":verifyModel.uid, "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode};
-                    api.userinfo(data, function(res) {
-                        var userinfo = res.obj;
-                        that.setData({
-                            _user: userinfo._LookUser,
-                            _minisns : userinfo._Minisns, // 论坛
-                            _myArtCount: userinfo._MyArtCount, // 文章数
-                            _myMinisnsCount: userinfo._MyMinisnsCount, // 关注论坛数
-                            isConcern:userinfo.IsConcern, // 
-                            concernCount:userinfo.ConcernCount, // 粉丝人数
-                            myConcernCount:userinfo.MyConcernCount,// 关注人数
-                        })
-                        wx.setStorageSync('_user', res.obj._LookUser);// 保存用户信息
-                        wx.setStorageSync('_minisns', res.obj._Minisns); // 论坛信息
-                    })
-                    // 测试用
-                    that.setGlobalData({"_user":
-                      {"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
-                      "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false}
-                    })
-                    that.globalData._minisns={"Id":1};
-                    wx.setStorageSync('_minisns', {"id":1})
-                    wx.setStorageSync('_user',  {"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
-                      "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false});// 保存用户信息
-                }
-              })
-          }
-        })
-      }
-    })
-  },
-  getUserInfo:function(cb){
-    var that = this;
+  // getUserInfo:function(cb){
+  //   var that = this;
     // var that = this
     // wx.getUserInfo({
     //   success: function(res){
@@ -128,64 +28,172 @@ App({
     //   //调用登录接口
     //   that.login();
     // }
-  },
-  getTypes: function() {
-      var that = this;
-      var types =  [{
-          ArticleTypeID : 0,
-          ArticleTypeName : "全部"
-        },{
-          ArticleTypeID : 3132,
-          ArticleTypeName : "运营日报"
-        },{
-          ArticleTypeID : 875,
-          ArticleTypeName : "操作指南"
-        },{
-          ArticleTypeID : 2038,
-          ArticleTypeName : "常见问题"
-        },{
-          ArticleTypeID : 2033,
-          ArticleTypeName : "微赞故事"
-        },{
-          ArticleTypeID : 1,
-          ArticleTypeName : "更新进度"
-        }];
-      that.globalData.types = types;
-  },
-  getMoreArticle: function(pn, typeId, h, hongbao, rspan, cb) {
-    wx.request({
-      url: 'http://vzan.com/f/getarticlebottom-1?pageIndex=1&typeId=2038&h=0&hongbao=&from=qq&rspan=1',
-      data: {
-        pageIndex:pn,
-        typeId:typeId,
-        h:h,
-        hongbao:"",
-        from:"qq",
-        rspan:rspan
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: {
-        "Content-Type":"application/json;charset=utf-8"
-      }, // 设置请求的 header
-      success: function(res){
-        console.log("request success");
-        if (typeof cb == "function") {
-          cb(res);
-        }
+  // },
+  // getTypes: function() {
+  //     var that = this;
+  //     var types =  [{
+  //         ArticleTypeID : 0,
+  //         ArticleTypeName : "全部"
+  //       },{
+  //         ArticleTypeID : 3132,
+  //         ArticleTypeName : "运营日报"
+  //       },{
+  //         ArticleTypeID : 875,
+  //         ArticleTypeName : "操作指南"
+  //       },{
+  //         ArticleTypeID : 2038,
+  //         ArticleTypeName : "常见问题"
+  //       },{
+  //         ArticleTypeID : 2033,
+  //         ArticleTypeName : "微赞故事"
+  //       },{
+  //         ArticleTypeID : 1,
+  //         ArticleTypeName : "更新进度"
+  //       }];
+  //     that.globalData.types = types;
+  // },
+
+
+  /**
+   * 获取用户信息
+   
+  getUserInfo: function(cb) {
+      var userInfo = wx.getStorageSync("userInfo");
+      if (typeof userInfo == "undefined") {
+          wx.login({
+            success: function(loginRes){
+                 var url = "https://api.weixin.qq.com/sns/jscode2session?"+ "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
+                  "js_code="+ loginRes.code +"&grant_type=authorization_code"
+                 wx.request({
+                   url: url,
+                   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                   // header: {}, // 设置请求的 header
+                   success: function(sessionRes){
+                        wx.getUserInfo({
+                          success: function(userInfoRes){
+                                var str = crypt.decryptUserInfo(userInfoRes.encryptedData, sessionRes.data.session_key, userInfoRes.iv); // 解密用户信息
+                                var userInfo = JSON.parse(str);
+                                var verifyModel = util.primaryLoginArgs(userInfo.unionId);
+                                wx.request({
+                                  url: 'https://apptest.vzan.com/minisnsapp/userinfo',
+                                  data: {"fid":1,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
+                                  "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode},
+                                  method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                                  // header: {}, // 设置请求的 header
+                                  success: function(res){
+                                      wx.setStorageSync('userInfo', res.obj._LookUser);
+                                      if (typeof cb == "function") { // 执行数据
+                                        cb(res.obj._LookUser);
+                                      }
+                                  }
+                                })
+                          }
+                        })
+                   },
+                   complete: function() {
+                     // 模拟数据
+                      cb({"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
+                        "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false})
+                   }
+                 })
+            }
+          })
+      } else {
+        cb(wx.getStorageSync("userInfo"));
       }
-    })
   },
-  globalData:{
-    userInfo:null,
-    openId:null,
-    watermark:null,
-    unionId:null,
-    sessionKey:null,
-    types:[],
-    voice:{},
-    sysInfo:{},
+  */
+  /**
+   * 获取论坛信息
+   
+  getMinisnsInfo: function() {
+      var minisnsInfo = wx.getStorageSync('minisnsInfo');
+      if (typeof minisnsInfo == "undefined") {
+          wx.login({
+            success: function(loginRes){
+                  var url = "https://api.weixin.qq.com/sns/jscode2session?"+ "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
+                  "js_code="+ loginRes.code +"&grant_type=authorization_code"
+                  wx.request({
+                    url: url,
+                    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                    success: function(sessionRes){
+                        wx.getUserInfo({
+                          success: function(userInfoRes){
+                                var str = crypt.decryptUserInfo(userInfoRes.encryptedData, sessionRes.data.session_key, userInfoRes.iv); // 解密用户信息
+                                var userInfo = JSON.parse(str);
+                                var verifyModel = util.primaryLoginArgs(userInfo.unionId);
+                                wx.request({
+                                  url: 'https://apptest.vzan.com/minisnsapp/userinfo',
+                                  data: {"fid":1,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
+                                  "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode},
+                                  method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                                  success: function(res){
+                                      wx.setStorageSync('minisnsInfo', res.obj._Minisns);
+                                      if (typeof cb == "function") { // 执行数据
+                                        cb(res.obj._Minisns);
+                                      }
+                                  }
+                                })
+                          }
+                        })
+                    }
+                  })
+            },
+            complete: function() {
+              // 模拟数据
+              cb({"minisns":{id:3}})
+            }
+          })
+      } else {
+        cb(wx.getStorageSync('minisnsInfo'));
+      }
   },
-  setGlobalData: function(data) {
-    this.globalData = data;
+  */
+
+  /**
+   * 初始化数据
+   */
+  init:function() {
+      wx.login({
+        success: function(loginRes){
+              var url = "https://api.weixin.qq.com/sns/jscode2session?"+ "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&"+
+                  "js_code="+ loginRes.code +"&grant_type=authorization_code";
+              wx.request({
+                url: url,
+                method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                success: function(sessionRes){
+                    wx.getUserInfo({
+                      success: function(userInfoRes){
+                          var str = crypt.decryptUserInfo(userInfoRes.encryptedData, sessionRes.data.session_key, userInfoRes.iv); // 解密用户信息
+                          var userInfo = JSON.parse(str);
+                          var verifyModel = util.primaryLoginArgs(userInfo.unionId);
+                          wx.request({ // 登陆服务器
+                            url: 'https://apptest.vzan.com/minisnsapp/userinfo',
+                            data: {"fid":fid,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
+                            "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode},
+                            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                            header: {"Content-Type":"form-data;charset=utf-8"}, // 设置请求的 header
+                            success: function(loginRes){
+                                wx.setStorageSync('user', loginRes.obj._LookUser);
+                                wx.setStorageSync('minisns', loginRes.obj._Minisns);
+                                wx.setStorageSync('myArtCount', loginRes.obj._MyArtCount);
+                                wx.setStorageSync('myMinisnsCount', loginRes.obj._MyMinisnsCount);
+                                wx.setStorageSync('concernCount', loginRes.obj.ConcernCount);
+                                wx.setStorageSync('myConcernCount', loginRes.obj.MyConcernCount);
+                            } 
+                          })
+                      }
+                    })
+                }
+              })
+        },
+        complete: function() {
+            inited = true;
+            // 模拟数据
+            wx.setStorageSync('minisnsInfo', {"id":3});
+            wx.setStorageSync('userInfo', {"unionid":"oW2wBwaOWQ2A7RLzG3fcpmfTgnPU","Openid":"obiMY0YuQSpXSAY21oWjKw-OJC0E",
+                        "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false})
+        }
+      })
   }
 })

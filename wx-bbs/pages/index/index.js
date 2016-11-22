@@ -21,7 +21,10 @@ Page({
     scrollLeft:0,
     praised:{}, // 是否已经点赞
     showRecommend:{
-      id:""
+      id:"",
+      toUserId:null,// 回复评论用户
+      commontId:null,// 回复评论ID
+      toUserName:null,// 回复评论用户名称
     },
     emoij:{
       id:""
@@ -60,18 +63,25 @@ Page({
   onLoad: function () {
     console.log('onLoad')
     var that = this
-
-    var sysInfo = wx.getSystemInfoSync();
+    this.init();
 
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
+    // app.getUserInfo(function(userInfo){
+    //   //更新数据
+    //   that.setData({
+    //     userInfo:userInfo
+    //   })
+    // })
     this.ready();
   },
+
+  /**
+   * 初始化
+   */
+  init:function(){
+    this.getartlistbyminisnsid(1, 0, 1);
+  },
+
   more_bankuai: function () {
     console.log ("获取更多版块");
   },
@@ -189,16 +199,16 @@ Page({
   // 更多版块
   moreType: function(event) {
     var that = this;
-    var types = app.globalData.types;
-    console.log(event);
+    var types = app.globalData.categories;
+    that.setData({categories:types})
     if (typeof types == "undefined") {
       return ;
     }
     var typeIds = [];
     var typeNames = [];
     for (var i = 0; i < types.length; i++) {
-      typeIds[i] = types[i].ArticleTypeID;
-      typeNames[i] = types[i].ArticleTypeName;
+      typeIds[i] = types[i].Id;
+      typeNames[i] = types[i].Title;
     }
     wx.showActionSheet({
         itemList:typeNames,
@@ -221,17 +231,14 @@ Page({
       var h = 0;
       var hongbao = "";
       var rspan = 1;      
-      app.getMoreArticle(pn, typeId, h, hongbao, rspan, function(res){
-          var articleList = res.ArtList;
-          that.data.articles = that.data.articles(articleList);
-      })
-      var tmp = this.data.typeList;
+      that.getartlistbyminisnsid(h, typeId, 1);
+      var tmp = this.data.categories;
       var typeList = tmp;
       for (var i=0 ; i<typeList.length ; i++) {
-          if (typeList[i].ArticleTypeID == typeId) {
+          if (typeList[i].Id == typeId) {
             var tmpType={
-                ArticleTypeID:typeId,
-                ArticleTypeName:typeList[i].ArticleTypeName
+                Id:typeId,
+                Title:typeList[i].Title
             }
             typeList.splice(i,1);
             typeList.splice(1, 0, tmpType);
@@ -239,10 +246,9 @@ Page({
       }
       that.setData({
         currentTypeId : typeId,
-        typeList:typeList,
+        categories:typeList,
         scrollLeft:-900
       })
-      console.log(this.data.currentTypeId);
   },
 
   showIndexPage: function() {
@@ -261,7 +267,7 @@ Page({
       "id":"3"
     }; 
     api.headInfo(data, function(res) {
-      if (res.result == "false") {
+      if (res.result == false) {
         // TODO 异常处理
         return 
       } 
@@ -502,7 +508,7 @@ Page({
       that.setData({articles:tmp})
   },
   /**
-   * 评论
+   * 评论帖子
    */
   showReComment:function(e){
       var that = this;
@@ -511,7 +517,8 @@ Page({
       var emoij = that.data.emoij;
       var commentText = that.data.commentText;
       var selectedImgs = that.data.selectedImgs;
-      if (existId == id){ // 打开，关闭
+      var existCommontid = that.data.showRecommend.commontId;
+      if (existId == id && existCommontid == null){ // 关闭
         id = "";
       }
       if (existId != id) { // 打开新的
@@ -520,8 +527,47 @@ Page({
         selectedImgs = [];
       } 
       // var tmp = that.data.articles;
-      that.setData({showRecommend:{id:id}, emoij:emoij, commentText:commentText, selectedImgs:selectedImgs})
+      that.setData({
+        showRecommend:{id:id, toUserId:null, commontId:null, toUserName:null}, 
+        emoij:emoij, 
+        commentText:commentText, 
+        selectedImgs:selectedImgs
+      })
   },
+  /**
+   * 回复用户评论
+   */
+commentUser:function(e){
+    var that = this;
+    var artId = e.currentTarget.dataset.artid;
+    var uid = e.currentTarget.dataset.uid;
+    var name = e.currentTarget.dataset.name;
+    var id = e.currentTarget.dataset.id;
+
+    var emoij = that.data.emoij;
+    var commentText = that.data.commentText;
+    var selectedImgs = that.data.selectedImgs;
+    
+    var existId = that.data.showRecommend.id;
+    var existCommontid = that.data.showRecommend.commontId;
+    if (artId == existId && existCommontid == id) { 
+        // 关闭当前评论
+        artId = "";
+    }
+    if (existId != artId || existCommontid != id) {
+        // 清空数据 ,打开新的
+        emoij = {id:""};
+        commentText = "";
+        selectedImgs = [];
+    }
+    that.setData({
+        showRecommend:{id:artId,toUserId:uid,commontId:id,toUserName:name},
+        emoij:emoij,
+        commentText:commentText,
+        selectedImgs:selectedImgs,
+    })
+},
+
   /**
    * 转发
    */
@@ -633,33 +679,63 @@ Page({
   commentCancle:function(e) {
     console.log("取消评论")
     this.setData({
-        showRecommend:{
-          id:""
-        },
-        emoij:{
-          id:""
-        },
+        showRecommend:{ id:"",toUserId:null,commontId:null,toUserName:null },
+        emoij:{ id:"" },
         commentText:"",
         selectedImgs:[],
     })
   },
   /**
-   * 提交评论
+   * 提交帖子评论 | 回复
    */
   commentSubmit:function(e){
       var that = this;
       var id = e.currentTarget.dataset.id;
       var minisId = app.globalData._minisns.Id;
-
+      var unionid = app.globalData._user.unionid;
       var imgs = [];
       for (var i=0; i < this.data.selectedImgs.length; i++) {
         imgs.push(this.data.selectedImgs[i].id);
       }
       var content = this.data.commentText;
       var verifyModel = util.primaryLoginArgs(unionid);
-      var data = {"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+
+      var showRecommend = that.data.showRecommend;
+
+      if (showRecommend.commontId) { // 回复用户
+          that.replyComment(id);
+      } else {
+          that.replyPost(id); // 回复帖子
+      }
+      console.log("提交评论 -- END");
+  },
+  /**
+   * 重新加载数据
+   */
+  reload:function(){
+  },
+
+  /**
+   * 回复帖子
+   * @Param id 帖子ID
+   */
+  replyPost: function(id) {
+
+      var that = this;
+      var minisId = app.globalData._minisns.Id;
+      var unionid = app.globalData._user.unionid;
+      var imgs = [];
+      for (var i=0; i < this.data.selectedImgs.length; i++) {
+        imgs.push(this.data.selectedImgs[i].id);
+      }
+      var content = this.data.commentText;
+      var verifyModel = util.primaryLoginArgs(unionid);
+
+      var data = {
+        "deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
         "uid": unionid, "versionCode":verifyModel.versionCode,"sign":verifyModel.sign,
-        "artId":id,"comment":content,"images":imgs}
+        "artId":id,"comment":content,"images":imgs
+      }
       wx.request({
         url: 'https://apptest.vzan.com/minisnsapp/commentartbyid',
         data: {},
@@ -667,7 +743,7 @@ Page({
         // header: {}, // 设置请求的 header
         success: function(res){
           if(res.result == true) {
-            // TODO刷新数据
+            // 获取评论列表
             var url = "https://apptest.vzan.com/minisnsapp/getcmt-"+id;
             wx.request({
               url: url,
@@ -675,41 +751,122 @@ Page({
               method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
               // header: {}, // 设置请求的 header
               success: function(res){
-                for (var i=0; i<that.articles.length;i++) {
-                    var tmp = that.articles[i];
-                    if (tmp.Id==id) {
-                      var list = [];
-                      for(var j = 0; j < res.CommentList.length; j++) {
-                        var comment = res.CommentList[j];
-                         list.push({"Id": comment.Id, "CreateDate": comment.CreateDate, "Content": comment.Content,
-                              "CommentCount": 0,
-                              "ComUser": { "Id": comment.User.Id,"Headimgurl": comment.User.Headimgurl,"NickName": comment.User.Nickname,},
-                              "DUser": { "Id":comment.PUserId,"NickName":comment.PUserName,},
-                              "Voice": comment.Voice,
-                              "Images": comment.Images
-                        })
-                      }
-                      break;
+                if (res.result == true) {
+                    var arts = that.data.articles;
+                    for (var i=0; i<arts.length;i++) {
+                        var tmp = arts[i];
+                        if (tmp.Id==id) {
+                          var list = []; // 评论信息
+                          for(var j = 0; j < res.CommentList.length; j++) {
+                            var comment = res.CommentList[j];
+                            list.push({"Id": comment.Id, "CreateDate": comment.CreateDate, "Content": comment.Content,
+                                  "CommentCount": 0,
+                                  "ComUser": { "Id": comment.User.Id,"Headimgurl": comment.User.Headimgurl,"NickName": comment.User.Nickname,},
+                                  "DUser": { "Id":comment.PUserId,"NickName":comment.PUserName,},
+                                  "Voice": comment.Voice,
+                                  "Images": comment.Images
+                            })
+                          }
+                          tmp.articleComments = list;
+                          arts[i] = tmp;
+                          // 更新数据
+                          that.setData({articles:tmp})
+                          break;
+                        }
                     }
                 }
               }
             })
-            that.reload();
           }
         }
       })
-      console.log("提交评论 -- END");
+  },
+
+/**
+ * 回复用户评论
+ * @param id 帖子ID
+ */
+  replyComment:function(id) {
+      var that = this;
+      var minisId = app.globalData._minisns.Id;
+      var unionid = app.globalData._user.unionid;
+      var imgs = [];
+      for (var i=0; i < this.data.selectedImgs.length; i++) {
+        imgs.push(this.data.selectedImgs[i].id);
+      }
+      var content = this.data.commentText;
+      var verifyModel = util.primaryLoginArgs(unionid);
+      var showRecommend = that.data.showRecommend;
+      data={"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+        "uid": unionid, "versionCode":verifyModel.versionCode, "sign":verifyModel.sign,
+        "artId":id, "toUserId":showRecommend.toUserId, "commontId":commontId, "comment":content, "images":imgs}
+
+      wx.request({
+        url: 'https://apptest.vzan.com/minisnsapp/replyartcommentbyid',
+        data: data,
+        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function(res){
+          // success
+          if (res.result == true) { // 发送成功，刷新帖子
+              var arts = that.data.articles;
+              for (var i=0; i<arts.length;i++) {
+                  var tmp = arts[i];
+                  if (tmp.Id==id) {
+                    var list = []; // 评论信息
+                    for(var j = 0; j < res.CommentList.length; j++) {
+                      var comment = res.CommentList[j];
+                      list.push({"Id": comment.Id, "CreateDate": comment.CreateDate, "Content": comment.Content,
+                            "CommentCount": 0,
+                            "ComUser": { "Id": comment.User.Id,"Headimgurl": comment.User.Headimgurl,"NickName": comment.User.Nickname,},
+                            "DUser": { "Id":comment.PUserId,"NickName":comment.PUserName,},
+                            "Voice": comment.Voice,
+                            "Images": comment.Images
+                      })
+                    }
+                    tmp.articleComments = list;
+                    arts[i] = tmp;
+                    // 更新数据
+                    that.setData({articles:tmp})
+                    break;
+                  }
+              }
+          }
+        }
+      })
   },
   /**
-   * 重新加载数据
+   * 获取论坛帖子列表(包含热帖)
    */
-  reload:function(){
-  }
-
-
-
-
-
+  getartlistbyminisnsid: function(hotshow, categoryId, pageIndex) {
+      var that = this;
+      var minisId = wx.getStorageSync('minisnsInfo').id;
+      var unionid = wx.getStorageSync('userInfo').unionid;
+      var verifyModel = util.primaryLoginArgs(unionid);
+      
+      var data = {"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+        "uid": unionid, "versionCode":verifyModel.versionCode, "sign":verifyModel.sign,
+        "fid": minisId, "hotshow":hotshow, "categoryId": categoryId, "pageIndex":pageIndex}
+      
+      wx.request({
+        // url: 'https://apptest.vzan.com/minisnsapp/getartlistbyminisnsid',
+        url: 'https://xiuxun.top/wx/app/minisnsapp/getartlistbyminisnsid',
+        data: data,
+        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        header: {"Content-Type":"multipart/form-data;charset=utf-8"}, // 设置请求的 header
+        success: function(res){
+            if (res.result == true) {
+              var articles = [];
+              if (pageIndex <= 1) {
+                  var articles = res.objArray; // 更新数据
+              } else {
+                  var articles = that.data.articles.concat(res.objArray);
+              }
+              that.setDataData({articles:articles})
+            }
+        }
+      })
+  },
 
 })
 
