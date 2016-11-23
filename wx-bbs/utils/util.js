@@ -66,15 +66,15 @@ function primaryLoginArgs(unionid) {
     var sysInfo = wx.getSystemInfoSync();
     var versionCode = 1;
     var deviceType = sysInfo.model;
-    var timestamp = ( new Date() ).getTime() / 1000;
-    var timestamp = Math.round(timestamp);
+    var timestamp = ( new Date() ).getTime();    
+    // var timestamp = Math.round(timestamp);
     var sign = crypt.getVerifyModel(unionid, versionCode, deviceType, timestamp);
     var verifyModel = {};
-    verifyModel.deviceType = deviceType;
-    verifyModel.timestamp = timestamp;
-    verifyModel.uid = unionid;
-    verifyModel.versionCode= versionCode;
-    verifyModel.sign=sign;
+    verifyModel.deviceType = "ios9.0";//deviceType;
+    verifyModel.timestamp = 1479174892808;//timestamp;
+    verifyModel.uid = "oW2wBwUJF_7pvDFSPwKfSWzFbc5o"//unionid;
+    verifyModel.versionCode= "1.0"//versionCode;
+    verifyModel.sign= "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82"//sign;
     return verifyModel;
 }
 
