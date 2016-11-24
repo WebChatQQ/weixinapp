@@ -79,6 +79,18 @@ App({
       }
   },
   
+  /**
+   * 获取初始数据
+   */
+  getInit: function(cb) {
+      var that = this;
+      var init  = wx.getStorageSync('init');
+      if (typeof init == 'undefined' || init == '') {
+          that.init(cb);
+      } else {
+          cb(init);
+      }
+  } ,
 
   /**
    * 初始化数据
@@ -141,9 +153,11 @@ App({
                                               wx.setStorageSync('myMinisnsCount', result.obj._MyMinisnsCount);
                                               wx.setStorageSync('concernCount', result.obj.ConcernCount);
                                               wx.setStorageSync('myConcernCount', result.obj.MyConcernCount);
+                                              result.obj.tmpFile = save.savedFilePath;
+                                              wx.setStorageSync('init', result);
                                               console.log("APP.JS loginRes ", res);
                                               if (typeof cb == "function") {
-                                                cb(result.obj._LookUser);
+                                                cb(result);
                                               }
                                           }
                                       })
@@ -181,8 +195,7 @@ App({
                         // "IsSign":true,"ArticleCount":20,"CommentCount":12,"PraiseCount":1231,"IsWholeAdmin":false})
         }
       })
-      var user = wx.getStorageSync('user');
-      wx.showToast({title:"初始化数据中...", icon:"loading", duration:1500});
+      var minisns = wx.getStorageSync('minisns');
   },
   
 })

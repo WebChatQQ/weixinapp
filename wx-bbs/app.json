@@ -1,10 +1,12 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/score/score",
+    "pages/mine/mine",
     "pages/logs/logs",
     "pages/post/post",
-    "pages/mine/mine",
     "pages/articledetail/articledetail"
+   
   ],
   "window":{
     "backgroundTextStyle":"light",

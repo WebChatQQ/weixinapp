@@ -1,0 +1,97 @@
+
+/**
+/minisnsapp/integralLog
+我的积分列表
+点赞有积分
+*/
+
+{
+	"result": true,
+	"msg": "请求成功",
+	"obj": null,
+	"objArray": [{
+		"Id": 126681395,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 4617315,
+		"CreateDate": "2016-11-24T10:23:37"
+	}, {
+		"Id": 126680068,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 12048205,
+		"CreateDate": "2016-11-24T10:19:53"
+	}, {
+		"Id": 126678857,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 12048088,
+		"CreateDate": "2016-11-24T10:16:08"
+	}, {
+		"Id": 126677863,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 4617315,
+		"CreateDate": "2016-11-24T10:13:25"
+	}, {
+		"Id": 126675345,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 4617315,
+		"CreateDate": "2016-11-24T10:07:16"
+	}, {
+		"Id": 126675179,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 4617315,
+		"CreateDate": "2016-11-24T10:06:41"
+	}, {
+		"Id": 126279726,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 12048088,
+		"CreateDate": "2016-11-23T12:14:29"
+	}, {
+		"Id": 126278873,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 12048088,
+		"CreateDate": "2016-11-23T12:12:02"
+	}, {
+		"Id": 126275138,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 12048088,
+		"CreateDate": "2016-11-23T11:59:24"
+	}, {
+		"Id": 126272941,
+		"UserId": 10475223,
+		"MinsnsId": 3,
+		"TypeId": 6,
+		"Score": 5,
+		"FromId": 8554402,
+		"CreateDate": "2016-11-23T11:52:53"
+	}],
+	"errcode": 0,
+	"pageIndex": 1,
+	"totalPage": 92,
+	"totalCount": 917
+}

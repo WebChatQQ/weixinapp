@@ -15,13 +15,13 @@
     </view>
     <view class="boundary"/>
     <view class="user-bbs-info-container">
-        <view class="user-post-wrap">
+        <view class="user-post-wrap" catchtap="myArticleList">
             <view class="user-post-icon"/>
             <view class="user-post-text-wrap">
                 <text class="user-text">我的发帖</text>
             </view>
             <view class="user-list-container">
-                <view class="post-list-num">2</view>
+                <view class="post-list-num">{{user.ArticleCount}}</view>
             </view>
             <view class="user-arrow-wrap">
                     <view class="user-info-arrow"/>
@@ -78,13 +78,13 @@
                     <view class="user-info-arrow"/>
             </view>
         </view>
-        <view class="user-post-wrap">
+        <view class="user-post-wrap" catchtap="integralLog">
             <view class="user-post-credit"/>
             <view class="user-post-text-wrap">
                 <text class="user-text">我的积分</text>
             </view>
              <view class="user-list-container">
-                <view class="post-list-num">2</view>
+                <view class="post-list-num">{{user.AggregateScore}}</view>
             </view>
             <view class="user-arrow-wrap">
                     <view class="user-info-arrow"/>

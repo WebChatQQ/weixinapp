@@ -7,16 +7,10 @@ var that;
 var recordTimeInterval;
 Page({
   data:{
-      typeList:[
-      {"id":1,"name":"运营日报"},
-      {"id":2,"name":"操作指南"},
-      {"id":3,"name":"常见问题"}
-    ],
-    minisnsId:1,
     emoij:0,
     title:"",
     artContent:"",
-    choosedType:null,
+    selectedCateogry:null,
     address:{
       "hidlat":"",
       "hidlng":"",
@@ -24,19 +18,7 @@ Page({
       "hidaddress":"",
     },
     locationMsg:"点击确定位置",
-    selectedImgs:[{
-      "src":"http://oss.vzan.cc/image/jpg/2016/6/29/104132817bf9689a7340798e7927d447ef56d7.jpg",
-      "id":0
-    },{
-      "src":"http://oss.vzan.cc/image/jpg/2016/6/29/104132817bf9689a7340798e7927d447ef56d7.jpg",
-      "id":1
-    },{
-      "src":"http://oss.vzan.cc/image/jpg/2016/6/29/104132817bf9689a7340798e7927d447ef56d7.jpg",
-      "id":2
-    },{
-      "src":"http://oss.vzan.cc/image/jpg/2016/6/29/104132817bf9689a7340798e7927d447ef56d7.jpg",
-      "id":3
-    }],
+    selectedImgs:[],
     voice:null,
     audioIcon:"http://i.pengxun.cn/content/images/voice/voiceplaying.png",
     recording : 0,
@@ -49,6 +31,7 @@ Page({
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
      that = this;
+     that.init();
   },
   onReady:function(){
     // 页面渲染完成
@@ -67,67 +50,106 @@ Page({
 
   init: function() {
     that.stopRecord()
-    that.setData({
-      voice:null,
-      audioIcon:"http://i.pengxun.cn/content/images/voice/voiceplaying.png",
-      recording : 0,
-      playing : 0,
-      hasRecorded : 0,
-      recordTime : 0,
-      formatedRecordTime:"00:00:00",
-      voiceSelected:0,
-      tempRecordFile:"",
-      locationMsg:"点击确定位置",
+    that.setData({ voice:null, audioIcon:"http://i.pengxun.cn/content/images/voice/voiceplaying.png", recording : 0, playing : 0, 
+      hasRecorded : 0, recordTime : 0, formatedRecordTime:"00:00:00", voiceSelected:0, tempRecordFile:"", locationMsg:"点击确定位置",
     })
+
+    app.getInit(function(result){
+        that.setData({"user":result.obj._LookUser, "minisns":result.obj._Minisns});
+        that.setData({"categories":wx.getStorageSync('categories')});
+    });
+
   },
 
   // 提交 TODO
   submit: function(event) {
     var that = this;
+    console.log()
     var detail = event.detail;
     console.info(detail);
     var content = detail.value.artContent;
     var title = detail.value.title;
     if (content == "" || typeof content=="undefined") {
       // 弹出提示窗
-      wx.showToast({
-        title: "内容不能为空",
-        icon:"success",
-      })
+      wx.showToast({ title: "内容不能为空", icon:"success", })
+      return false;
+    }
+    if (that.data.selectedCateogry == null) {
+      wx.showToast({ title: "请选择一个分类", icon:"success", })
       return false;
     }
     that.setData({ artContent:content, title:title })
-    var requestData={
-      id:that.data.minisnsId,
-      txtContentAdd:that.data.artContent,
-      hidrecordId:that.data.voice.id,
-      txtTitle:that.data.title,
-      hvideo:that.data.vdeio.src,
-      choosedType:that.data.choosedType,
-      hImgIds:that.data.selectedImgs,
-      hidlat:that.data.address.hidlat,
-      hidlng:that.data.address.hidlng,
-      hidspeed:that.data.address.hidspeed,
-      hidaddress:that.data.address.hidaddress
-    }
     // 发帖
-    wx.request({
-      url: 'https://URL',
-      data: {},
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function(res){
-        // success
-      }
+    app.getInit(function(result){
+        let minisId = result.obj._Minisns.Id;
+        let unionid = result.obj._LookUser.unionid;
+        let tmpFile = result.obj.tmpFile;
+        let verifyModel = util.primaryLoginArgs(unionid);
+        let imgs = "";
+        for (let i=0; i<that.data.selectedImgs; i++) {
+            if (i=0){
+              imgs = imgs + that.data.selectedImgs[i];
+            } else {
+              imgs = imgs + "," + that.data.selectedImgs[i]
+            }
+        }
+
+        let data = {"deviceType":verifyModel.deviceType, 
+                    "timestamp":verifyModel.timestamp,
+                    "uid": unionid, 
+                    "versionCode":verifyModel.versionCode, 
+                    "sign":verifyModel.sign,
+                    "id":minisId, "txtContentAdd": content}
+        if (that.data.voice) {
+            data.hidrecordId = that.data.voice.id;
+        }
+        if (title != "" && title != null && typeof title != "undefined") {
+            data.txtTitle = title;
+        }
+        if (that.data.selectedCateogry) {
+            data.choosedType = that.data.selectedCateogry.Id
+        }
+        if (imgs != "") {
+            data.hImgIds = imgs
+        }
+        if (that.data.address.hidlat != "") {
+            data.hidlat = that.data.address.hidlat
+        }
+        if (that.data.address.hidlng != "") {
+            data.hidlng = that.data.address.hidlng
+        }
+        if (that.data.address.hidspeed != "") {
+            data.hidspeed = that.data.address.hidspeed
+        }
+        if (that.data.address.hidaddress != "") {
+            data.hidaddress = that.data.address.hidaddress
+        }
+        wx.uploadFile({
+          url: 'http://apptest.vzan.com/minisnsapp/addart',
+          filePath: tmpFile,
+          name:'file',
+          // header: {}, // 设置请求的 header
+          formData: data, // HTTP 请求中其他额外的 form data
+          success: function(res){
+              console.log("发帖成功", res);
+              wx.redirectTo({"url":"/pages/index/index"});
+          }
+        })
     })
-
-
     console.info("提交");
   },
   // 获取Content值
-  getContent: function(){
-
+  saveContent: function(e){
+      this.setData({"artContent":e.detail.value});
   },
+
+  /**
+   * 保存Title
+   */
+  saveTitle: function(e){
+      this.setData({"title":e.detail.value});
+  },
+
   // 定位
   getLocate: function() {
     console.info("定位")
@@ -171,11 +193,7 @@ Page({
   },
   // 选择表情
   emoijSelected: function(event) {
-      var title = event.currentTarget.dataset.title;
       var code = event.currentTarget.dataset.code;
-      console.log("emoijSelected")
-      console.log(title);
-      console.log(code);
       var content = that.data.artContent + code;
       that.setData({ artContent:content })
   },
@@ -187,23 +205,28 @@ Page({
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function(res){
           var imgs = res.tempFilePaths;
-          var exisImgs = that.data.selectedImgs;
-          var user = wx.getStorageSync('user');
-          for(var i = 0; i<imgs.length; i++) {
-            // 上传图片
-            wx.uploadFile({
-              url: 'https://String',
-              filePath:imgs[i],
-              name:'file',
-              // header: {}, // 设置请求的 header
-              formData: {"minisnsId":that.data.minisnsId,"userid":user.id}, // HTTP 请求中其他额外的 form data
-              success: function(res){
-                 var img = {"src": res.url, "id": res.id};
-                 exisImgs.push(img);
+          app.getInit(function(result){
+              var minisId = result.obj._Minisns.Id;
+              var unionid = result.obj._LookUser.unionid;
+              var verifyModel = util.primaryLoginArgs(unionid);
+              for (let i=0; i<imgs.length; i++){
+                  wx.uploadFile({
+                    url: 'http://apptest.vzan.com/minisnsapp/uploadfilebytype',
+                    filePath:imgs[i],
+                    name:'file',
+                    // header: {}, // 设置请求的 header
+                    formData: {"fid":minisId, "uploadType":"img", "deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
+                              "uid": unionid, "versionCode":verifyModel.versionCode, "sign":verifyModel.sign}, // HTTP 请求中其他额外的 form data
+                    success: function(res){
+                        var result = JSON.parse(res.data);
+                        // 刷新页面
+                        var rtmp = that.data.selectedImgs;
+                        rtmp = rtmp.concat({id:result.obj.id,src:result.obj.url});
+                        that.setData({selectedImgs:rtmp});
+                    }
+                  })
               }
-            })
-          }
-          that.setData({ selectedImgs:exisImgs })
+          })
       }
     })
   },
@@ -335,8 +358,17 @@ Page({
     });
   },
   // 选择板块
-  selectType: function(event) {
+  selectCategory: function(event) {
     var id = event.currentTarget.dataset.id;
-    this.setData({choosedType:id});
+    var title = event.currentTarget.dataset.name;
+    this.setData({selectedCateogry:{"Id":id, "Title":title}});
+  },
+  /**
+   * 删除选择的版块
+   */
+  deleteCategory: function(event) {
+      this.setData({selectedCateogry:null})
   }
+
+
 })

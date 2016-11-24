@@ -43,3 +43,6 @@ console.log('解密后 data: ', data)
 //     "appid": "wx4f4bc4dec97d474b"
 //   }
 // }
+
+
+// { "deviceType":"ios9.0","uid":"oW2wBwUJF_7pvDFSPwKfSWzFbc5o", "versionCode":1.0,"timestamp":1479174042985,"sign":"7FD0013953456C62B839BB9C08C9337BC08C1F140767947B93D8001C0098BCB581B287F2E391C67E"}

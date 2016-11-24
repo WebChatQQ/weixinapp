@@ -1,0 +1,41 @@
+/**
+
+	积分兑换列表
+	http://apptest.vzan.com/minisnsapp/integralexLog
+
+*/
+
+{
+	"result": true,
+	"msg": "请求成功",
+	"obj": null,
+	"objArray": [{
+		"Id": 8256,
+		"Actid": 2350,
+		"GiftTotals": 9999,
+		"State": 0,
+		"Num": 1,
+		"ActName": "测试",
+		"Addtime": "2016-11-15T17:17:50"
+	}, {
+		"Id": 8255,
+		"Actid": 2350,
+		"GiftTotals": 9999,
+		"State": 0,
+		"Num": 1,
+		"ActName": "测试",
+		"Addtime": "2016-11-15T17:17:46"
+	}, {
+		"Id": 8254,
+		"Actid": 2350,
+		"GiftTotals": 9999,
+		"State": 0,
+		"Num": 1,
+		"ActName": "测试",
+		"Addtime": "2016-11-15T17:17:46"
+	}],
+	"errcode": 0,
+	"pageIndex": 1,
+	"totalPage": 1,
+	"totalCount": 3
+}

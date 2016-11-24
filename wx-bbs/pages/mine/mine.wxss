@@ -18,8 +18,8 @@
 .user-text{position: static; font-size: 1rem; line-height: 100%; }
 .user-join-icon{width: 25px; height: 25px;background: url(http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png) no-repeat 0 -25px; vertical-align: middle; margin-right: 5px; display: inline-block; background-size:100%}
 .user-reward-icon{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -50px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
-.user-list-container{height: 25px; position: absolute; right: 10px; width: 37px; display: flex; }
-.post-list-num{position: relative; height: 100%; width: 30px; font-size: 14px; font-style: normal;font-family: "Microsoft YaHei",Arial;line-height:25px; }
+.user-list-container{height: 25px; position: absolute; right: 20px; width: 37px; display: flex; }
+.post-list-num{text-align:right; position: relative; height: 100%; width: 30px; font-size: 14px; font-style: normal;font-family: "Microsoft YaHei",Arial;line-height:25px; }
 .user-arrow-wrap{width: 7px; padding: 9px 5px 9px 0px; text-align: right;position:absolute; right:15px; }
 .user-post-chat{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -100px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
 .user-post-credit{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -125px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}

@@ -398,16 +398,14 @@
     </view>
     <view style="clear:both"></view>
 </view>
+<!-- 选择版块 -->
 <view class="post-type-container" >
-    <block wx:for="{{typeList}}" wx:for-item="type" wx:key="{{typeList.id}}">
-        <text class="post-type-wrap" catchtap="selectType" data-id="{{type.id}}" >{{type.name}}</text>
-        <!-- <text class="post-type-wrap" >运营交流</text>
-        <text class="post-type-wrap" >改进建议</text>
-        <text class="post-type-wrap" >操作指南</text>
-        <text class="post-type-wrap" >常见问题</text>
-        <text class="post-type-wrap" >微赞故事</text>
-        <text class="post-type-wrap" >更新进度</text>
-        <text class="post-type-wrap" >公众号运营</text> -->
+    <block wx:if="{{categories && selectedCateogry == null}}" wx:for="{{categories}}" wx:for-item="type" wx:key="{{categories.Id}}">
+        <text class="post-type-wrap" catchtap="selectCategory" data-id="{{type.Id}}" data-name="{{type.Title}}">{{type.Title}}</text>
+    </block>
+    <block wx:if="{{categories && selectedCateogry}}">
+        <text class="post-type-wrap" catchtap="selectCategory" data-id="{{selectedCateogry.Id}}" data-name="{{selectedCateogry.Title}}">{{selectedCateogry.Title}}</text>
+        <view class="category-selected-delete" catchtap="deleteCategory"></view>
     </block>
 </view>
 
