@@ -9,50 +9,9 @@ App({
   onLaunch: function () {
     that = this;
     //调用API从本地缓存中获取数据
-    // this.getTypes();
-    // this.login();
-    // this.getUserInfo();
+
     this.init();
   },
-
-  // getUserInfo:function(cb){
-  //   var that = this;
-    // var that = this
-    // wx.getUserInfo({
-    //   success: function(res){
-    //   }
-    // })
-    // if(this.globalData.userInfo){
-    //   typeof cb == "function" && cb(this.globalData.userInfo)
-    // }else{
-    //   //调用登录接口
-    //   that.login();
-    // }
-  // },
-  // getTypes: function() {
-  //     var that = this;
-  //     var types =  [{
-  //         ArticleTypeID : 0,
-  //         ArticleTypeName : "全部"
-  //       },{
-  //         ArticleTypeID : 3132,
-  //         ArticleTypeName : "运营日报"
-  //       },{
-  //         ArticleTypeID : 875,
-  //         ArticleTypeName : "操作指南"
-  //       },{
-  //         ArticleTypeID : 2038,
-  //         ArticleTypeName : "常见问题"
-  //       },{
-  //         ArticleTypeID : 2033,
-  //         ArticleTypeName : "微赞故事"
-  //       },{
-  //         ArticleTypeID : 1,
-  //         ArticleTypeName : "更新进度"
-  //       }];
-  //     that.globalData.types = types;
-  // },
-
 
   /**
    * 获取用户信息
@@ -66,7 +25,6 @@ App({
         cb(wx.getStorageSync("userInfo"));
       }
   },
-  
   /**
    * 获取论坛信息
    */
@@ -78,7 +36,6 @@ App({
         cb(wx.getStorageSync('minisns'));
       }
   },
-  
   /**
    * 获取初始数据
    */
@@ -91,7 +48,6 @@ App({
           cb(init);
       }
   } ,
-
   /**
    * 初始化数据
    */
@@ -123,46 +79,29 @@ App({
                           //   }
                           // })
 
-                          // var formdata = new FormData();
-                          // formdata.append("fid",fid); formdata.append("deviceType",verifyModel.deviceType);
-                          // formdata.append("uid", verifyModel.uid); formdata.append("sign", verifyModel.sign);
-                          // formdata.append("timestamp",verifyModel.timestamp); formdata.append("versionCode", verifyModel.versionCode);
-                          wx.downloadFile({
-                            url: "http://i.pengxun.cn/images/logo/2015921102133221.JPG",
-                            type: 'image', // 下载资源的类型，用于客户端识别处理，有效值：image/audio/video
-                            // header: {}, // 设置请求的 header
+                          wx.request({
+                            url: 'https://xiuxun.top/wx/app/minisnsapp/userinfo',
+                            data: {"fid":fid,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
+                                          "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode},
+                            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                            // header: {"Content-Type":"multipart/form-data;charset=utf-8"}, // 设置请求的 header
                             success: function(res){
-                                console.log("下载文件", res);
-                                wx.saveFile({
-                                  tempFilePath: res.tempFilePath,
-                                  success: function(save){
-                                      console.log("SaveFile");
-                                      wx.setStorageSync('tmpFile', save.savedFilePath);
-                                      wx.uploadFile({ // 获取userInfo
-                                          url: 'http://apptest.vzan.com/minisnsapp/userinfo',
-                                          filePath:wx.getStorageSync('tmpFile'),
-                                          name:'file',
-                                          // header: {}, // 设置请求的 header
-                                          formData: {"fid":fid,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
-                                          "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode}, // HTTP 请求中其他额外的 form data
-                                          success: function(res){
-                                              var result = JSON.parse(res.data);
-                                              wx.setStorageSync('user', result.obj._LookUser);
-                                              wx.setStorageSync('minisns', result.obj._Minisns);
-                                              wx.setStorageSync('myArtCount', result.obj._MyArtCount);
-                                              wx.setStorageSync('myMinisnsCount', result.obj._MyMinisnsCount);
-                                              wx.setStorageSync('concernCount', result.obj.ConcernCount);
-                                              wx.setStorageSync('myConcernCount', result.obj.MyConcernCount);
-                                              result.obj.tmpFile = save.savedFilePath;
-                                              wx.setStorageSync('init', result);
-                                              console.log("APP.JS loginRes ", res);
-                                              if (typeof cb == "function") {
-                                                cb(result);
-                                              }
-                                          }
-                                      })
-                                  }
-                                })
+                                console.log("测试Request", res);
+                                var result = res.data;
+                                wx.setStorageSync('user', result.obj._LookUser);
+                                wx.setStorageSync('minisns', result.obj._Minisns);
+                                wx.setStorageSync('myArtCount', result.obj._MyArtCount);
+                                wx.setStorageSync('myMinisnsCount', result.obj._MyMinisnsCount);
+                                wx.setStorageSync('concernCount', result.obj.ConcernCount);
+                                wx.setStorageSync('myConcernCount', result.obj.MyConcernCount);
+                                wx.setStorageSync('init', result);
+                                console.log("APP.JS loginRes ", res);
+                                if (typeof cb == "function") {
+                                    cb(result);
+                                }
+                            },
+                            complete: function() {
+                                console.log("测试Requet 完成");
                             }
                           })
                           // wx.request({ 
