@@ -1,0 +1,221 @@
+
+/**
+  帖子评论列表
+  http://apptest.vzan.com/minisnsapp/getcmt-12256660
+
+*/
+
+{
+  "MinisnsId": 3,
+  "BestCmtId": 0,
+  "IsReward": 1,
+  "IsPraise": 0,
+  "CommentCount": 0,
+  "Article": {
+    "Id": 12256660,
+    "UserId": 10475223,
+    "IsGuerdon": 0
+  },
+  "CommentList": [
+    {
+      "Floor": "",
+      "IsPraise": 0,
+      "Id": 23927483,
+      "Score": "5",
+      "Signday": 0,
+      "CreateDate": "1天前",
+      "ComIndex": 1,
+      "Content": "",
+      "IsPc": 0,
+      "Praise": 0,
+      "Images": [
+        {
+          "Filepath": "http://oss.vzan.cc/image/png/2016/11/23/190721d98cf783dce44200aa05bdcfac5e4e4a.png"
+        }
+      ],
+      "RewardUsers": null,
+      "User": {
+        "Id": 10475223,
+        "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+        "Nickname": "zmx'"
+      },
+      "Comments": [
+        {
+          "Floor": "",
+          "IsPraise": 0,
+          "Id": 24086376,
+          "Score": null,
+          "Signday": 0,
+          "CreateDate": "6分钟前",
+          "ComIndex": 0,
+          "Content": "313131",
+          "IsPc": 0,
+          "Praise": 0,
+          "Images": null,
+          "RewardUsers": null,
+          "User": {
+            "Id": 10475223,
+            "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+            "Nickname": "zmx'"
+          },
+          "Comments": null,
+          "PUserId": 0,
+          "PUserName": null,
+          "Voice": null,
+          "ArticleId": 12256660,
+          "State": 1,
+          "Reward": 0
+        }
+      ],
+      "PUserId": 0,
+      "PUserName": null,
+      "Voice": null,
+      "ArticleId": 12256660,
+      "State": 1,
+      "Reward": 0
+    },
+    {
+      "Floor": "",
+      "IsPraise": 0,
+      "Id": 23928032,
+      "Score": "5",
+      "Signday": 0,
+      "CreateDate": "1天前",
+      "ComIndex": 2,
+      "Content": "",
+      "IsPc": 0,
+      "Praise": 0,
+      "Images": [
+        {
+          "Filepath": "http://oss.vzan.cc/image/png/2016/11/23/1913449b1b7e396af04619b6055f6d6f36d27a.png"
+        }
+      ],
+      "RewardUsers": null,
+      "User": {
+        "Id": 10475223,
+        "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+        "Nickname": "zmx'"
+      },
+      "Comments": [
+        {
+          "Floor": "",
+          "IsPraise": 0,
+          "Id": 24086583,
+          "Score": null,
+          "Signday": 0,
+          "CreateDate": "2分钟前",
+          "ComIndex": 0,
+          "Content": "<a href='tel:41341341' class='content-phoneNumber'>41341341</a>",
+          "IsPc": 0,
+          "Praise": 0,
+          "Images": null,
+          "RewardUsers": null,
+          "User": {
+            "Id": 10475223,
+            "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+            "Nickname": "zmx'"
+          },
+          "Comments": null,
+          "PUserId": 0,
+          "PUserName": null,
+          "Voice": null,
+          "ArticleId": 12256660,
+          "State": 1,
+          "Reward": 0
+        }
+      ],
+      "PUserId": 0,
+      "PUserName": null,
+      "Voice": null,
+      "ArticleId": 12256660,
+      "State": 1,
+      "Reward": 0
+    },
+    {
+      "Floor": "",
+      "IsPraise": 0,
+      "Id": 23928139,
+      "Score": "5",
+      "Signday": 0,
+      "CreateDate": "1天前",
+      "ComIndex": 3,
+      "Content": "",
+      "IsPc": 0,
+      "Praise": 0,
+      "Images": [
+        {
+          "Filepath": "http://oss.vzan.cc/image/png/2016/11/23/19151747bfa392393a43a8a93f0f02037a8573.png"
+        }
+      ],
+      "RewardUsers": null,
+      "User": {
+        "Id": 10475223,
+        "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+        "Nickname": "zmx'"
+      },
+      "Comments": [],
+      "PUserId": 0,
+      "PUserName": null,
+      "Voice": null,
+      "ArticleId": 12256660,
+      "State": 1,
+      "Reward": 0
+    },
+    {
+      "Floor": "",
+      "IsPraise": 0,
+      "Id": 23928216,
+      "Score": "5",
+      "Signday": 0,
+      "CreateDate": "1天前",
+      "ComIndex": 4,
+      "Content": "",
+      "IsPc": 0,
+      "Praise": 0,
+      "Images": [
+        {
+          "Filepath": "http://oss.vzan.cc/image/png/2016/11/23/191604c770ab4c74b0431490d6157edadb630e.png"
+        }
+      ],
+      "RewardUsers": null,
+      "User": {
+        "Id": 10475223,
+        "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+        "Nickname": "zmx'"
+      },
+      "Comments": [],
+      "PUserId": 0,
+      "PUserName": null,
+      "Voice": null,
+      "ArticleId": 12256660,
+      "State": 1,
+      "Reward": 0
+    },
+    {
+      "Floor": "",
+      "IsPraise": 0,
+      "Id": 23980470,
+      "Score": "5",
+      "Signday": 0,
+      "CreateDate": "1天前",
+      "ComIndex": 5,
+      "Content": "<a href='tel:12312313' class='content-phoneNumber'>12312313</a>1",
+      "IsPc": 0,
+      "Praise": 0,
+      "Images": null,
+      "RewardUsers": null,
+      "User": {
+        "Id": 10475223,
+        "Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+        "Nickname": "zmx'"
+      },
+      "Comments": [],
+      "PUserId": 0,
+      "PUserName": null,
+      "Voice": null,
+      "ArticleId": 12256660,
+      "State": 1,
+      "Reward": 0
+    }
+  ]
+}

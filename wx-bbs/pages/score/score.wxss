@@ -58,3 +58,11 @@
     border-top: 1px solid #ececec;
     font-size: 13px;
 }
+.exchange-empty {
+    font-family: SimSun,Arial Narrow,HELVETICA;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    line-height: 50px;
+
+}

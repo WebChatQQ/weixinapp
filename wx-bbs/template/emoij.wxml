@@ -1,4 +1,4 @@
-<view class="post-qq-face bz clearfix">
+<template name="emoij">
     <view class="fl">
         <view href="javascript:;" class="qqface-img" catchtap="emoijSelected" data-title="微笑" data-code="[微笑]" style="background-position: left 0;"></view>
     </view>
@@ -299,4 +299,4 @@
     <view class="fl">
         <view href="javascript:;" class="qqface-img" catchtap="emoijSelected" data-title="挥手" data-code="[挥手]" style="background-position: left -2871px;"></view>
     </view>
-</view>
+</template>

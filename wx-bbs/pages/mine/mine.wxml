@@ -1,10 +1,10 @@
 <view class="page-container">
     <view class="user-info-container">
         <view class="user-img-wrap">
-            <image class="user-img" mode="scaleToFill" src="http://qzapp.qlogo.cn/qzapp/101282138/A2B11AC4D94ED257E016B53438CE4050/30" style="background-size: 100% 100%; background-position: 0% 0%; background-repeat: no-repeat; background-image: url(http://qzapp.qlogo.cn/qzapp/101282138/A2B11AC4D94ED257E016B53438CE4050/30); "/>
+            <image class="user-img" mode="scaleToFill" src="{{user.Headimgurl}}"/>
         </view>
         <view class="user-info-wrap">
-            <text class="c-block user-info-name">Stephen Z</text>
+            <text class="c-block user-info-name">{{user.Nickname}}</text>
             <text class="c-block user-info-follower">粉丝 : 0</text>
         </view>
         <text class="c-block user-update">修改</text>

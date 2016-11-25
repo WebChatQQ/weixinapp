@@ -52,5 +52,16 @@ Page({
         url: '/pages/score/score',
         complete: function() {console.log("跳转到积分列表")}
       })
+  },
+  /**
+   * 我的发帖
+   */
+  myArticleList:function() {
+      wx.navigateTo({
+        url: '/pages/mypost/mypost',
+        complete: function() {
+            console.log("跳转到我的发帖");
+        }
+      })
   }
 })

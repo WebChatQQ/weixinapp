@@ -1,0 +1,22 @@
+
+/**
+	获取用户关注的论坛列表
+	http://apptest.vzan.com/minisnsapp/getminisnssbyuser
+
+*/
+
+{
+	"result": true,
+	"msg": "查询成功",
+	"obj": null,
+	"objArray": [{
+		"minisnsId": 3,
+		"minisnsLogo": "http://i.pengxun.cn/upload/forum/2016112411162275.jpg",
+		"title": "测试微赞3号",
+		"Notice": "测试3号论坛。哈哈哈哈哈四婶是实话实说四婶实话实说"
+	}],
+	"errcode": 0,
+	"pageIndex": 1,
+	"totalPage": 1,
+	"totalCount": 1
+}
