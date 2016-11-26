@@ -1,0 +1,19 @@
+
+<!-- 贴主信息-->
+<view>
+    <view style="padding:30rpx 24rpx 16rpx; float:left">
+        <image style="width:40px;height:40px;overflow:hidden;" src="{{article.user.Headimgurl}}"></image>
+    </view>
+    <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">
+        <view style="position:relative">
+            <text class="index-poster-name">{{article.user.NickName}}</text>
+            <text class="index-poster-kind">V.{{article.user.Level}}</text>
+            <view class="index-poster-arrow" catchtap="openArrow" data-art-id="{{article.Id}}" data-user-id="{{article.user.Id}}"></view>
+        </view>
+        <view style="height:40rpx">
+            <text class="index-post-info">{{article.CreateDate}}</text>
+            <text class="index-post-info">浏览{{article.Click}}</text>
+        </view>
+    </view>
+    <view style="clear:both"></view>
+</view>

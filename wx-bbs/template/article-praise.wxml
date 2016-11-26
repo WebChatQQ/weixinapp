@@ -1,0 +1,8 @@
+<view wx:if="{{article.PraiseUsers}}" class="praise-logo">
+        <view style="width:7%"><view class="praise-logo-icon"></view></view>
+        <view class="praise-logo-container">
+        <block wx:for="{{article.PraiseUsers}}" wx:for-item="praiseUser" wx:key="Id">
+            <view class="praise-logo-img-container"><image style="width:35px; height:35px;" src="{{praiseUser.Headimgurl}}"></image></view>
+        </block>
+        </view>
+    </view>

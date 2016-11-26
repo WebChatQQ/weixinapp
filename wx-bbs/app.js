@@ -1,6 +1,8 @@
 var crypt =  require("./utils/crypt.js");
 var util = require("./utils/util.js");
 var api = require("./utils/api.js")
+var data = require("./data/index-list.js")
+
 //app.js
 var that;
 var inited = false;// 初始化过程
@@ -104,22 +106,6 @@ App({
                                 console.log("测试Requet 完成");
                             }
                           })
-                          // wx.request({ 
-                          //   url: 'https://xiuxun.top/wx/app/minisnsapp/userinfo',
-                          //   data: {"fid":fid,"deviceType":verifyModel.deviceType, "uid":verifyModel.uid, 
-                          //   "sign":verifyModel.sign, "timestamp":verifyModel.timestamp, "versionCode":verifyModel.versionCode},
-                          //   method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                          //   // header: {"Content-Type":"multipart/form-data;charset=utf-8"}, // 设置请求的 header
-                          //   success: function(loginRes){
-                          //       wx.setStorageSync('user', loginRes.data.obj._LookUser);
-                          //       wx.setStorageSync('minisns', loginRes.data.obj._Minisns);
-                          //       wx.setStorageSync('myArtCount', loginRes.data.obj._MyArtCount);
-                          //       wx.setStorageSync('myMinisnsCount', loginRes.data.obj._MyMinisnsCount);
-                          //       wx.setStorageSync('concernCount', loginRes.data.obj.ConcernCount);
-                          //       wx.setStorageSync('myConcernCount', loginRes.data.obj.MyConcernCount);
-                          //       console.log("APP.JS loginRes ", loginRes);
-                          //   } 
-                          // })
                       }
                     })
                 }
@@ -136,5 +122,21 @@ App({
       })
       var minisns = wx.getStorageSync('minisns');
   },
-  
+
+  /**
+   * init
+   */
+getInit2: function(cb){
+    var that = this;
+    let init = wx.getStorageSync('init');
+    if (typeof init == "undefined" || init == "" || init == null ) {
+        cb(init)
+    } else {
+        that.init2(cb)
+    }
+},
+init2: function(cb) {
+    cb(data.userinfo)
+}
+
 })

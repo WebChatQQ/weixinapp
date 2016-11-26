@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/index2/index2",
     "pages/index/index",
     "pages/mypost/mypost",
     "pages/score/score",

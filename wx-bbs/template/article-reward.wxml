@@ -1,0 +1,8 @@
+<view wx:if="{{article.RewardUsers}}" class="reward-logo">
+        <view style="width:7%"><view class="reward-logo-icon"></view></view>
+        <view class="praise-logo-container">
+        <block wx:for="{{article.RewardUsers}}" wx:for-item="rewardUser" wx:key="Id">
+            <view class="reward-logo-img-container"><image style="width:35px; height:35px;" src="{{rewardUser.Headimgurl}}"></image></view>
+        </block>
+        </view>
+    </view>

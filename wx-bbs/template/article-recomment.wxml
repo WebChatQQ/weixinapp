@@ -1,0 +1,40 @@
+<view wx:if="{{showRecommend.id==article.Id}}" class="recommend-container" >
+    <view>
+        <!-- 图片 -->
+        <!-- 发帖图片 -->
+        <view style="margin:12px;">
+            <block wx:for="{{selectedImgs}}" wx:for-item="imgs">
+                <view style="position:relative;max-height:80px; width:20%; margin:5px; display:inline-block; vertical-align:middel">
+                    <view class="img-remove" data-id="{{imgs.id}}" catchtap="removeImg"></view>
+                    <image style="width:100%;max-height:80px;" src="{{imgs.src}}"/>
+                </view>
+            </block>
+        </view>
+        <view style="width:100%; padding:5px;border: 1px solid #d6d6d6;background-color:#fff">
+            <!--<textarea bindfocus="saveTextValue" class="recommend-text" placeholder="{{showRecommend.toUserName?'回复'+showRecommend.toUserName+':':'回复帖子:'}}" value="{{commentText}}" bindblur="saveTextValue"></textarea>-->
+            <input bindinput="saveTextValue" class="recommend-text" placeholder="{{showRecommend.toUserName?'回复'+showRecommend.toUserName+':':'回复帖子:'}}" value="{{commentText}}"/>
+        </view>
+        <view class="recommend-line-container">
+            <view class="recommend-icon-container">
+                <view class="recommend-emoij-wrap recommend-wrap" catchtap="selectEmoij" data-id="{{article.Id}}">
+                    <view class="recommend-emoij"></view>
+                </view>
+                <view class="recommend-imgae-wrap recommend-wrap" catchtap="selectImg" data-id="{{article.Id}}">
+                    <view class="recommend-img"></view>
+                </view>
+            <!-- 
+            <view class="recommend-voice-wrap recommend-wrap">
+            <view class="recommend-voice"></view>
+            </view>
+            -->
+        </view>
+        <view class="recommend-submit-container">
+                <view class="recommend-cancle-wrap recommend-wrap" catchtap="commentCancle">取消</view>
+                <view class="recommend-submit-wrap recommend-wrap" catchtap="commentSubmit" data-id="{{article.Id}}">发表</view>
+        </view>
+    </view>
+    <view class="post-qq-face bz clearfix" style="{{emoij.id==article.Id?'display:block':'display:none'}}">
+        <template is="emoij" />
+    </view>
+    <view style="clear:both"></view>
+</view>

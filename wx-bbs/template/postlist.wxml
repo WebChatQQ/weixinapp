@@ -129,3 +129,5 @@
         <image style="width:47px;height:47px;padding:6px" src="{{ComUser.Headimgurl}}" ></image>
     </view>
 </template>
+
+

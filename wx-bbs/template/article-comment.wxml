@@ -1,0 +1,44 @@
+<view wx:if="{{article.articleComments}}" class="comment-container"> 
+    <view style="width:7%"><view class="comment-icon"></view></view>
+    <view class="comment-content"> 
+        <block wx:for="{{article.articleComments}}" wx:for-item="comment" wx:key="Id" wx:if="{{index < 3 || currentMoreComment == item.Id}}">
+            <view class="res-info">
+                <!-- 头像 -->
+                <view class="comment-content-image-wrap">
+                    <image style="width:47px;height:47px;padding:6px" src="{{comment.ComUser.Headimgurl}}" ></image>
+                </view>
+                <view class="comment-content-msg-wrap" catchtap="commentUser" data-id="{{comment.Id}}"
+                data-uid="{{comment.ComUser.Id}}" data-name="{{comment.ComUser.NickName}}" data-artid="{{item.Id}}">
+                    <view>
+                        <view class="res-content-name">{{comment.ComUser.NickName || comment.ComUser.Nickname}}</view>
+                        <view class="res-content-time">{{comment.CreateDate}}</view>
+                        <view style="clear:both"></view>
+                    </view>
+                    <!-- 文字回复 -->
+                    <view class="res-content">
+                        <text wx:if="{{comment.DUser}}">回复<text style="color:#5a85ce;max-width:110px;">@{{comment.DUser.NickName}} : </text></text>
+                        <text>{{comment.Content}}</text>
+                    </view>
+                    <!-- 语音 -->
+                    <view wx:if="{{comment.Voice}}" class="comment-voice-container">
+                        <view class="audio-wrap" catchtap="playAudio" data-v-id="{{comment.Voice.Id}}">
+                            <image style="width:22px; height:22px;margin-left:4px" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>            
+                            <audio  class="audio" id="{{comment.Voice.Id}}" 
+                            poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" 
+                            src="{{comment.Voice.TransFilePath}}"></audio>
+                        </view>
+                        <view class="audio-time-wrap"><text>{{comment.Voice.VoiceTime}}"</text></view>
+                        <view style="clear:both;"></view>
+                    </view>
+                    <!-- 评论图片 -->
+                    <view class="comment-image" >
+                        <block wx:for="{{comment.Images}}" wx:for-item="comImages" wx:key="Id">
+                            <view><image style="width:66px;height:66px;" src="{{comment.comImages.filepath || comment.comImages.Filepath}}"></image> </view>
+                        </block>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>
+<view wx:if="{{item.CommentCount>3 && currentMoreComment != item.Id}}" style="clear:both" class="more-comments" data-id="{{item.Id}}" catchtap = "moreComment">查看更多{{item.CommentCount}}信息</view>

@@ -1,0 +1,34 @@
+<!-- 帖子正文 -->
+
+<view class="article-content-container" catchtap="toArticleDetail" data-article-id="{{article.Id}}">
+    <view class="article-content-title" >{{article.Title == null?'':article.Title}}</view>
+    <view>
+        <a class="section-theme" wx:if="{{article.ArticleTypeName}}" bindtap="toBankuai">{{article.ArticleTypeName == null?'':article.ArticleTypeName}}</a>
+        <a class="article-content">{{article.ContentDesc == null?'':article.ContentDesc}}</a>
+    </view>
+    <!-- 语音 -->
+    <view wx:if="{{article.Voice}}" class="comment-voice-container">
+        <view class="audio-wrap" catchtap="playAudio" data-v-id="{{article.Voice.Id}}">
+        <image style="width:22px; height:22px;margin-left:4px" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>            
+        <audio  class="audio" id="{{article.Voice.Id}}" 
+        poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" 
+        src="{{article.Voice.TransFilePath}}"></audio>
+        </view>
+        <view class="audio-time-wrap"><text>{{article.Voice.VoiceTime}}"</text></view>
+        <view style="clear:both"></view>
+    </view>
+    <!-- 图片 -->
+    <view wx:if="{{article.Images && Images.length>0}}" class="comment-imgs-container">
+        <block wx:for="{{article.Images}}" wx:for-item="image" wx:key="thumbnail">
+        <view>
+            <image catchtap="showBigImg" data-src="{{article.image.filepath}}"  mode="left" style="max-height:200px; max-width:100%" src="{{article.image.thumbnail}}" class="article-image"></image>
+        </view>
+        </block>
+    </view>
+        <!-- 视频 
+        <block wx:for="" wx:for-item="video">
+            <view>
+            </view>
+        </block>
+        -->
+</view>

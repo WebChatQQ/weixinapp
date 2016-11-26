@@ -1,0 +1,177 @@
+.page-container{
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5f5;
+}
+.head-container {
+    position: relative;
+    z-index:2;
+}
+.head-container-wrap{
+    width: 100%;
+    height: 220rpx;
+    padding-top: 60rpx;
+}
+.head-img-wrap {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-size: 100%;
+    height: 220rpx;
+    width: 100%;
+}
+.head-logo-container{
+    height: 120rpx;
+    margin-left:36rpx;
+}
+.head-info-wrap {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 30rpx;
+}
+.head-info {
+    color:#fff;
+}
+.index-sign {
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 33% 2%;
+  background-size:552%;
+  vertical-align: -5px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+.index-concern {
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 62% 2%;
+  background-size:552%;
+  vertical-align: -6px;
+  height: 48rpx;
+  width:48rpx;
+  display: inline-block;
+}
+.head-sign-container{
+    display:-webkit-flex;
+    display: -moz-box;
+    display: flex;
+    justify-content: space-around ; /* 间距平分 */
+    background-color: #fff;
+}
+.head-sign-wrap {
+    -webkit-box-flex:1 ;
+    -moz-box-flex: 1;
+}
+.category-container{
+    background-color: #fff;
+    width: 100%;
+    overflow: hidden;
+    height: 40px;
+    white-space:nowrap; /*强制不换行*/
+}
+.fix-category-container{
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:1;
+}
+fix-category-wrap{
+    white-space:nowrap; /*强制不换行*/
+    overflow: hidden;
+    width: 100%;
+    height: 40px;
+}
+.cateogry {
+    display: inline-block;
+    line-height: 40px;
+    padding: 0 10rpx;
+}
+.arrow-wrap {
+    position:absolute;
+    top: 20rpx;
+    right: 0;
+    background-color: #fff;
+    width: 40px;
+    height: 20px;
+}
+.arrow {
+  border-width: 0 5rpx 5rpx 0;
+  border-style: solid;
+  border-color: #c8c8cd;
+  position: absolute;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  top: 0;
+  right: 30rpx;
+  height: 14rpx;
+  width: 14rpx;
+}
+.articles-container {
+    background-color: #fff;
+}
+.selected {
+  color:#17b5ee;
+  border-bottom: 1px solid #17b5ee;
+}
+.recomment-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); 
+    z-index:10;
+}
+.recomment-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    
+}
+.recommend-text{
+    position: relative;
+    font-size: 14px;
+    text-align: justify;
+    width: 100%;
+}
+.recommend-line-container{
+  height: 40px;
+  margin-top: 5px;
+}
+.recommend-icon-container{
+  float: left;
+}
+.recommend-wrap{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+}
+.recommend-emoij{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -234px; background-size: 100%; height: 26px; width: 26px; }
+.recommend-img{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -286px; background-size: 100%; height: 26px; width: 26px; }
+.recommend-submit-container{
+  float: right;
+}
+.recommend-cancle-wrap{
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  color: #858585;
+  background: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+.recommend-submit-wrap {
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  background: #17b5ee;
+}
+.z-index2{
+    z-index: 2;
+    position: relative;
+}

@@ -306,9 +306,11 @@ page {
 }
 .zindex-2{
   z-index:3;
+  position: relative;
 }
 .zindex-1{
   z-index:1;
+  position: relative;
 }
 .loading {
     margin: 10px 0px;
