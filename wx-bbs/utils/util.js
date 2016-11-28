@@ -38,64 +38,37 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
-function getData() {
-  wx.request({
-    url: 'http://apptest.vzan.com/f/s-1',
-    data: {},
-    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    // header: {}, // 设置请求的 header
-    success: function(res){
-      // success
-    },
-    fail: function() {
-      // fail
-    },
-    complete: function() {
-      // complete
-    }
-  })
-}
 
-// 举报
-function tipOff(user) {
-    console.info("举报");
-}
+
+
 
 // 登陆必要参数
 function primaryLoginArgs(unionid) {
+    // unionid = "oW2wBwUJF_7pvDFSPwKfSWzFbc5o";
     var sysInfo = wx.getSystemInfoSync();
-    var versionCode = 1;
+    var versionCode = "1.0";
     var deviceType = sysInfo.model;
     var timestamp = ( new Date() ).getTime();    
     // var timestamp = Math.round(timestamp);
     var sign = crypt.getVerifyModel(unionid, versionCode, deviceType, timestamp);
     var verifyModel = {};
     verifyModel.deviceType = "ios9.0";//deviceType;
+    verifyModel.deviceType = deviceType;
     verifyModel.timestamp = 1479174892808;//timestamp;
+    verifyModel.timestamp = timestamp;
     verifyModel.uid = "oW2wBwUJF_7pvDFSPwKfSWzFbc5o"//unionid;
+    verifyModel.uid = unionid;
     verifyModel.versionCode= "1.0"//versionCode;
+    verifyModel.versionCode= versionCode;
     verifyModel.sign= "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82"//sign;
+    verifyModel.sign= sign;
     return verifyModel;
-}
-
-function login(data) {
-    // 登陆服务器
-    wx.request({
-      url: 'https://apptest.vzan.com/minisnsapp/loginByWeiXin',
-      data: data,
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: {}, // 设置请求的 header
-      success: function(res){
-        // success
-      }
-    })
 }
 
 
 module.exports = {
   formatTime: formatTime,
-  tipOff: tipOff,
   primaryLoginArgs:primaryLoginArgs,
-  login:login
+
 }
 

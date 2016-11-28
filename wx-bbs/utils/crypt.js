@@ -49,7 +49,7 @@ function getVerifyModel(uid, versionCode, deviceType, timestamp) { // 登陆加�
     var md5 = MD5(msg);
     console.log("MD5加密：", msg, md5);
     // 对MD5结果DES加密
-    return des(msg);
+    return des(md5);
 }
 
 

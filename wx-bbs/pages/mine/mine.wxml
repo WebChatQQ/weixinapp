@@ -7,7 +7,7 @@
             <text class="c-block user-info-name">{{user.Nickname}}</text>
             <text class="c-block user-info-follower">粉丝 : 0</text>
         </view>
-        <text class="c-block user-update">修改</text>
+        <text class="c-block user-update" >修改</text>
         <view class="user-info-arrow-wrap">
             <view class="user-info-arrow"/>
         </view>

@@ -183,6 +183,9 @@ Page({
         var result = JSON.parse(res.data);
         that.setData({ articles: result.objArray == null ? [] : result.objArray, pageIndex: 1 });
       },
+      complete:function() {
+        that.setData({"loading":false})
+      }
     })
   },
   /**
@@ -331,6 +334,9 @@ Page({
         var result = JSON.parse(res.data);
         that.setData({ articles: result.objArray == null ? [] : result.objArray, "loading":false })
         that.setData({ "currentTypeId": typeId, "categories": typeList, "scrollLeft": -900, "pageIndex": 1, "hot": 0 })
+      },
+      complete:function(res) {
+        that.setData({"loading":false});
       }
     })
   },
