@@ -61,7 +61,7 @@ Page({
      */
     myArticleList: function () {
         let that = this;
-        wx.redirectTo({
+        wx.navigateTo({
             url: '/pages/mypost/mypost?uid=' + that.data.uid,
             complete: function () {
                 console.log("跳转到我的发帖");

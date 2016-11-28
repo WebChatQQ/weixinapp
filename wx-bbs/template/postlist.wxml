@@ -2,7 +2,7 @@
 
   <!-- 贴主信息-->
   <view>
-    <view style="padding:30rpx 24rpx 16rpx; float:left">
+    <view style="padding:30rpx 24rpx 16rpx; float:left" catchtap="navicateToUser" data-id="{{user.Id}}">
       <image style="width:40px;height:40px;overflow:hidden;" src="{{user.Headimgurl}}">{{articles}}</image>
     </view>
     <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">

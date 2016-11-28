@@ -2,8 +2,8 @@
 <import src="/template/emoij" />
 <view class="page-container">
   <view class="tabbar-container">
-    <view class="tabbar-wrap {{selected==1?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="1">我的发帖</view>
-    <view class="tabbar-wrap {{selected==2?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="2">我的付费贴</view>
+    <view class="tabbar-wrap {{selected==1?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="1">{{uid==user.Id?"我的":"TA的"}}发帖</view>
+    <view class="tabbar-wrap {{selected==2?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="2">{{uid==user.Id?"我的":"TA的"}}付费贴</view>
   </view>
   <view class="post-container">
     <block wx:for="{{articles}}" wx:for-item="article">
