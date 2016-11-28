@@ -1,6 +1,5 @@
 var crypt =  require("./utils/crypt.js");
 var util = require("./utils/util.js");
-var api = require("./utils/api.js")
 //app.js
 var that;
 var inited = false;// 初始化过程

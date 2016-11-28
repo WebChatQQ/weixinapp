@@ -73,6 +73,7 @@
 
                 <!-- 头像 -->
                 <template is="commentimg" data="{{...comment}}"></template>
+
                 <!-- 评论信息 -->
                 <view class="comment-content-msg-wrap" catchtap="commentUser" data-id="{{comment.Id}}" data-uid="{{comment.ComUser.Id}}" data-name="{{comment.ComUser.NickName}}" data-artid="{{item.Id}}">
                   <template is="commentcontent" data="{{...comment}}" />
@@ -91,6 +92,7 @@
 <view wx:for="{{showRecomment}}" class="recommend-container">
   <view style="width:100%;height:100%" catchtap="commentCancle"></view>
   <view class="recomment-wrap">
+
     <!-- 发帖图片 -->
     <view style="margin:12px;">
       <block wx:for="{{selectedImgs}}" wx:for-item="imgs">
@@ -100,7 +102,7 @@
         </view>
       </block>
     </view>
-    <form bindsubmit="commentSubmit" bindreset = "commentCancle">
+    <form bindsubmit="commentSubmit" bindreset="commentCancle">
       <view style="width:100%; padding:5px;background-color:#fff">
         <textarea name="content" class="recommend-text" placeholder="{{showRecomment.toUserName?'回复'+showRecomment.toUserName+':':'回复帖子:'}}" value="{{commentText}}" />
       </view>
@@ -154,6 +156,12 @@
     </block>
   </scroll-view>
   <view class="index-heading-more " catchtap="moreType">+</view>
+</view>
+
+<!-- 搜索框 -->
+<view class="">
+
+
 </view>
 
 <!--<view class="comment-voice-container">
