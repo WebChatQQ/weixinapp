@@ -71,7 +71,7 @@ Page({
       name:'file',
       // header: {}, // 设置请求的 header
       formData: {"deviceType":verifyModel.deviceType, "timestamp":verifyModel.timestamp, 
-                "uid": unionid, "versionCode":verifyModel.versionCode, "sign":verifyModel.sign,id:minisId}, // HTTP 请求中其他额外的 form data
+                "uid": unionid, "versionCode":verifyModel.versionCode, "sign":verifyModel.sign,"fid":minisId}, // HTTP 请求中其他额外的 form data
       success: function(res){
           var result = JSON.parse(res.data);
           let list=[]
