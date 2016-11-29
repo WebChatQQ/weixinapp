@@ -1,7 +1,6 @@
 var index = require("../../data/index-list.js")
 var util = require("../../utils/util.js")
-var crypt = require("../../utils/crypt.js")
-var comobj = require("../../obj/comobj.js")
+var api = require("../../utils/api.js")
 
 
 //index.js
@@ -31,6 +30,11 @@ Page({
     var that = this
     this.init();
   },
+  onShow: function(){
+    this.resetData()
+    this.init();
+  },
+
   /**
    * 下拉加载
    */
@@ -47,10 +51,22 @@ Page({
 
   },
   /**
+   * 重置数据
+   */
+  resetData: function () {
+    let that = this;
+    that.setData({
+      "articles": [], "currentTypeId": 0, "hot": 0,
+      "scrollLeft": 0, "praised": {}, "showRecomment": null, "emoij": false, "commentText": '', "selectedImgs": [], "currentMoreComment": null
+    })
+  },
+
+  /**
    * 初始化
    */
   init: function () {
     var that = this;
+    that.setData({"loading":true})
     app.getInit(function (result) {
       var tmpFile = result.obj.tmpFile;
       var minisId = result.obj._Minisns.Id;
@@ -230,43 +246,13 @@ Page({
       }
     })
   },
-  // 播放声音
+  /**
+   * 播放声音 
+   */ 
   playAudio: function (event) {
-    console.info("播放声音");
-    var voiceId = event.currentTarget.dataset.vId;
-    console.info(voiceId);
-    var storageVoice = wx.getStorageSync('playingVoice');
-    var audioContext = wx.createAudioContext(voiceId + "");
-    // 获取正在播放的内容
-    if (typeof storageVoice == "undefined" || storageVoice == "" || storageVoice == null) {
-      // 当前未播放
-      audioContext.play();
-      storageVoice = new Object();
-      storageVoice.id = voiceId;
-      storageVoice.status = 2;
-    } else if (storageVoice.id == voiceId) {
-      // 暂定状态
-      if (storageVoice.status == 1) {
-        audioContext.play();
-        storageVoice.status = 2;
-      } else
-        // 播放状态 - 转为暂停
-        if (storageVoice.status == 2) {
-          audioContext.pause();
-          storageVoice.status = 1;
-        }
-    } else {
-      // 停止当前的，播放另一个
-      var usingAudioContext = wx.createAudioContext(storageVoice.id + "")
-      usingAudioContext.seek(0);
-      usingAudioContext.pause();
-      storageVoice = new Object();
-      storageVoice.id = voiceId;
-      storageVoice.status = 2;
-      audioContext.play();
-    }
-    wx.setStorageSync('String', storageVoice);
-
+    let vid = event.currentTarget.dataset.vId;
+    let vSrc = event.currentTarget.dataset.vSrc;
+    util.playVoice(vid, vSrc)
   },
   /**
    * 更多版块
@@ -329,7 +315,7 @@ Page({
       }, // HTTP 请求中其他额外的 form data
       success: function (res) {
         var result = JSON.parse(res.data);
-        that.setData({ articles: result.objArray == null ? [] : result.objArray, "loading":false })
+        that.setData({ articles: result.objArray == null ? [] : result.objArray, "loading": false })
         that.setData({ "currentTypeId": typeId, "categories": typeList, "scrollLeft": -900, "pageIndex": 1, "hot": 0 })
       }
     })
@@ -370,7 +356,6 @@ Page({
 
     })
   },
-
 
   /**
    * 展示首页帖子
@@ -813,7 +798,32 @@ Page({
     wx.navigateTo({
       url: '/pages/user/user?uid=' + uid,
     })
+  },
+  /**
+   * 点击搜索按钮
+   */
+  searchClick: function () {
+    this.setData({ "searchClicked": true })
+  },
+  /**
+   * 取消搜索
+   */
+  searchCancle: function () {
+    this.setData({ "searchClicked": false })
+  },
+  /**
+   * 搜索 帖子 
+   */
+  search: function (e) {
+    let keyWord = e.detail.value.keyWord
+    if (!keyWord || keyWord == "") {
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/search/search?keyWord='+keyWord,
+    })
   }
+
 
 
 

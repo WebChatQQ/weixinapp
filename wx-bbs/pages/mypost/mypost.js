@@ -17,6 +17,7 @@ Page({
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     let uid = options.uid;
+    this.setData({ "uid": uid })
     this.init(uid);
   },
   onReady: function () {
@@ -34,6 +35,7 @@ Page({
 
   init: function (uid) {
     var that = this;
+    that.setData({"loading":true})
     app.getInit(function (result) {
       that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": result.obj.tmpFile })
     })
@@ -94,6 +96,9 @@ Page({
         }
         console.log("获取我的发帖列表", list);
         that.setData({ articles: list })
+      },
+      complete: function() {
+        that.setData({"loading":false})
       }
     })
 
@@ -410,40 +415,9 @@ Page({
 
   // 播放声音
   playAudio: function (event) {
-    console.info("播放声音");
-    var voiceId = event.currentTarget.dataset.vId;
-    console.info(voiceId);
-    var storageVoice = wx.getStorageSync('playingVoice');
-    var audioContext = wx.createAudioContext(voiceId + "");
-    // 获取正在播放的内容
-    if (typeof storageVoice == "undefined" || storageVoice == "" || storageVoice == null) {
-      // 当前未播放
-      audioContext.play();
-      storageVoice = new Object();
-      storageVoice.id = voiceId;
-      storageVoice.status = 2;
-    } else if (storageVoice.id == voiceId) {
-      // 暂定状态
-      if (storageVoice.status == 1) {
-        audioContext.play();
-        storageVoice.status = 2;
-      } else
-        // 播放状态 - 转为暂停
-        if (storageVoice.status == 2) {
-          audioContext.pause();
-          storageVoice.status = 1;
-        }
-    } else {
-      // 停止当前的，播放另一个
-      var usingAudioContext = wx.createAudioContext(storageVoice.id + "")
-      usingAudioContext.seek(0);
-      usingAudioContext.pause();
-      storageVoice = new Object();
-      storageVoice.id = voiceId;
-      storageVoice.status = 2;
-      audioContext.play();
-    }
-    wx.setStorageSync('String', storageVoice);
+    let vid = event.currentTarget.dataset.vId;
+    let vSrc = event.currentTarget.dataset.vSrc;
+    util.playVoice(vid, vSrc)
 
   },
   /**
@@ -555,12 +529,8 @@ Page({
     let uid = e.currentTarget.dataset.id;
     let that = this;
     if (uid == that.data.user.Id) {
-      wx.redirectTo({
-        url: '/pages/mine/mine',
-        success: function (res) {
-          console.log("从用户发帖列表，跳转到用户信息页")
-        }
-      })
+      // 回退
+      wx.navigateBack({"delta":1})
     } else {
       wx.redirectTo({
         url: '/pages/user/user?uid=' + uid,

@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/search/search",
     "pages/user/user",
     "pages/mypost/mypost",
     "pages/score/score",

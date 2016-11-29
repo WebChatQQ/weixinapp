@@ -10,6 +10,7 @@
         </text>
       </view>
       <view class="head-banner" style="background:url({{headInfo.backMap}}) no-repeat"></view>
+      <view class="index-head-search" catchtap="searchClick"></view>
     </view>
     <view class="index-head-bottom ">
       <view wx:if="{{user.IsSign == false}}" class="flex " catchtap="sign">
@@ -157,12 +158,7 @@
   </scroll-view>
   <view class="index-heading-more " catchtap="moreType">+</view>
 </view>
-
-<!-- 搜索框 -->
-<view class="">
-
-
-</view>
+<include src="/template/search.wxml" />
 
 <!--<view class="comment-voice-container">
    <view class="audio-wrap">
