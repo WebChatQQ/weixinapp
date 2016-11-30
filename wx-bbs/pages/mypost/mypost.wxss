@@ -39,11 +39,12 @@
     text-align: center;
     line-height: 40px;
 }
-.border-slice {
-  border-bottom: 10px solid #eee;
-}
+
 .address {
     color:#5a85ce;
     font-size: 24rpx;
     padding:0 12px;
+}
+.post-wrap {
+  background-color: #fff;
 }

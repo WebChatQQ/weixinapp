@@ -38,7 +38,7 @@ Page({
             var unionid = result.obj._LookUser.unionid;
             var verifyModel = util.primaryLoginArgs(unionid);
             wx.uploadFile({
-                url: 'http://apptest.vzan.com/minisnsapp/userinfo',
+                url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
                 filePath: that.data.tmpFile,
                 name: 'file',
                 // header: {}, // 设置请求的 header

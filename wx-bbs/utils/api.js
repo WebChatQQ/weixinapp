@@ -43,14 +43,31 @@ function getartlistbykeyword(data, filepath, cb) {
     })
 }
 
-function wxApi() {
-
+/**
+ * 获取用户信息
+ */
+function userInfo(data, filepath, cb) {
+    wx.uploadFile({
+      url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
+      filePath: filepath,
+      name:'file',
+      // header: {}, // 设置请求的 header
+      formData: data, // HTTP 请求中其他额外的 form data
+      success: function(res){
+        let result = JSON.parse(res.data)
+        if (result.result == true) {
+            console.log("获取用户信息成功", result)
+            cb(result)
+        } else {
+            console.log("获取用户信息失败")
+        }
+      }
+    })
 }
-
-
 
 
 module.exports = {
     "myarticles": myarticles,
     "getartlistbykeyword":getartlistbykeyword,
+    "userInfo":userInfo,
 }

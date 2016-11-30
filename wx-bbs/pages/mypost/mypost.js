@@ -70,7 +70,7 @@ Page({
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
     wx.uploadFile({
-      url: 'http://apptest.vzan.com/minisnsapp/myarticles',
+      url: 'https://snsapi.vzan.com/minisnsapp/myarticles',
       filePath: tmpFile,
       name: 'file',
       // header: {}, // 设置请求的 header
@@ -124,7 +124,7 @@ Page({
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
     wx.uploadFile({
-      url: 'http://apptest.vzan.com//minisnsapp/checkpermissionbyuser',
+      url: 'https://snsapi.vzan.com//minisnsapp/checkpermissionbyuser',
       filePath: tmpFile,
       name: 'file',
       // header: {}, // 设置请求的 header
@@ -249,7 +249,7 @@ Page({
         for (var i = 0; i < tmp.length; i++) {
           // 上传图片s
           wx.uploadFile({
-            url: 'http://apptest.vzan.com/minisnsapp/uploadfilebytype',
+            url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
             filePath: tmp[i],
             name: 'file',
             // header: {}, // 设置请求的 header
@@ -310,7 +310,7 @@ Page({
     var content = that.data.commentText;
     let id = that.data.showRecomment.id;// 帖子ID
     wx.uploadFile({
-      url: 'http://apptest.vzan.com/minisnsapp/commentartbyid',
+      url: 'https://snsapi.vzan.com/minisnsapp/commentartbyid',
       filePath: wx.getStorageSync('tmpFile'),
       name: 'file',
       // header: {}, // 设置请求的 header
@@ -323,7 +323,7 @@ Page({
         var result = JSON.parse(res.data);
         if (result.result == true) { // 发帖成功
           wx.request({
-            url: "http://apptest.vzan.com/minisnsapp/getcmt-" + id,
+            url: "https://snsapi.vzan.com/minisnsapp/getcmt-" + id,
             data: { fid: minisId, pageIndex: 1 },
             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
             // header: {}, // 设置请求的 header
@@ -369,7 +369,7 @@ Page({
     var content = that.data.commentText;
     var showRecomment = that.data.showRecomment;
     wx.uploadFile({
-      url: 'http://apptest.vzan.com/minisnsapp/replyartcommentbyid',
+      url: 'https://snsapi.vzan.com/minisnsapp/replyartcommentbyid',
       filePath: wx.getStorageSync('tmpFile'),
       name: 'file',
       // header: {}, // 设置请求的 header
@@ -382,7 +382,7 @@ Page({
         var result = JSON.parse(res.data);
         if (result.result == true) { // 发帖成功
           wx.request({
-            url: "http://apptest.vzan.com/minisnsapp/getcmt-" + showRecomment.id,
+            url: "https://snsapi.vzan.com/minisnsapp/getcmt-" + showRecomment.id,
             data: { fid: minisId, pageIndex: 1 },
             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
             // header: {}, // 设置请求的 header
@@ -487,7 +487,7 @@ Page({
     var id = e.currentTarget.dataset.id; // 帖子ID
     var verifyModel = util.primaryLoginArgs(unionid);
     wx.uploadFile({
-      url: 'http://apptest.vzan.com/minisnsapp/articlepraise',
+      url: 'https://snsapi.vzan.com/minisnsapp/articlepraise',
       filePath: wx.getStorageSync('tmpFile'),
       name: 'file',
       // header: {}, // 设置请求的 header

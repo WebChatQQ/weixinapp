@@ -62,7 +62,7 @@
 
     <!-- 转发 -->
     <view class="fr res" catchtap="praise" data-id="{{Id}}">
-      <view class="icon-zan {{IsPraise == 0?'':'zaned'}}"></view>
+      <view class="{{IsPraise == 0?'icon-zan':'zaned'}}"></view>
       <em style="color:{{ (IsPraise == 0)?'':'#5a85ce'}}" class="em">赞 {{Praise}}</em>  </view>
     <view class="fr res" catchtap="showReComment" data-id="{{Id}}">
       <view class="icon-ping"></view><em class="em">评 {{CommentCount}}</em>  </view>

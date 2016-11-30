@@ -40,7 +40,7 @@ Page({
         var unionid = result.obj._LookUser.unionid;
         var verifyModel = util.primaryLoginArgs(unionid);
         wx.uploadFile({
-          url: 'http://apptest.vzan.com/minisnsapp/integralLog',
+          url: 'https://snsapi.vzan.com/minisnsapp/integralLog',
           filePath: tmpFile,
           name:'file',
           // header: {}, // 设置请求的 header
@@ -83,7 +83,7 @@ Page({
         var unionid = result.obj._LookUser.unionid;
         var verifyModel = util.primaryLoginArgs(unionid);
         wx.uploadFile({
-          url: 'http://apptest.vzan.com/minisnsapp/integralLog',
+          url: 'https://snsapi.vzan.com/minisnsapp/integralLog',
           filePath: tmpFile,
           name:'file',
           // header: {}, // 设置请求的 header
@@ -109,7 +109,7 @@ Page({
           var unionid = result.obj._LookUser.unionid;
           var verifyModel = util.primaryLoginArgs(unionid);
           wx.uploadFile({
-            url: 'http://apptest.vzan.com/minisnsapp/integralexLog',
+            url: 'https://snsapi.vzan.com/minisnsapp/integralexLog',
             filePath: tmpFile,
             name:'file',
             // header: {}, // 设置请求的 header

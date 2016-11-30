@@ -1,13 +1,13 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/post/post",
     "pages/search/search",
     "pages/user/user",
     "pages/mypost/mypost",
     "pages/score/score",
     "pages/mine/mine",
     "pages/logs/logs",
-    "pages/post/post",
     "pages/articledetail/articledetail"
    
   ],
