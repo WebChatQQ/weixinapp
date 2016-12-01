@@ -1,0 +1,21 @@
+/**
+	发送帖子
+	http://apptest.vzan.com/minisnsapp/addart
+**/
+
+{
+	"result": true,
+	"msg": "发帖成功!",
+	"obj": {
+		"state": 1,
+		"isguerdon": 0,
+		"money": 0,
+		"isaudit": 0,
+		"aid": 12564484
+	},
+	"objArray": null,
+	"errcode": 0,
+	"pageIndex": 0,
+	"totalPage": 0,
+	"totalCount": 0
+}

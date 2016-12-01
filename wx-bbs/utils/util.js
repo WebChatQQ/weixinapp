@@ -119,10 +119,20 @@ function playVoice(vId, vSrc) {
   wx.setStorageSync('playingVoice', storageVoice)
 }
 
+/**
+ * 过滤HTML标签
+ */
+function htmlFilter(content) {
+  let regExp = new RegExp("</?[^>]*>");
+  let regExp2 = new RegExp("</[^>]*>");
+  content = content.replace(regExp2,"")
+  return content.replace(regExp,"")
+}
 
 module.exports = {
   "formatTime": formatTime,
   "primaryLoginArgs": primaryLoginArgs,
   "playVoice":playVoice,
+  "htmlFilter":htmlFilter,
 }
 

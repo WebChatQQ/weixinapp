@@ -20,7 +20,7 @@ Page({
     emoij: false, // 是否选择emoij
     commentText: "",
     selectedImgs: [], // 评论选择图片
-    currentMoreComment: null,
+    currentMoreComment: "",
     headInfo: {},
     categories: []
   },
@@ -57,7 +57,7 @@ Page({
     let that = this;
     that.setData({
       "articles": [], "currentTypeId": 0, "hot": 0,
-      "scrollLeft": 0, "praised": {}, "showRecomment": null, "emoij": false, "commentText": '', "selectedImgs": [], "currentMoreComment": null
+      "scrollLeft": 0, "praised": {}, "showRecomment": null, "emoij": false, "commentText": '', "selectedImgs": [], "currentMoreComment": ""
     })
   },
 
@@ -103,7 +103,7 @@ Page({
         formData: {
           "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
           "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-          "fid": minisId, "hotshow": 0, "categoryId": 0, "pageIndex": 1
+          "fid": minisId, "hotshow": 1, "categoryId": 0, "pageIndex": 1
         }, // HTTP 请求中其他额外的 form data
         success: function (res) {
           var result = JSON.parse(res.data);
@@ -111,6 +111,16 @@ Page({
           if (articles == null) {
             articles = []
           }
+          // 过滤HTML标签
+          articles.forEach(function(article) {
+            article.ContentDesc = util.htmlFilter(article.ContentDesc)
+            if(article.articleComments) {
+              article.articleComments.forEach(function(comment) {
+                comment.Content = util.htmlFilter(comment.Content)
+              }) 
+            }
+          })
+          
 
           that.setData({ articles: articles })
         },
@@ -173,13 +183,18 @@ Page({
     console.log("点击版块跳转", event);
     var typeId = event.currentTarget.dataset.typeid;
     var hot = event.currentTarget.dataset.hot;
-    if (hot) {
-      typeId = 0;
-      hot = 1;
+    if (typeId == 0) {
+      hot = 1
     } else {
-      typeId = typeId;
-      hot = 0;
+      hot = 0
     }
+    // if (hot == 1) {
+    //   typeId = 0;
+    //   hot = 1;
+    // } else {
+    //   typeId = typeId;
+    //   hot = 0;
+    // }
     that.setData({ currentTypeId: typeId, hot: hot, articles: [], loading: true });
     // 获取articles
     var minisId = wx.getStorageSync('minisns').Id;
@@ -193,11 +208,16 @@ Page({
       formData: {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-        "fid": minisId, "hotshow": 1, "categoryId": that.data.currentTypeId, "pageIndex": 1
+        "fid": minisId, "hotshow": hot, "categoryId": that.data.currentTypeId, "pageIndex": 1
       }, // HTTP 请求中其他额外的 form data
       success: function (res) {
         var result = JSON.parse(res.data);
-        that.setData({ articles: result.objArray == null ? [] : result.objArray, pageIndex: 1 });
+        if (result.result == true) {
+          console.log("跳转版块成功", res)
+          that.setData({ articles: result.objArray == null ? [] : result.objArray, pageIndex: 1 });
+        } else {
+          console.log("跳转版块失败", res)
+        }
       },
     })
   },
@@ -302,7 +322,7 @@ Page({
     var minisId = wx.getStorageSync('minisns').Id;
     var unionid = wx.getStorageSync('user').unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
-    that.setData({ currentTypeId: typeId, articles: [], "loading": true });
+    that.setData({ currentTypeId: typeId, articles: [], "loading": true, "hot": 0 });
     wx.uploadFile({
       url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
       filePath: wx.getStorageSync('tmpFile'),
@@ -315,8 +335,16 @@ Page({
       }, // HTTP 请求中其他额外的 form data
       success: function (res) {
         var result = JSON.parse(res.data);
-        that.setData({ articles: result.objArray == null ? [] : result.objArray, "loading": false })
-        that.setData({ "currentTypeId": typeId, "categories": typeList, "scrollLeft": -900, "pageIndex": 1, "hot": 0 })
+        if (result.result == true) {
+          console.log("切换版块成功", res)
+          that.setData({ articles: result.objArray == null ? [] : result.objArray})
+          that.setData({ "currentTypeId": typeId, "categories": typeList, "scrollLeft": -900, "pageIndex": 1, "hot": 0 })
+        } else {
+          console.log("切换版块失败", res)
+        }
+      },
+      complete: function() {
+        that.setData({"loading": false })
       }
     })
   },
@@ -404,16 +432,16 @@ Page({
             },
             tmpFile,
             function (result) { // 更新用户信息
-              that.setData({"user":result.obj._LookUser})
+              that.setData({ "user": result.obj._LookUser })
             })
-            wx.showToast({
-              "title":"签到成功,连续签到" + result.obj.SigDays + "天",
-              "icon":"success"
-            })
-            // 跳转到排行榜
-            // wx.navigateTo({
-            //   url: 'String',
-            // })
+          wx.showToast({
+            "title": "签到成功,连续签到" + result.obj.SigDays + "天",
+            "icon": "success"
+          })
+          // 跳转到排行榜
+          // wx.navigateTo({
+          //   url: 'String',
+          // })
         } else {
           console.log("签到失败", result)
         }
@@ -637,7 +665,6 @@ Page({
       that.replyPost(); // 回复帖子
     }
 
-    console.log("提交评论 -- END");
   },
 
 
@@ -669,6 +696,7 @@ Page({
       }, // HTTP 请求中其他额外的 form data
       success: function (res) {
         var result = JSON.parse(res.data);
+        console.log("回复帖子成功", result)
         if (result.result == true) { // 发帖成功
           wx.request({
             url: "https://snsapi.vzan.com/minisnsapp/getcmt-" + id,
@@ -687,6 +715,7 @@ Page({
                   break;
                 }
               }
+              console.log("获取帖子评论列表成功")
             }
           })
         }
@@ -729,6 +758,7 @@ Page({
       }, // HTTP 请求中其他额外的 form data
       success: function (res) {
         var result = JSON.parse(res.data);
+        console.log("回复用户评论成功", result)
         if (result.result == true) { // 发帖成功
           wx.request({
             url: "https://snsapi.vzan.com/minisnsapp/getcmt-" + showRecomment.id,
@@ -747,6 +777,7 @@ Page({
                   break;
                 }
               }
+              console.log("获取评论列表成功")
             }
           })
         }

@@ -27,6 +27,7 @@ Page({
     recordTime: 0,
     formatedRecordTime: "00:00:00",
     voiceSelected: 0,
+    vedio:null,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -98,11 +99,11 @@ Page({
       let tmpFile = result.obj.tmpFile;
       let verifyModel = util.primaryLoginArgs(unionid);
       let imgs = "";
-      for (let i = 0; i < that.data.selectedImgs; i++) {
-        if (i = 0) {
-          imgs = imgs + that.data.selectedImgs[i];
+      for (let i = 0; i < that.data.selectedImgs.length; i++) {
+        if (i == 0) {
+          imgs = imgs + that.data.selectedImgs[i].id;
         } else {
-          imgs = imgs + "," + that.data.selectedImgs[i]
+          imgs = imgs + "," + that.data.selectedImgs[i].id
         }
       }
       let data = {
@@ -145,7 +146,7 @@ Page({
         formData: data, // HTTP 请求中其他额外的 form data
         success: function (res) {
           console.log("发帖成功", res);
-          wx.redirectTo({ "url": "/pages/index/index" });
+          wx.navigateTo({ "url": "/pages/index/index" });
         },
         complete: function () { // 重置数据
           that.resetData();
@@ -269,7 +270,6 @@ Page({
    */
   startRecord: function () {
     let that = this;
-    console.info("开始录音")
     that.setData({ recording: 1 })
     recordTimeInterval = setInterval(function () {
       var recordTime = that.data.recordTime + 1;
@@ -287,9 +287,11 @@ Page({
           filePath: res.tempFilePath,
           name: 'file',
           // header: {}, // 设置请求的 header
-          formData: { "uploadType": "audio", "fid": that.minisns.Id }, // HTTP 请求中其他额外的 form data
+          formData: { "uploadType": "audio", "fid": that.data.minisns.Id }, // HTTP 请求中其他额外的 form data
           success: function (res) {
-            that.setData({ voice: { id: res.id, src: res.url } })
+            let result = JSON.parse(res)
+            console.log("上传录音成功", res)
+            that.setData({ "voice": { "id": result.obj.id, "src": result.obj.url } })
           },
           complete: function () {
             that.setData({ hasRecorded: 1, recording: 0, recordTime: 0, })
@@ -307,7 +309,6 @@ Page({
    * 结束录音
    */
   stopRecord: function () {
-    console.info("结束录音")
     wx.stopRecord({
       success: function (res) {
         // 上传录音
@@ -317,23 +318,23 @@ Page({
           filePath: res.tempFilePath,
           name: "file",
           // header: {}, // 设置请求的 header
-          formData: { "uploadType": "audio", "fid": that.minisns.Id }, // HTTP 请求中其他额外的 form data
+          formData: { "uploadType": "audio", "fid": that.data.minisns.Id }, // HTTP 请求中其他额外的 form data
           success: function (res) {
-            that.setData({ voice: { id: res.id, src: res.url } })
+            let result = JSON.parse(res.data);
+            that.setData({ "voice": { "id": result.obj.id, "src": res.obj.url } })
           },
           complete: function () {
-            that.setData({ recording: 0, hasRecorded: 1, formatedRecordTime: util.formatTime(that.data.recordTime) })
+            that.setData({ "recording": 0, hasRecorded: 1, formatedRecordTime: util.formatTime(that.data.recordTime) })
           }
         })
-        console.info("录音完成")
       },
       complete: function () {
         that.setData({ recording: 0, hasRecorded: 1, formatedRecordTime: util.formatTime(that.data.recordTime) })
         console.info("停止录音，Complete");
+        that.setData({ voiceSelected: 0, recording: 0, hasRecorded: 1, recordTime: 0, formatedRecordTime: "00:00:00" })
+        clearInterval(recordTimeInterval);
       }
     })
-    that.setData({ voiceSelected: 0, recording: 0, hasRecorded: 1, recordTime: 0, formatedRecordTime: "00:00:00" })
-    clearInterval(recordTimeInterval);
   },
 
   /**
@@ -360,9 +361,16 @@ Page({
           filePath: res.tempFilePath,
           name: 'file',
           // header: {}, // 设置请求的 header
-          formData: { "uploadType": "video", "fid": that.minisns.Id }, // HTTP 请求中其他额外的 form data
+          formData: { "uploadType": "video", "fid": that.data.minisns.Id }, // HTTP 请求中其他额外的 form data
           success: function (r) {
-            that.setData({ voice: { id: r.id, src: r.url, duration: res.duration } })
+            let result = JSON.parse(r.data)
+            if (result.result == true) {
+              console.log("上传视频成功", res)
+              that.setData({ vedio: { "id": result.obj.id, "src": result.obj.url} })
+            } else {
+              console.log("上传视频失败")
+            }
+
           }
         })
       }

@@ -1,0 +1,18 @@
+/***
+	签到
+	http://snsapi.vzan.com//minisnsapp/signin
+
+**/
+
+{
+	"result": true,
+	"msg": "签到成功",
+	"obj": {
+		"SigDays": 1
+	},
+	"objArray": null,
+	"errcode": 0,
+	"pageIndex": 0,
+	"totalPage": 0,
+	"totalCount": 0
+}

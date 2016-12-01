@@ -1,13 +1,22 @@
+
+.post-container {
+  background-color: #eee;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.tabbar-container {
+  background-color: #fff;
+}
 .tabbar-wrap-selected {
     border-bottom: 2px solid #0e90d2;
-    background-color: #F8F8F8;
+    /*background-color: #F8F8F8;*/
     color: #0e90d2;
 }
 .tabbar-wrap {
     display: inline-block;
     width: 50%;
     text-align: center;
-    background-color: #eeeeee;
     height: 84rpx;
     line-height: 84rpx;    
 }

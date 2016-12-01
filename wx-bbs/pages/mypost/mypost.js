@@ -12,7 +12,8 @@ Page({
     commentText: "",
     selectedImgs: [],
     currentMoreComment: null,
-    articles: []
+    articles: [], // 我的发帖
+    payArticles:[], // 我的付费贴
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -38,9 +39,21 @@ Page({
     that.setData({"loading":true})
     app.getInit(function (result) {
       that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": result.obj.tmpFile })
+      if (user.Id != that.data.uid) {
+        wx.setNavigationBarTitle({"tilte":"TA的发帖"})
+      }
     })
+    
     that.getArticles(uid);
 
+  },
+
+  /**
+   * 重置数据
+   */
+  resetData: function() {
+    this.setData({"showRecomment":{}, "emoij":false, "commentText":"", "selectedImgs":[]
+    , "currentMoreComment":null })
   },
 
   /**
@@ -50,11 +63,10 @@ Page({
     var that = this;
     let id = e.currentTarget.dataset.id;
     if (id == 1) {
-      that.setData({ selected: 1 })
-
+      that.setData({ "selected": 1 })
       that.getArticles();
     } else {
-      that.setData({ selected: 2 })
+      that.setData({ "selected": 2 })
 
       that.getChargeArt();
     }
@@ -109,7 +121,9 @@ Page({
    * 获取我的付费贴
    */
   getChargeArt: function () {
-
+    let that = this
+    that.resetData()
+    
   },
 
   /**

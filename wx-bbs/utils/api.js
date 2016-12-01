@@ -1,3 +1,4 @@
+var Promise = require("./bluebird.js")
 
 /**
  * 获取发帖列表
@@ -65,9 +66,27 @@ function userInfo(data, filepath, cb) {
     })
 }
 
+/**
+ * 微信API
+ */
+function wxApi(wxFn) {
+    return function(data = {}) {
+        return new Promise((resolve, reject) => {
+            data.success = function(res) { // 成功
+                resolve(res)
+            }
+            data.fail = function(res) { // 失败 
+                reject(res)
+            }
+            wxFn(data)
+        })
+    }
+}
+
 
 module.exports = {
     "myarticles": myarticles,
     "getartlistbykeyword":getartlistbykeyword,
     "userInfo":userInfo,
+    "wxApi":wxApi,
 }
