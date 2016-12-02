@@ -7,7 +7,6 @@
     "pages/mypost/mypost",
     "pages/score/score",
     "pages/mine/mine",
-    "pages/logs/logs",
     "pages/articledetail/articledetail"
    
   ],

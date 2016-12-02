@@ -40,7 +40,7 @@
     height: 80rpx;
     line-height: 80rpx;
     text-align: center;
-    color:#f80;
+    color:#ff8800;
 }
 .score-head-opera-wrap {
     width: 50%;
@@ -61,7 +61,7 @@
 .exchange-empty {
     font-family: SimSun,Arial Narrow,HELVETICA;
     text-align: center;
-    color: #333;
+    color: #333333;
     font-size: 14px;
     line-height: 50px;
 

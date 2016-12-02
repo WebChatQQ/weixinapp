@@ -13,7 +13,7 @@
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color: #aaaaaa;
 }
 
 .usermotto {
@@ -23,7 +23,7 @@
 .index-head-logo-f{
   font-family:"微软雅黑";
   font-size: 28rpx;
-  color: #fff;
+  color: #ffffff;
 }
 .flex {
   flex: 1;
@@ -32,7 +32,7 @@
   position: relative;
 }
 .border-slice {
-  border-bottom: 10px solid #eee;
+  border-bottom: 10px solid #eeeeee;
 }
 .head {
   height: 110px;
@@ -116,7 +116,7 @@
   position: fixed;
   top: 0;
   z-index: 1;
-  background-color: #fff;
+  background-color: #ffffff;
   border-top: 1px solid #858585;
 }
 
@@ -132,8 +132,8 @@
 }
 .scrollview-hide {
   position: relative;
-  border: 1px solid #fff;
-  background-color: #eee;
+  border: 1px solid #ffffff;
+  background-color: #eeeeee;
   top: -12px;
   height: 7px;
   widows: 100%;
@@ -141,7 +141,7 @@
 .index-heading-more {
   height: 60rpx;
   width: 80rpx;
-  background-color: #fff;
+  background-color: #ffffff;
   font-size: 31.2rpx;
   text-align: center;
   line-height: 60rpx;
@@ -157,7 +157,7 @@
 }
 
 .fl text {
-  color:#000;
+  color:#000000;
 }
 .aricle-user-wrap {
   position: relative;
@@ -272,7 +272,7 @@
   border: 1px solid #d6d6d6;
   border-radius: 4px;
   color: #858585;
-  background: #fff;
+  background: #ffffff;
   font-size: 12px;
   width: 60px;
   height: 20px; 
@@ -282,7 +282,7 @@
 .recommend-submit-wrap {
   border: 1px solid #d6d6d6;
   border-radius: 4px;
-  color: #fff;
+  color: #ffffff;
   font-size: 12px;
   width: 60px;
   height: 20px; 
@@ -317,7 +317,7 @@
     margin: 10px 0px;
     text-align: center;
     color: #858585;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 .index-head-search{
     background: url(http://j.pengxun.cn/content/images/index/searh.png) no-repeat;

@@ -3,12 +3,12 @@ page{
 }
 .box-container{
 	padding: 15px;
-	background-color: #fff;
+	background-color: #ffffff;
 }
 .user-info-container{
 	height: 60px;
 	margin: 0 10px;
-	background-color: #fff;
+	background-color: #ffffff;
 
 }
 .u-img-wrap {
@@ -30,6 +30,6 @@ page{
 	height: 26px;
 	line-height: 26px;
 	background-color: #17b5ee;
-	color: #fff;
+	color: #ffffff;
 	border-radius: 5px;
 }

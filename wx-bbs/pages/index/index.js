@@ -28,7 +28,7 @@ Page({
   onLoad: function () {
     console.log('onLoad')
     var that = this
-    this.init();
+    // this.init();
   },
   onShow: function () {
     this.resetData()
