@@ -179,7 +179,7 @@ Page({
           address: { "hidlat": latitude, "hidlng": longitude, "hidaddress": address },
           locationMsg: address
         });
-        console.log(that.address);
+        console.log(that.data.address);
       }
     })
   },

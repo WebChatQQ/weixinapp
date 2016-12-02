@@ -2,12 +2,14 @@ var api = require("../../utils/api.js")
 var util = require("../../utils/util.js")
 
 var app = getApp()
+var that 
 Page({
     data: {
     },
     onLoad: function (options) {
         // 页面初始化 options为页面跳转所带来的参数
         this.setData({ "keyWord": "试试" })
+        that = this
         this.init();
     },
     onReady: function () {
@@ -24,7 +26,6 @@ Page({
     },
 
     init: function () {
-        let that = this;
         app.getInit(function (result) {
             var tmpFile = result.obj.tmpFile;
             var minisId = result.obj._Minisns.Id;
@@ -32,10 +33,9 @@ Page({
             var verifyModel = util.primaryLoginArgs(unionid);
             // 设置全局数据
             that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": tmpFile })
+            let keyWrod = that.data.keyWord;
+            that.searchHandler(keyWrod);
         })
-
-        let keyWrod = that.data.keyWord;
-        that.searchHandler(keyWrod);
     },
 
     /**
@@ -46,7 +46,6 @@ Page({
         this.searchHandler(keyWord)
     },
     searchHandler: function (keyWrod) {
-        let that = this
         var tmpFile = that.data.tmpFile;
         var minisId = that.data.minisns.Id;
         var unionid = that.data.user.unionid;
@@ -60,16 +59,16 @@ Page({
         api.getartlistbykeyword(data, tmpFile,
             {
                 "success": function (result) {
-                    // 评论倒序
-                    let articles = result.objArray
-                    for (let i = 0; i < articles.length; i++) {
-                        if (articles[i].articleComments) {
-                            articles[i].articleComments = articles[i].articleComments.reverse();
-                        }
+                    console.log("关键词搜索帖子成功", result)
+                    if (result.result) {
+                        // 评论倒序
+                        let articles = result.objArray
+                        articles = util.articleFilter(articles)
+                        that.setData({ "articles": articles })
                     }
-                    that.setData({ "articles": articles })
+                    that.setData({ "loading": false })
                 },
-                complete: function () { // 关闭加载
+                "complete": function (res) { // 关闭加载
                     that.setData({ "loading": false })
                 }
             })

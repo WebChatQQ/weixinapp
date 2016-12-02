@@ -22,6 +22,7 @@
                         <view wx:if="{{score.TypeId==4}}" class="score-head-opera-wrap score-data-wrap">分享</view>
                         <view wx:if="{{score.TypeId==5}}" class="score-head-opera-wrap score-data-wrap">签到</view>
                         <view wx:if="{{score.TypeId==6}}" class="score-head-opera-wrap score-data-wrap">扣积分</view>
+                        <view wx:else class="score-head-opera-wrap score-data-wrap"></view>
                         <view class="score-head-data-wrap score-data-wrap">{{score.CreateDate}}</view>
                     </view>
                 </block>

@@ -39,7 +39,7 @@ Page({
     that.setData({"loading":true})
     app.getInit(function (result) {
       that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": result.obj.tmpFile })
-      if (user.Id != that.data.uid) {
+      if (result.obj._LookUser.Id != that.data.uid) {
         wx.setNavigationBarTitle({"tilte":"TA的发帖"})
       }
     })

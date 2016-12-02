@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/post/post",
     "pages/search/search",
@@ -8,34 +8,37 @@
     "pages/score/score",
     "pages/mine/mine",
     "pages/articledetail/articledetail"
-   
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "微赞官方论坛",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#dddddd",
     "selectedColor": "#3cc51f",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "首页",
-      "iconPath": "images/index.png",
-      "selectedIconPath": "images/index.png"
-    },{
-      "pagePath": "pages/post/post",
-      "text": "发帖",
-      "iconPath": "images/发帖32x32.png",
-      "selectedIconPath": "images/发帖32x32hl.png"
-    },{
-      "pagePath": "pages/mine/mine",
-      "text": "我的",
-      "iconPath": "images/我的32x32.png",
-      "selectedIconPath": "images/我的32x32hl.png"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index.png"
+      },
+      {
+        "pagePath": "pages/post/post",
+        "text": "发帖",
+        "iconPath": "images/发帖32x32.png",
+        "selectedIconPath": "images/发帖32x32hl.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/我的32x32.png",
+        "selectedIconPath": "images/我的32x32hl.png"
+      }
+    ]
   }
 }

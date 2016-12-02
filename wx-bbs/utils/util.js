@@ -92,7 +92,7 @@ function playVoice(vId, vSrc) {
     audioContext.play();
     storageVoice = new Object();
     storageVoice.id = vId;
-    storageVoice.status = 2;  
+    storageVoice.status = 2;
     storageVoice.src = vSrc;
   } else if (storageVoice.id == vId) {
     // 暂定状态
@@ -123,16 +123,60 @@ function playVoice(vId, vSrc) {
  * 过滤HTML标签
  */
 function htmlFilter(content) {
-  let regExp = new RegExp("</?[^>]*>");
-  let regExp2 = new RegExp("</[^>]*>");
-  content = content.replace(regExp2,"")
-  return content.replace(regExp,"")
+  if (content) {
+    let regExp = new RegExp("</?[^>]*>", "g");
+    let regExp2 = new RegExp("</[^>]*>", "g");
+    content = content.replace(regExp2, "")
+    return content.replace(regExp, "")
+  }
+  return content
 }
+
+/**
+ * 过滤Articles中的标签
+ */
+function articleFilter(articles) {
+  let that = this
+  articles.forEach(function (article) {
+    article.ContentDesc = that.htmlFilter(article.ContentDesc)
+    if (article.articleComments) {
+      article.articleComments.forEach(function (comment) {
+        if (comment) {
+          comment.Content = that.htmlFilter(comment.Content)
+        }
+      })
+      article.articleComments = article.articleComments.reverse()
+    }
+  })
+  return articles;
+}
+
+/**
+ * 开启加载框
+ */
+function showLoading(title = "加载中", duration = 10000) {
+  wx.showToast({
+    title: title,
+    icon: 'loading',
+    duration: duration
+  })
+}
+
+/**
+ * 关闭加载框
+ */
+function endLoading() {
+  wx.hideToast()
+}
+
 
 module.exports = {
   "formatTime": formatTime,
   "primaryLoginArgs": primaryLoginArgs,
-  "playVoice":playVoice,
-  "htmlFilter":htmlFilter,
+  "playVoice": playVoice,
+  "htmlFilter": htmlFilter,
+  "articleFilter": articleFilter,
+  "showLoading": showLoading,
+  "endLoading": endLoading
 }
 

@@ -24,14 +24,14 @@
   </view>
   <view class="index-heading-scrol ">
     <scroll-view class="index-heading-content " scroll-x="true" scroll-left="{{scrollLeft}}" style="width:100%">
-      <view class="bankuai  {{currentTypeId==0&&hot==0?'selected':''}}" catchtap="toBankuai" data-typeid="0">
+      <view class="bankuai  {{currentTypeId==0&&hot==0?'selected':''}}" catchtap="toBankuai" data-typeid="0" data-hot="0">
         <text>全部</text>
       </view>
       <view class="bankuai  {{currentTypeId==0&&hot==1?'selected':''}}" catchtap="toBankuai" data-typeid="0" data-hot="1">
         <text>热帖</text>
       </view>
       <block wx:for="{{categories}}" wx:for-item="category" wx:key="Id">
-        <view wx:if="{{category.Id != 0}}" class="bankuai  {{ currentTypeId==category.Id?'selected':''}}" catchtap="toBankuai" data-typeid="{{category.Id}}">
+        <view wx:if="{{category.Id != 0}}" class="bankuai  {{ currentTypeId==category.Id?'selected':''}}" catchtap="toBankuai" data-typeid="{{category.Id}}" data-hot="0">
           <text class="">{{category.Title}}</text>
         </view>
       </block>
@@ -159,7 +159,6 @@
   <view class="index-heading-more " catchtap="moreType">+</view>
 </view>
 <include src="/template/search.wxml" />
-
 <!--<view class="comment-voice-container">
    <view class="audio-wrap">
       <audio id="test" class="audio" name="此时此刻" controls   poster="http://i.pengxun.cn/content/images/voice/voiceplaying.png" 

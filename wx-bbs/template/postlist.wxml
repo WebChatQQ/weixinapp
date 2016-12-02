@@ -116,7 +116,8 @@
 
   <!-- 文字回复 -->
   <view class="res-content">
-    <text wx:if="{{DUser}}">回复
+    <text wx:if="{{DUser}}">
+      <text>回复</text>
       <text style="color:#5a85ce;max-width:110px;">@{{DUser.NickName}} : </text>
     </text>
     <text>{{Content}}</text>

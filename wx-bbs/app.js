@@ -1,7 +1,10 @@
 var crypt = require("./utils/crypt.js");
 var util = require("./utils/util.js");
-var Promise = require("./utils/bluebird.js")
+// var Promise = require("./utils/polyfill.js")
 var api = require("./utils/api.js")
+import Promise from './utils/es6-promise.min.js';
+
+
 //app.js
 var that;
 var inited = false;// 初始化过程
@@ -33,6 +36,27 @@ App({
      * 初始化数据
      */
     init: function (cb) {
+
+        let formData = new FormData();
+        formData.append("deviceType","ios9.0")
+        formData.append("uid", "oW2wBwUJF_7pvDFSPwKfSWzFbc5o")
+        formData.append("sign", "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82")
+        formData.append("timestamp", 1479174892808)
+        formData.append("fid", "3")
+        formData.append("pageIndex", "1")
+        formData.append("categoryId", "0")
+        formData.append("hotshow", "0")
+
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
+            data: formData,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "multipart/form-data;charset=UTF-8" }, // 设置请求的 header
+            success: function (res) {
+                console.log("loginByWeiXin", res);
+            }
+        })
+
 
         api.wxApi(wx.login)({})
             .then(function (loginRes) {

@@ -8,7 +8,7 @@ var api = require("../../utils/api.js")
 var app = getApp()
 Page({
   data: {
-    loading: true,
+    loading: true,  // 当前页面是否正在加载
     articles: [],
     pageIndex: 1,
     audioIcon: "http://i.pengxun.cn/content/images/voice/voiceplaying.png",
@@ -26,9 +26,7 @@ Page({
   },
 
   onLoad: function () {
-    console.log('onLoad')
-    var that = this
-    // this.init();
+    this.init();
   },
   onShow: function () {
     this.resetData()
@@ -56,8 +54,9 @@ Page({
   resetData: function () {
     let that = this;
     that.setData({
-      "articles": [], "currentTypeId": 0, "hot": 0,
-      "scrollLeft": 0, "praised": {}, "showRecomment": null, "emoij": false, "commentText": '', "selectedImgs": [], "currentMoreComment": ""
+      "articles": [], "pageIndex": 1, "currentTypeId": 0, "hot": 0, "scrollLeft": 0, "praised": {},
+      "showRecomment": null, "emoij": false, "commentText": '', "selectedImgs": [], "currentMoreComment": "",
+      "searchClicked": false,
     })
   },
 
@@ -67,6 +66,9 @@ Page({
   init: function () {
     var that = this;
     that.setData({ "loading": true })
+    //提示加载
+    util.showLoading()
+
     app.getInit(function (result) {
       var tmpFile = result.obj.tmpFile;
       var minisId = result.obj._Minisns.Id;
@@ -74,103 +76,75 @@ Page({
       var verifyModel = util.primaryLoginArgs(unionid);
       // 设置全局数据
       that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": tmpFile })
-      wx.uploadFile({
-        url: 'https://snsapi.vzan.com/minisnsapp/getminisnsheadinfo',
-        filePath: tmpFile,
-        name: 'file',
-        // header: {}, // 设置请求的 header
-        formData: {
+      // 设置头部信息
+      api.snsApi({
+        "url": 'https://snsapi.vzan.com/minisnsapp/getminisnsheadinfo', "filePath": tmpFile, "name": "file", "formData": {
           "deviceType": verifyModel.deviceType, "uid": verifyModel.uid, "versionCode": verifyModel.versionCode,
           "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, "id": minisId
-        }, // HTTP 请求中其他额外的 form data
-        success: function (res) {
-          var result = JSON.parse(res.data);
-          that.setData({
-            headInfo: {
-              "backMap": result.obj.BackMap, "logoUrl": result.obj.LogoUrl, "articleCount": result.obj.ArticleCount,
-              "clickCount": result.obj.ClickCount, "isSign": result.obj.IsSign, "isConcern": result.obj.IsConcern
-            },
-            categories: result.obj.Categories
-          });
-          wx.setStorageSync('categories', result.obj.Categories);
         }
+      }, function (result) {
+        that.setData({
+          "headInfo": {
+            "backMap": result.obj.BackMap, "logoUrl": result.obj.LogoUrl, "articleCount": result.obj.ArticleCount,
+            "clickCount": result.obj.ClickCount, "isSign": result.obj.IsSign, "isConcern": result.obj.IsConcern
+          },
+          "categories": result.obj.Categories
+        })
+        wx.setStorageSync('categories', result.obj.Categories);
       })
-      wx.uploadFile({
-        url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-        filePath: tmpFile,
-        name: 'file',
-        // header: {}, // 设置请求的 header
-        formData: {
+      // 获取初始数据
+      api.snsApi({
+        "url": "https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid", "filePath": tmpFile, "name": "file", "formData": {
           "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
           "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
           "fid": minisId, "hotshow": 1, "categoryId": 0, "pageIndex": 1
-        }, // HTTP 请求中其他额外的 form data
-        success: function (res) {
-          var result = JSON.parse(res.data);
-          var articles = result.objArray; // 更新数据
-          if (articles == null) {
-            articles = []
-          }
-          // 过滤HTML标签
-          articles.forEach(function(article) {
-            article.ContentDesc = util.htmlFilter(article.ContentDesc)
-            if(article.articleComments) {
-              article.articleComments.forEach(function(comment) {
-                comment.Content = util.htmlFilter(comment.Content)
-              }) 
-            }
-          })
-          
-
-          that.setData({ articles: articles })
-        },
-        complete: function () {
-          that.setData({ loading: false });
         }
+      }, function (result) {
+        let articles = result.objArray
+        if (articles == null) { articles = [] }
+        // 过滤HTML标签
+        articles = util.articleFilter(articles)
+        that.setData({ "articles": articles, "loading": false })
+        // 关闭加载
+        util.endLoading()
+      }, function (result) {
+        that.setData({ "loading": false })
+        // 关闭加载
+        util.endLoading()
       })
-
     })
   },
   /**
-   * 下拉刷新
+   * 上拉加载
   */
   nextPage: function (e) {
     console.log("开启下拉加载");
     var that = this;
-    wx.showNavigationBarLoading();
     that.setData({ "loading": true });
+    util.showLoading()
     var minisId = that.data.minisns.Id;
     var unionid = that.data.user.unionid;
+    var tmpFile = that.data.tmpFile
     var verifyModel = util.primaryLoginArgs(unionid);
     var pageIndex = that.data.pageIndex + 1;
-    wx.uploadFile({
-      url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-      filePath: wx.getStorageSync('tmpFile'),
-      name: 'file',
-      // header: {}, // 设置请求的 header
-      formData: {
+
+    api.snsApi({
+      "url": "https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid", "filePath": tmpFile, "name": "file", "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
         "fid": minisId, "hotshow": that.data.hot, "categoryId": that.data.currentTypeId, "pageIndex": pageIndex
-      }, // HTTP 请求中其他额外的 form data
-      success: function (res) {
-        console.log("下拉刷新成功");
-        var result = JSON.parse(res.data);
-        if (result.result == true) {
-          var articles = [];
-          if (pageIndex <= 1) {
-            articles = result.objArray == null ? [] : result.objArray; // 更新数据
-          } else {
-            articles = that.data.articles.concat(result.objArray == null ? [] : result.objArray);
-          }
-          that.setData({ articles: articles, pageIndex: result.pageIndex });
-          wx.hideNavigationBarLoading();
-        }
-
-      },
-      complete: function () {
-        that.setData({ "loading": false })
       }
+    }, function (result) {
+      console.log("上拉加载成功", result)
+      let articles = that.data.articles || []
+      if (result.objArray != null) { // 过滤HTML元素
+        articles = articles.concat(util.articleFilter(result.objArray))
+      }
+      that.setData({ "articles": articles, "pageIndex": pageIndex, "loading": false })
+      util.endLoading()
+    }, function (result) {
+      that.setData({ "loading": false, pageIndex: that.data.pageIndex })
+      util.endLoading()
     })
   },
 
@@ -183,42 +157,29 @@ Page({
     console.log("点击版块跳转", event);
     var typeId = event.currentTarget.dataset.typeid;
     var hot = event.currentTarget.dataset.hot;
-    if (typeId == 0) {
-      hot = 1
-    } else {
-      hot = 0
-    }
-    // if (hot == 1) {
-    //   typeId = 0;
-    //   hot = 1;
-    // } else {
-    //   typeId = typeId;
-    //   hot = 0;
-    // }
-    that.setData({ currentTypeId: typeId, hot: hot, articles: [], loading: true });
+    that.setData({ loading: true });
+    util.showLoading()
     // 获取articles
-    var minisId = wx.getStorageSync('minisns').Id;
-    var unionid = wx.getStorageSync('user').unionid;
+    var minisId = that.data.minisns.Id;
+    var unionid = that.data.user.unionid;
+    let tmpFile = that.data.tmpFile
     var verifyModel = util.primaryLoginArgs(unionid);
-    wx.uploadFile({
-      url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-      filePath: wx.getStorageSync('tmpFile'),
-      name: 'file',
-      // header: {}, // 设置请求的 header
-      formData: {
+    api.snsApi({
+      "url": "https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid", "filePath": tmpFile, "name": "file", "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-        "fid": minisId, "hotshow": hot, "categoryId": that.data.currentTypeId, "pageIndex": 1
-      }, // HTTP 请求中其他额外的 form data
-      success: function (res) {
-        var result = JSON.parse(res.data);
-        if (result.result == true) {
-          console.log("跳转版块成功", res)
-          that.setData({ articles: result.objArray == null ? [] : result.objArray, pageIndex: 1 });
-        } else {
-          console.log("跳转版块失败", res)
-        }
-      },
+        "fid": minisId, "hotshow": hot, "categoryId": typeId, "pageIndex": 1
+      }
+    }, function (result) {
+      console.log("跳转版块成功", result)
+      let articles = result.objArray || []
+      articles = util.articleFilter(articles)
+      that.setData({ "articles": articles, "hot": hot, "pageIndex": 1, "loading": false, "currentTypeId": typeId })
+      util.endLoading()
+    }, function (result) {
+      console.log("跳转版块失败", result)
+      that.setData({ "loading": false })
+      util.endLoading()
     })
   },
   /**
@@ -232,38 +193,30 @@ Page({
     var minisId = that.data.minisns.Id;
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
-    wx.uploadFile({
-      url: 'https://snsapi.vzan.com//minisnsapp/checkpermissionbyuser',
-      filePath: tmpFile,
-      name: 'file',
-      // header: {}, // 设置请求的 header
-      formData: {
+    api.snsApi({
+      "url": "https://snsapi.vzan.com//minisnsapp/checkpermissionbyuser",
+      "filePath": tmpFile,
+      "name": "file",
+      "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
         artId: artId
-      }, // HTTP 请求中其他额外的 form data
-      success: function (res) {
-        let result = JSON.parse(res.data);
-        console.log("获取帖子权限", result);
-        if (result.result == true) {
-          let actionList = []
-          if (result.obj.BlackOne) { // 举报
-            actionList.push("举报")
-          }
-          actionList.push("取消")
-          wx.showActionSheet({
-            itemList: actionList,
-            success: function (res) {
-              if (!res.cancel) {
-                let idx = res.tapIndex;
-                if (actionList[idx] == "举报") {
-                  console.log("点击举报")
-                }
-              }
-            }
-          })
-        }
       }
+    }, function (result) {
+      let actionList = []
+      if (result.obj.BlackOne) {
+        actionList.push("举报")
+      }
+      actionList.push("取消")
+      api.wxApi(wx.showActionSheet)({ "itemList": actionList })
+        .then(function (result) {
+          if (!res.cancel) {
+            let idx = res.tapIndex;
+            if (actionList[idx] == "举报") {
+              console.log("举报成功")
+            }
+          }
+        })
     })
   },
   /**
@@ -322,76 +275,27 @@ Page({
     var minisId = wx.getStorageSync('minisns').Id;
     var unionid = wx.getStorageSync('user').unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
-    that.setData({ currentTypeId: typeId, articles: [], "loading": true, "hot": 0 });
-    wx.uploadFile({
-      url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-      filePath: wx.getStorageSync('tmpFile'),
-      name: 'file',
-      // header: {}, // 设置请求的 header
-      formData: {
+    let tmpFile = that.data.tmpFile
+    that.setData({ "loading": true });
+    util.showLoading()
+    api.snsApi({
+      "url": "https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid",
+      "filePath": tmpFile,
+      "name": "file",
+      "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
         "fid": minisId, "hotshow": 0, "categoryId": typeId, "pageIndex": 1
-      }, // HTTP 请求中其他额外的 form data
-      success: function (res) {
-        var result = JSON.parse(res.data);
-        if (result.result == true) {
-          console.log("切换版块成功", res)
-          that.setData({ articles: result.objArray == null ? [] : result.objArray})
-          that.setData({ "currentTypeId": typeId, "categories": typeList, "scrollLeft": -900, "pageIndex": 1, "hot": 0 })
-        } else {
-          console.log("切换版块失败", res)
-        }
-      },
-      complete: function() {
-        that.setData({"loading": false })
       }
-    })
-  },
-
-  /**
-   *  展示首页Head信息 
-   * 
-  */
-  showHeadInfo: function () {
-    var that = this;
-    app.getInit(function (result) {
-      var tmpFile = result.obj.tmpFile;
-      var minisId = result.obj._Minisns.Id;
-      var unionid = result.obj._LookUser.unionid;
-      var verifyModel = util.primaryLoginArgs(unionid);
-      wx.uploadFile({
-        url: 'https://snsapi.vzan.com/minisnsapp/getminisnsheadinfo',
-        filePath: tmpFile,
-        name: 'file',
-        // header: {}, // 设置请求的 header
-        formData: {
-          "deviceType": verifyModel.deviceType, "uid": verifyModel.uid, "versionCode": verifyModel.versionCode,
-          "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, "id": minisId
-        }, // HTTP 请求中其他额外的 form data
-        success: function (res) {
-          var result = JSON.parse(res.data);
-          that.setData({
-            headInfo: {
-              "backMap": result.obj.BackMap, "logoUrl": result.obj.LogoUrl, "articleCount": result.obj.ArticleCount,
-              "clickCount": result.obj.ClickCount, "isSign": result.obj.IsSign, "isConcern": result.obj.IsConcern
-            },
-            categories: result.obj.Categories
-          });
-          wx.setStorageSync('categories', result.obj.Categories);
-        }
-      })
-
-    })
-  },
-
-  /**
-   * 展示首页帖子
- */
-  toArticleDetail: function (event) {
-    var articleId = event.currentTarget.dataset.articleId;
-    wx.navigateTo({
-      url: '/pages/articledetail/articledetail?id=' + articleId,
+    }, function (result) {
+      console.log("跳转版块成功", result)
+      let articles = util.articleFilter(result.objArray)
+      that.setData({ "articles": articles, "loading": false, "currentTypeId": typeId, "hot": 0 })
+      util.endLoading()
+    }, function (result) {
+      console.log("跳转版块失败", result)
+      that.setData({ "loading": false })
+      util.endLoading()
     })
   }
   ,
@@ -412,40 +316,37 @@ Page({
     var minisId = that.data.minisns.Id;
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
-    wx.uploadFile({
-      url: 'https://snsapi.vzan.com//minisnsapp/signin',
-      filePath: tmpFile,
-      name: 'file',
-      // header: {}, // 设置请求的 header
-      formData: {
+
+    api.snsApi({
+      "url": "https://snsapi.vzan.com//minisnsapp/signin",
+      "filePath": tmpFile,
+      "name": "file",
+      "formData": {
         "deviceType": verifyModel.deviceType, "uid": verifyModel.uid, "versionCode": verifyModel.versionCode,
         "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, "fid": minisId
-      }, // HTTP 请求中其他额外的 form data
-      success: function (res) {
-        let result = JSON.parse(res.data)
-        if (result.result == true) {
-          console.log("签到成功", result)
-          api.userInfo(
-            {
-              "fid": minisId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,
-              "sign": verifyModel.sign, "timestamp": verifyModel.timestamp, "versionCode": verifyModel.versionCode
-            },
-            tmpFile,
-            function (result) { // 更新用户信息
-              that.setData({ "user": result.obj._LookUser })
-            })
-          wx.showToast({
-            "title": "签到成功,连续签到" + result.obj.SigDays + "天",
-            "icon": "success"
-          })
-          // 跳转到排行榜
-          // wx.navigateTo({
-          //   url: 'String',
-          // })
-        } else {
-          console.log("签到失败", result)
-        }
       }
+    }, function (result) {
+      console.log("签到成功", result)
+      wx.showToast({
+        "title": "签到成功,连续签到" + result.obj.SigDays + "天",
+        "icon": "success"
+      })
+      api.snsApi({
+        "url": "https://snsapi.vzan.com/minisnsapp/userinfo",
+        "filePath": tmpFile,
+        "name": "file",
+        "formData": {
+          "fid": minisId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,
+          "sign": verifyModel.sign, "timestamp": verifyModel.timestamp, "versionCode": verifyModel.versionCode
+        }
+      }, function (result) {
+        console.log("更新用户信息成功", result)
+        that.setData({ "user": result.obj._LookUser })
+      }, function (error) {
+        console.log("签到后更新用户信息失败", error)
+      })
+    }, function(error) {
+      console.log("签到失败", error)
     })
   },
   // 关注
