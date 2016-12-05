@@ -31,7 +31,7 @@ function getartlistbykeyword(data, filepath, cb) {
         formData: data, // HTTP 请求中其他额外的 form data
         success: function (res) {
             let result = JSON.parse(res.data);
-            if (result.result) { 
+            if (result.result) {
                 cb.success(result);
             }
         },
@@ -50,46 +50,67 @@ function getartlistbykeyword(data, filepath, cb) {
  */
 function userInfo(data, filepath, cb) {
     wx.uploadFile({
-      url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
-      filePath: filepath,
-      name:'file',
-      // header: {}, // 设置请求的 header
-      formData: data, // HTTP 请求中其他额外的 form data
-      success: function(res){
-        let result = JSON.parse(res.data)
-        if (result.result == true) {
-            console.log("获取用户信息成功", result)
-            cb(result)
-        } else {
-            console.log("获取用户信息失败")
+        url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
+        filePath: filepath,
+        name: 'file',
+        // header: {}, // 设置请求的 header
+        formData: data, // HTTP 请求中其他额外的 form data
+        success: function (res) {
+            let result = JSON.parse(res.data)
+            if (result.result == true) {
+                console.log("获取用户信息成功", result)
+                cb(result)
+            } else {
+                console.log("获取用户信息失败")
+            }
         }
-      }
+    })
+}
+
+/**
+ * 获取帖子列表
+ */
+function getComment(id, data = {}, success, fail) {
+    wx.request({
+        url: "https://snsapi.vzan.com/minisnsapp/getcmt-" + id,
+        data: data,
+        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function (res) {            
+            console.log("获取帖子评论列表成功")
+            success(res)
+        },
+        fail: function(res) {
+            console.log("获取帖子评论列表失败")
+            fail(res)
+        }
     })
 }
 
 
 /**
- * 
+ * 服务器API
  */
 function snsApi(data, success, fail) {
     let that = this
+    data["header"] = {"content-type": "multipart/form-data;charset=gbk"}
     return that.wxApi(wx.uploadFile)(data)
-    .then(function(res){
-        let result = JSON.parse(res.data)
-        console.log("请求成功", result)
-        if (result.result == true) {
-            return success(result) || true
-        } else {
-            console.log("服务器返回错误", res)
-            return fail(result) || false
-        }
-    }, function(res) {
-        console.log("请求失败", res)
-        if (typeof fail == "function") {
-            return fail(res) || false
-        }
-        return false;
-    })
+        .then(function (res) {
+            let result = JSON.parse(res.data)
+            console.log("请求成功", result)
+            if (result.result == true) {
+                return success(result) || true
+            } else {
+                console.log("服务器返回错误", res)
+                return fail(result) || false
+            }
+        }, function (res) {
+            console.log("请求失败", res)
+            if (typeof fail == "function") {
+                return fail(res) || false
+            }
+            return false;
+        })
 }
 
 
@@ -97,13 +118,13 @@ function snsApi(data, success, fail) {
  * 微信API
  */
 function wxApi(wxFn) {
-    return function(data = {}) {
+    return function (data = {}) {
         return new Promise((resolve, reject) => {
-            data.success = function(res) { // 成功
+            data.success = function (res) { // 成功
                 // console.log("执行 " + wxFn.toString() + " 成功", res)
                 resolve(res)
             }
-            data.fail = function(res) { // 失败
+            data.fail = function (res) { // 失败
                 // console.log("执行 " + wxFn.toString() + " 失败 ", res)
                 reject(res)
             }
@@ -115,8 +136,9 @@ function wxApi(wxFn) {
 
 module.exports = {
     "myarticles": myarticles,
-    "getartlistbykeyword":getartlistbykeyword,
-    "userInfo":userInfo,
-    "wxApi":wxApi,
-    "snsApi":snsApi,
+    "getartlistbykeyword": getartlistbykeyword,
+    "userInfo": userInfo,
+    "wxApi": wxApi,
+    "snsApi": snsApi,
+    "getComment":getComment,
 }

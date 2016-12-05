@@ -1,0 +1,6 @@
+.mine-article-icon{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px 0px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
+.mine-join-icon{width: 25px; height: 25px;background: url(http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png) no-repeat 0 -25px; vertical-align: middle; margin-right: 5px; display: inline-block; background-size:100%}
+.mine-post-chat{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -100px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
+.mine-post-credit{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -125px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
+.mine-post-gift{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -150px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}
+.mine-post-aboutus{width: 25px; height: 25px; background: url("http://i.pengxun.cn/static/vzan/web/post-big-pic-09.png") 0px -200px / 100% no-repeat; vertical-align: middle; margin-right: 5px; display: inline-block;}

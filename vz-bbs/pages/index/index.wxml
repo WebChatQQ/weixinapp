@@ -1,0 +1,16 @@
+<!--index.wxml-->
+
+<view>
+	<view>
+		<navigator url="" hover-class="weui-cell_active" class="weui-meida-box weui-media-box_appmsg">
+			<view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+				<image class="weui-media-box__thumb" src=""></image>
+			</view>
+			<view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+				<view class="weui-media-box__title">用户名</view>
+				<view class="weui-media-box__desc">时间  浏览量</view>
+			</view>
+		</navigator>
+	</view>
+
+</view>
