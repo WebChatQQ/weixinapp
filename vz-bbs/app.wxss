@@ -1,4 +1,5 @@
 /**app.wxss**/
+
 .container {
   height: 100%;
   display: flex;
@@ -7,4 +8,161 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
+image {
+  width: 100%;
+  height: 100%;
+}
+
+/*** 隐藏顶部选择 ***/
+
+.top-category-box {
+  background: #fff;
+  height: 60rpx;
+  width: 100%;
+  white-space: nowrap;
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+/*** 语音 ***/
+
+.voice-icon {
+  width: 150px;
+  height: 22px;
+  text-align: middle;
+  background-color: #fff;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 0;
+  margin: 10rpx 14rpx;
+}
+
+/*** 转 赞 评 ***/
+
+.article-content-share-box {
+  width: 100%;
+  height: 40rpx;
+  padding: 12rpx 0;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+}
+
+.article-content-share {
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  text-align: center;
+}
+
+.article-content-share-reward::before {
+  content: " ";
+  vertical-align: -4px;
+  width: 17px;
+  height: 17px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png) no-repeat 0 0;
+  background-size: 100%;
+  display: inline-block;
+  margin-right: 10rpx;
+}
+
+.article-content-share-comment::before {
+  content: " ";
+  vertical-align: -4px;
+  width: 17px;
+  height: 17px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/icon1.png) no-repeat 62% 37%;
+  background-size: 735%;
+  display: inline-block;
+  margin-right: 10rpx;
+}
+
+.article-content-share-praise::before {
+  content: " ";
+  vertical-align: -3px;
+  width: 17px;
+  height: 17px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/icon1.png) no-repeat 34% 67%;
+  background-size: 735%;
+  display: inline-block;
+  margin-right: 10rpx;
+}
+
+/*** 图标 ***/
+
+.reward-icon {
+  top: 0;
+  left: 0;
+  margin: 4px 0;
+  margin-left: 12px;
+  width: 15px;
+  height: 15px;
+  border: 0;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -15px;
+  background-size: 100%;
+}
+
+.praise-icon {
+  top: 0;
+  left: 0;
+  margin-top: 4px;
+  margin-left: 12px;
+  width: 15px;
+  height: 15px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -105px;
+  background-size: 100%;
+}
+
+.article-img-box {
+  padding-left: 2rpx;
+  padding-bottom: 2rpx;
+  width: 33px;
+  height: 33px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/*** 评论信息 ***/
+
+.comment-icon {
+  top: 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: 12px;
+  width: 15px;
+  height: 15px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -90px;
+  background-size: 100%;
+  display: inline-block;
+}
+
+.comments-box {
+  padding-left: 66rpx;
+}
+
+.comment-box {
+  padding: 20rpx 24rpx 20rpx 0;
+  border-bottom: 1px solid #858585;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+}
+/*** 用户评论头像 ***/
+.comment-user-img{
+  width: 35px;
+  height: 35px;
+}
+
+.comment-content-box{
+  flex: 1;
+  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  margin-left: 10rpx;
+}
+.comment-name-box{
+  color: #5a85ce;
+}

@@ -2,10 +2,49 @@
     width: 100%;
     height: 20rpx;
 }
-.page{
-    background-color: #F8F8F8;
-    font-size: 16px;
-    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
-    width: 100%;
-    height: 100%;
+.flex {
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: flex;
+}
+.f-13rem {
+    font-size: 26rpx;
+}
+.f-14rem{
+    font-size: 28rpx;
+}
+.f-11rem{
+    font-size: 22rpx;
+}
+.f-12rem {
+    font-size: 24rpx;
+}
+.f-16rem{
+    font-size:32rpx;
+}
+.f-f{
+    font-family: "Microsoft YaHei",Arial;
+}
+.f-c-white{
+    color: #ffffff;
+}
+.f-c-blue{
+    color:#5a85ce;
+}
+.c858 {
+    color: #858585;
+}
+.rl{
+    position: relative;
+}
+.abs {
+    position: absolute;
+}
+.hide {
+    display: none;
+}
+.border-slice{
+    width: 20rem;
+    height: 0px;
+    border: 1px solid #858585;
 }

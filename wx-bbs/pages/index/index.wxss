@@ -1,39 +1,15 @@
 /**index.wxss**/
 
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaaaaa;
-}
-
-.usermotto {
-  margin-top: 200px;
-}
-
 .index-head-logo-f{
   font-family:"微软雅黑";
   font-size: 28rpx;
   color: #ffffff;
+  margin-left: 15px;
 }
 .flex {
   flex: 1;
-}
-.rel {
-  position: relative;
-}
-.border-slice {
-  border-bottom: 10px solid #eeeeee;
+  -webkit-box-flex: 1;
+  -webkit-flex:1;
 }
 .head {
   height: 110px;
@@ -52,15 +28,12 @@
   padding-left: 18px;
   padding-top: 30px;
   display: flex;
-
+  display: -webkit-box;
+  display: -webkit-flex;
 }
 .index-head-logo-img {
   height: 60px;
   width: 60px;
-}
-.index-head-logo-f { 
-  margin-left: 15px;
-  flex:1;
 }
 .index-head-bottom {
   height: 30px;
@@ -69,6 +42,7 @@
   line-height: 30px;
   display: flex;
   display: -webkit-flex;
+  display: -webkit-box;
 }
 .index-sign {
   background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 33% 2%;
@@ -106,6 +80,8 @@
   /*border-bottom:20rpx solid #eee;*/
   overflow: hidden;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
   position: relative;
 }
 .fix-index-heading-scrol{
@@ -114,6 +90,8 @@
   /*border-bottom:20rpx solid #eee;*/
   overflow: hidden;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
   position: fixed;
   top: 0;
   z-index: 1;
@@ -173,12 +151,6 @@
   text-overflow: ellipsis;
 }
 
-
-
-
-
-
-
 .icon-reward {
   vertical-align: -4px;
   width: 17px;
@@ -222,6 +194,8 @@
 
 .res-info {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
   padding-left: 2px;
   border-bottom: 1px solid #d6d6d6;
   width: 100%;
@@ -230,15 +204,20 @@
 .comment-content-msg-wrap {
   display: inline-block;
   padding: 6px;
-  width: 100%;
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex:1;
+  overflow: hidden;
 }
 
 .comment-container {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
 }
 
 .comment-content {
-  width: 93%;
+  width: 18.6rem;
 }
 
 .comment-image view {
@@ -250,13 +229,7 @@
   color:#17b5ee;
   border-bottom: 1px solid #17b5ee;
 }
-
-
 .recommend-emoij{background: url(http://i.pengxun.cn//content/images/imgpost2/01/post-big-pic-01.png) no-repeat 0 -234px; background-size: 100%; height: 26px; width: 26px; }
-
-
-
-
 
 .recommend-icon-container{
   float: left;

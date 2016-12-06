@@ -14,9 +14,6 @@ page {
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
-
-
-
 .c-fullwidth {
   width: 100%;
 }
@@ -142,7 +139,7 @@ page {
   text-overflow: ellipsis;
 }
 .border-slice {
-  border-bottom: 10px solid #eee;
+  border-bottom: 10px solid #eeeeee;
 }
 .article-content-title {
   font-size:18px;

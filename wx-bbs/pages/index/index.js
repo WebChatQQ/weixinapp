@@ -175,6 +175,7 @@ Page({
     }, function (result) {
       that.setData({ "loading": false, pageIndex: that.data.pageIndex })
       util.endLoading()
+      wx.showToast({ "title":"没有更多了", "icon":"success" })
     })
   },
 

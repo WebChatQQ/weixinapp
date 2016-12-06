@@ -65,8 +65,8 @@
     </view>
 
     <!-- 我的付费贴 -->
-    <view>
-      <block wx:if="{{selected==2}}" wx:for="{{payArticles}}" wx:for-item="article">
+    <view wx:if="{{selected==2}}">
+      <block  wx:for="{{payArticles}}" wx:for-item="article">
         <view style="height:20rpx;width:100%;background-color:#eee"></view>
         <view class="post-wrap">
           <view>
