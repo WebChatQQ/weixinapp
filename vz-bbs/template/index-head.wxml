@@ -1,0 +1,29 @@
+<view class="head-box rl">
+  <view class="head-desc-box rl">
+    <view class="head-desc-box-info flex">
+      <view class="head-img-box ">
+        <image src="http://i.pengxun.cn/upload/thumbnail/20150923/130874432266460890.jpg" style="width:100%;height:100%;"></image>
+      </view>
+      <view class="head-desc">
+        <text class="f-f f-13rem f-c-white">话题 231313</text>
+        <text class="f-f f-13rem f-c-white"> | </text>
+        <text class="f-f f-13rem f-c-white">访问 123131</text>
+      </view>
+    </view>
+  </view>
+  <view class="head-bg-box" style="background:url(http://i.pengxun.cn/images/bms1/050_app[1].jpg) no-repeat;background-size: 100%;">
+  </view>
+  <view class="head-bottom-box flex">
+    <block wx:if="{{!user.IsSign}}">
+      <text class="head-bottom head-sign f-f f-13rem">签到</text>
+    </block>
+    <block wx:if="{{user.IsSign}}">
+      <text class="head-bottom head-sign-list f-f f-13rem">排行榜</text>
+    </block>
+    <block>
+      <text class="head-bottom head-concern f-f f-13rem">排行榜</text>
+    </block>
+  </view>
+  <view class="search-icon-box abs">
+  </view>
+</view>

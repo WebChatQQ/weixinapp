@@ -1,0 +1,208 @@
+<view class="article-box">
+  <template is="article-head" />
+  <template is="article-content" />
+
+  <!--
+    赏列表
+  -->
+  <view class="rl">
+    <view class="reward-icon abs"></view>
+    <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+    </view>
+  </view>
+
+  <!--
+  点赞列表
+  -->
+  <view class="rl">
+    <view class="praise-icon abs"></view>
+    <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+      <view class="article-img-box">
+        <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
+      </view>
+    </view>
+  </view>
+
+  <!--
+    回复信息
+  -->
+  <view>
+    <view class="comments-box rl">
+      <view class="comment-icon abs">
+      </view>
+      <template is="comment" />
+      <template is="comment" />
+    </view>
+    <view class="more-comment-box f-14rem f-f">更多10条回复</view>
+  </view>
+</view>
+
+<!-- 
+帖子的 头部信息
+ -->
+<template name="article-head">
+  <view class="article-head-box">
+    <view class="article-head-img">
+      <image src="http://wx.qlogo.cn/mmopen/tZOqj4KIx0h38nWLib7mmrrb7wVUxNzvvyxz3AltEOg395TEt9ibD8cavO6rbktT4mkzXibNmFyt7Hgsl2OoCQCmjzScLLNibIjP/132"></image>
+    </view>
+    <view class="article-head-desc">
+      <view class="article-head-name rl">
+        <text class="f-c-blue f-14rem f-f">微赞客服-光耀</text>
+        <text class="article-level-box">V.3</text>
+        <text class=""></text>
+        <text class="article-open-arrow"></text>
+      </view>
+      <view class="article-head-t">
+        <text class="f-f f-11rem c858">一小时前 </text>
+        <text class="f-f f-11rem c858"> 浏览123131</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!--
+帖子的正文部分
+-->
+<template name="article-content">
+  <view class="article-content-box">
+    <view class=" f-16rem f-f" style="font-weight:bold">
+      【论坛】微赞论坛开通帖子群发功能啦！
+    </view>
+
+    <!-- 语音 -->
+    <include src="/template/voice-wrap.wxml" />
+    <view class="f-16rem f-f">
+      <text class="article-category f-f f-12rem">运营日报</text>
+      <text class="f-16rem f-f">微赞论坛一直深受众多用户喜爱，而作为论坛管理员，则需要经常向论坛全体用户发布相关通知或资讯。因此，为了更好地帮助论坛管理员实现信息的及时传播。我们特意在论坛中开通了帖子群发...</text>
+    </view>
+
+    <!-- 图片 -->
+    <view class="article-content-img-box">
+      <image style="height:200px; width:200px" src="http://img.vzan.cc/image/jpg/2016/6/1/102041dc76a85542fe4eac829b01cdbf777071.jpg@1e_1c_0o_0l_100sh_200h_200w_90q.src"></image>
+      <image style="height:200px; width:200px" src="http://img.vzan.cc/image/jpg/2016/6/1/102041dc76a85542fe4eac829b01cdbf777071.jpg@1e_1c_0o_0l_100sh_200h_200w_90q.src"></image>
+    </view>
+
+    <!-- 视频 -->
+    <view class="article-content-vedio-box">
+      <video style="width:100%;" src="http://i4.pengxun.cn/video/mp4/2016/11/2016112507541537155.mp4" controls="false"></video>
+    </view>
+
+    <!-- 转赞评 -->
+    <view class="article-content-share-box">
+      <view class="article-content-share-reward article-content-share c858 f-12rem f-f">赏</view>
+      <view class="article-content-share-comment article-content-share c858 f-12rem f-f" catchtap="showComment">评</view>
+      <view class="article-content-share-praise article-content-share c858 f-12rem f-f">赞</view>
+    </view>
+  </view>
+</template>
+
+<!--
+  回复信息
+-->
+<template name="comment">
+  <view class="comment-box rl">
+    <view class="comment-user-img abs">
+      <image style="width:100%; height:100%;" src="http://wx.qlogo.cn/mmopen/wcLBdiaDTlsuqIj0ibFGANqlXpUKS7OTLG2wzfskAS08CziaqbZCJq85iaHZ4xHYribzntJyYoRGGVMkUQsT4fvAgVRka5qSDJUMp/132"></image>
+    </view>
+    <view class="comment-content-box border-box">
+      <view class="comment-name-box f-f f-14rem ">活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活</view>
+
+      <!-- 回复文本 -->
+      <view class="f-f f-14rem">电脑版页面目前很丑陋，电脑端扫码登陆后用户微信直接关注的是威赞公众号，跟个人创建的微赞论坛关联不大。</view>
+
+      <!-- 回复语音 -->
+      <include src="/template/voice-wrap.wxml" />
+
+      <!-- 回复图片 -->
+      <view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+        <view class="comment-content-img">
+          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

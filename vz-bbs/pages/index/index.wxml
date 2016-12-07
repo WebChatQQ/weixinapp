@@ -1,14 +1,26 @@
 
 <!--index.wxml-->
 <view>
-  <view class="{{hidTop?'hide':''}}">
-    <include src="/template/index-head.wxml" />
-    <include src="/template/head-category.wxml" />
-  </view>
   <include src="/template/top-category.wxml" />
+
+  <!-- 搜索框 -->
+  <block wx:if="{{showSearch}}">
+    <include src="/template/search.wxml" />
+  </block>
+  <block wx:if="{{showComment}}">
+    <include src="/template/comment.wxml" />
+  </block>
+
+  <!-- 评论框 -->
   <view>
     <scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="nextPage" class="articles-box">
-      <include src="/template/article-content.wxml"/>
+      <view class="{{hidTop?'':''}}">
+        <include src="/template/index-head.wxml" />
+        <include src="/template/head-category.wxml" />
+      </view>
+      <include src="/template/article-content.wxml" />
+      <view class="border-slice"></view>
+      <include src="/template/article-content.wxml" />
     </scroll-view>
   </view>
 </view>
