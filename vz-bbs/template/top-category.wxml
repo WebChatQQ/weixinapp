@@ -5,9 +5,8 @@
 <scroll-view scroll-x="true" class="top-category-box {{hidTop?'top':'hide'}}">
   <view class="topCateogry f-14rem f-f">全部</view>
   <view class="topCateogry f-14rem f-f">热帖</view>
-  <view class="topCateogry f-14rem f-f">运营日报</view>
-  <view class="topCateogry f-14rem f-f">操作指南</view>
-  <view class="topCateogry f-14rem f-f">更新进度</view>
-  <view class="topCateogry f-14rem f-f">微赞故事</view>
-  <view class="topCateogry f-14rem f-f">更多+</view>
+  <block wx:for="{{categories}}" wx:for-item="category" wx:key="Id">
+    <view wx:if="{{index <= 6}}" class="topCateogry f-14rem f-f">{{category.Title}}</view>
+  </block>
+  <view wx:if="{{categories && categories.length > 8}}" class="topCateogry f-14rem f-f">更多+</view>
 </scroll-view>
