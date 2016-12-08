@@ -8,6 +8,7 @@
       <block wx:for="{{commentReImgs}}" wx:for-item="img" wx:key="id">
         <view class="comment-re-img-box rl">
           <image style="width:100%;height:100%;position:relative" src="{{img.url}}"></image>
+          <view class="remove-x abs"></view>
         </view>
       </block>
       <view class="comment-re-img-box rl" catchtap="commentReImage">

@@ -1,0 +1,31 @@
+
+<!--pages/post/post.wxml-->
+<import src="/template/voice-wrap.wxml" />
+<view>
+  <view class="post-title-box">
+    <input class="post-title f-f f-16rem" placeholder="标题,可以不填..." />
+  </view>
+  <view>
+    <textarea class="border-box post-content f-f f-16rem" placeholder="这一刻的想法..." />
+    <!-- 图片 -->
+    <view  class="rl comment-re-imgs-box">
+      <block wx:for="{{commentReImgs}}" wx:for-item="img" wx:key="id">
+        <view class="comment-re-img-box rl">
+          <image style="width:100%;height:100%;position:relative" src="{{img.url}}"></image>
+          <view class="remove-x abs"></view>
+        </view>
+      </block>
+      <view class="comment-re-img-box rl" catchtap="commentReImage">
+        <image style="width:100%;height:100%;position:relative" src="http://i.pengxun.cn/content/images/imgpost2/success-select-column-close-add02.png"></image>
+      </view>
+    </view>
+    <!-- 语音 -->
+    <template is="redio-voice" />
+
+    <view class="video-box rl">
+      <video style="width:100%;height:100%;" src="http://player.youku.com/embed/XMTg1MzQ4MDQyMA" controls="false"></video>
+      <view></view>
+    </view>
+  </view>
+  <view></view>
+</view>

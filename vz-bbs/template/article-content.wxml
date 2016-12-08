@@ -115,7 +115,7 @@
 
 <!-- 评论信息 -->
 <template name="comment-wrap">
-  <view>
+  <view wx:if="{{articleComments}}">
     <view class="comments-box rl">
       <view class="comment-icon abs">
       </view>
