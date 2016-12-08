@@ -3,10 +3,10 @@
 
 
 <scroll-view scroll-x="true" class="top-category-box {{hidTop?'top':'hide'}}">
-  <view class="topCateogry f-14rem f-f">全部</view>
-  <view class="topCateogry f-14rem f-f">热帖</view>
+  <view class="topCateogry f-14rem f-f {{(currentCategory&&currentCategory.id==0&&currentCategory.hot==0)?'top-category-selected':''}}"  catchtap="changeCategory" data-category-id="0" data-hot="0">全部</view>
+  <view class="topCateogry f-14rem f-f {{(currentCategory&&currentCategory.id==0&&currentCategory.hot==1)?'top-category-selected':''}}"  catchtap="changeCategory" data-category-id="0" data-hot="1">热帖</view>
   <block wx:for="{{categories}}" wx:for-item="category" wx:key="Id">
-    <view wx:if="{{index <= 6}}" class="topCateogry f-14rem f-f">{{category.Title}}</view>
+    <view wx:if="{{index <= 6}}" class="topCateogry f-14rem f-f {{(currentCategory&&currentCategory.id==category.Id)?'top-category-selected':''}}"  catchtap="changeCategory" data-category-id="{{category.Id}}" data-hot="0">{{category.Title}}</view>
   </block>
   <view wx:if="{{categories && categories.length > 8}}" class="topCateogry f-14rem f-f">更多+</view>
 </scroll-view>

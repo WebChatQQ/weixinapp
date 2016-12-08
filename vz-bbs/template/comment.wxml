@@ -1,14 +1,28 @@
+<import src="/template/voice-wrap.wxml" />
 <view class="z5 pop">
   <view class="comment-re-box border-box">
+    <block wx:if="{{record}}">
+      <template is="redio-voice" data="{{...record}}"/>
+    </block>
+    <view wx:if="{{commentReImgs}}" class="rl bg-f5 comment-re-imgs-box">
+      <block wx:for="{{commentReImgs}}" wx:for-item="img" wx:key="id">
+        <view class="comment-re-img-box rl">
+          <image style="width:100%;height:100%;position:relative" src="{{img.url}}"></image>
+        </view>
+      </block>
+      <view class="comment-re-img-box rl" catchtap="commentReImage">
+        <image style="width:100%;height:100%;position:relative" src="http://i.pengxun.cn/content/images/imgpost2/success-select-column-close-add02.png"></image>
+      </view>
+    </view>
     <form bindsubmit="comment">
       <view class="comment-re-content-box">
-        <textarea class="tarea" placeholder="回复帖子 : " />
+        <textarea name="content" class="tarea" placeholder="回复{{comment.commentName?comment.commentName:'帖子'}} : " />
       </view>
       <view class="comment-re-op-box">
         <view class="fl">
           <view class="record-icon"></view>
-          <view class="img-icon"></view>
-          <view class="emoij-icon"></view>
+          <view class="img-icon" catchtap="commentReImage"></view>
+          <view class="emoij-icon" catchtap="showEmoijBox"></view>
         </view>
         <view class="fr">
           <view class="comment-re-btn-box cancle-box">

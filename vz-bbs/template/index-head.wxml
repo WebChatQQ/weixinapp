@@ -24,6 +24,7 @@
       <text class="head-bottom head-concern f-f f-13rem">关注</text>
     </block>
   </view>
-  <view class="search-icon-box abs">
+  <!-- 搜索标志 -->
+  <view class="search-icon-box abs" catchtap="showSearchBox">
   </view>
 </view>

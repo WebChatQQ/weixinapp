@@ -2,13 +2,14 @@ var crypt = require("./utils/crypt.js");
 var util = require("./utils/util.js");
 // var Promise = require("./utils/polyfill.js")
 var api = require("./utils/api.js")
+var constant = require("./utils/constant.js")
 import Promise from './utils/es6-promise.min.js';
 
 
 //app.js
 var that;
 var inited = false;// 初始化过程
-var fid = 3;
+var fid = constant.minisnsId;
 App({
     onLaunch: function () {
         that = this;
@@ -36,10 +37,6 @@ App({
      * 初始化数据
      */
     init: function (cb) {
-
-        
-
-
         api.wxApi(wx.login)({})
             .then(function (loginRes) {
                 return "https://api.weixin.qq.com/sns/jscode2session?" + "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&" +

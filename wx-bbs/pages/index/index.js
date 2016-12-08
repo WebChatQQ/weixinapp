@@ -1,11 +1,13 @@
 var index = require("../../data/index-list.js")
 var util = require("../../utils/util.js")
 var api = require("../../utils/api.js")
+var constant = require("../../utils/constant.js")
 
 
 //index.js
 //获取应用实例
 var app = getApp()
+var minisnsId = constant.minisnsId
 Page({
   data: {
     loading: true,  // 当前页面是否正在加载
@@ -22,7 +24,8 @@ Page({
     selectedImgs: [], // 评论选择图片
     currentMoreComment: "",
     headInfo: {},
-    categories: []
+    categories: [],
+    hideTop: false
   },
 
   onLoad: function () {
@@ -32,35 +35,49 @@ Page({
     this.resetData()
     this.init();
 
-    let formData = new FormData();
-    formData.append("deviceType", "ios9.0")
-    formData.append("uid", "oW2wBwUJF_7pvDFSPwKfSWzFbc5o")
-    formData.append("sign", "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82")
-    formData.append("timestamp", 1479174892808)
-    formData.append("fid", "3")
-    formData.append("pageIndex", "1")
-    formData.append("categoryId", "0")
-    formData.append("hotshow", "0")
-    let data = "deviceType=ios9.0&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&sign=817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82" + 
-    "&timestamp=1479174892808&fid=3&pageIndex=1&categoryId=0&hotshow=0"
-    wx.request({
-      url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-      data: formData,
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: { "content-type": "multipart/form-data;charset=UTF-8" }, // 设置请求的 header
-      success: function (res) {
-        console.log("loginByWeiXin success", res);
-      },
-      fail: function (res) {
-        console.log("loginByWeiXin fail", res);
-      },
-      complete: function (res) {
-        console.log("loginByWeiXin complete", res);
-      }
-    })
+    // let formData = new FormData();
+    // formData.append("deviceType", "ios9.0")
+    // formData.append("uid", "oW2wBwUJF_7pvDFSPwKfSWzFbc5o")
+    // formData.append("sign", "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82")
+    // formData.append("timestamp", 1479174892808)
+    // formData.append("fid", "3")
+    // formData.append("pageIndex", "1")
+    // formData.append("categoryId", "0")
+    // formData.append("hotshow", "0")
+    // let data = "deviceType=ios9.0&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&sign=817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82" + 
+    // "&timestamp=1479174892808&fid=3&pageIndex=1&categoryId=0&hotshow=0"
+    // wx.request({
+    //   url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
+    //   data: formData,
+    //   method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    //   // header: { "content-type": "multipart/form-data;charset=UTF-8" }, // 设置请求的 header
+    //   success: function (res) {
+    //     console.log("loginByWeiXin success", res);
+    //   },
+    //   fail: function (res) {
+    //     console.log("loginByWeiXin fail", res);
+    //   },
+    //   complete: function (res) {
+    //     console.log("loginByWeiXin complete", res);
+    //   }
+    // })
 
 
   },
+
+  /**
+   * 隐藏版块
+   */
+  hideTop: function (e) {
+    let scrollTop = e.detail.scrollTop
+    console.log(scrollTop)
+    if (scrollTop > 190) {
+      this.setData({ "hideTop": true })
+    } else {
+      this.setData({ "hideTop": false })
+    }
+  },
+
 
   /**
    * 下拉加载
@@ -175,7 +192,7 @@ Page({
     }, function (result) {
       that.setData({ "loading": false, pageIndex: that.data.pageIndex })
       util.endLoading()
-      wx.showToast({ "title":"没有更多了", "icon":"success" })
+      wx.showToast({ "title": "没有更多了", "icon": "success" })
     })
   },
 
@@ -510,8 +527,9 @@ Page({
               "formData": {
                 "fid": minisId, "uploadType": "img", "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
                 "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign
-              },
-              "success": function (success) {
+              }
+            },
+              function (success) {
                 console.log("上传图片成功", success)
                 // 图片回显
                 let selectedImgs = that.data.selectedImgs
@@ -521,7 +539,7 @@ Page({
                 selectedImgs = selectedImgs.concat({ "id": success.obj.id, "src": success.obj.url })
                 that.setData({ "selectedImgs": selectedImgs })
               }
-            })
+            )
           }
         }
       }
@@ -589,7 +607,7 @@ Page({
       "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-        "artId": id, "comment": content , "images": imgs
+        "artId": id, "comment": content, "images": imgs
       }
     }, function (success) {
       console.log("回复帖子成功", success)

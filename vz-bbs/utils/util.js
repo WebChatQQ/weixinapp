@@ -154,6 +154,21 @@ function endLoading() {
 }
 
 
+function imgArrayToString(imgsArray) {
+  var imgs = "";
+  if (imgsArray) {
+    for (var i = 0; i < imgsArray.length; i++) {
+      if (i = 0) {
+        imgs = imgsArray[i].id;
+      } else {
+        imgs = imgs + "," + imgsArray[i].id;
+      }
+    }
+  }
+  return imgs
+}
+
+
 module.exports = {
   "formatTime": formatTime,
   "primaryLoginArgs": primaryLoginArgs,
@@ -161,6 +176,7 @@ module.exports = {
   "htmlFilter": htmlFilter,
   "articleFilter": articleFilter,
   "showLoading": showLoading,
-  "endLoading": endLoading
+  "endLoading": endLoading,
+  imgArrayToString,
 }
 

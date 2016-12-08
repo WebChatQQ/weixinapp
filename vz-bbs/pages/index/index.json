@@ -1,1 +1,8 @@
-{}
+{
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "微赞官方论坛",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#cccccc",
+    "enablePullDownRefresh": true
+}

@@ -7,6 +7,7 @@
   <block wx:if="{{showSearch}}">
     <include src="/template/search.wxml" />
   </block>
+  <!-- 展示评论框 -->
   <block wx:if="{{showComment}}">
     <include src="/template/comment.wxml" />
   </block>
@@ -20,7 +21,6 @@
       </view>
       <include src="/template/article-content.wxml" />
       <view class="border-slice"></view>
-      <include src="/template/article-content.wxml" />
     </scroll-view>
   </view>
 </view>

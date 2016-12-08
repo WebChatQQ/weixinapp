@@ -1,3 +1,4 @@
+<import src="/template/voice-wrap.wxml" />
 <view class="article-box">
   <block wx:for="{{articles}}" wx:for-item="article" wx:key="Id">
     <template is="article-head" data="{{...article}}" />
@@ -6,74 +7,18 @@
     <!--
     赏列表
   -->
-    <view class="rl" wx:if="{{article.RewardUsers}}">
-      <view class="reward-icon abs"></view>
-      <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
-        <block wx:for="{{article.RewardUsers}}" wx:for-item="rewardUser" wx:key="Id">
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="{{rewardUser.Headimgurl}}"></image>
-        </view>
-        </block>
-      </view>
-    </view>
+    <template is="reward" data="{{...article}}" />
 
     <!--
   点赞列表
   -->
-    <view class="rl">
-      <view class="praise-icon abs"></view>
-      <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-        <view class="article-img-box">
-          <image style="width:100%;height:100%" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEJwnOoicJx7KQ4ibOuYe8wqFlh6L4OPZv2wNibxXP2M4pCXnYhgjIibe1MFXJWMIG71b3fzTOEy9EaBsQ/0"></image>
-        </view>
-      </view>
-    </view>
+    <template is="praise-list" data="{{...article}}" />
 
     <!--
     回复信息
   -->
-    <view>
-      <view class="comments-box rl">
-        <view class="comment-icon abs">
-        </view>
-        <template is="comment" />
-        <template is="comment" />
-      </view>
-      <view class="more-comment-box f-14rem f-f">更多10条回复</view>
-    </view>
+    <template is="comment-wrap" data="{{...article}}" />
+    <view class="border-slice"></view>
   </block>
 </view>
 
@@ -111,6 +56,8 @@
 
     <!-- 语音 -->
     <include src="/template/voice-wrap.wxml" />
+
+    <!-- 文本 -->
     <view class="f-16rem f-f" wx:if="{{ContentDesc || ArticleTypeName}}">
       <text class="article-category f-f f-12rem" wx:if="{{ArticleTypeName}}">{{ArticleTypeName}}</text>
       <text class="f-16rem f-f" wx:if="{{ContentDesc}}">{{ContentDesc}}</text>
@@ -131,51 +78,83 @@
 
     <!-- 转赞评 -->
     <view class="article-content-share-box">
-      <view class="article-content-share-reward article-content-share c858 f-12rem f-f">赏</view>
-      <view class="article-content-share-comment article-content-share c858 f-12rem f-f" catchtap="showComment">评</view>
-      <view class="article-content-share-praise article-content-share c858 f-12rem f-f">赞</view>
+      <view class="article-content-share-reward article-content-share c858 f-12rem f-f">赏 {{Reward}}</view>
+      <view class="article-content-share-comment article-content-share c858 f-12rem f-f" catchtap="showComment" data-art-id="{{Id}}">评 {{CommentCount}}</view>
+      <view class="{{IsPraise?'c5a85ce zand-article-content-share-praise':'article-content-share-praise'}}   article-content-share c858 f-12rem f-f" catchtap="praise" data-art-id="{{Id}}">赞 {{Praise}}</view>
     </view>
   </view>
 </template>
 
-<!--
-  回复信息
--->
-<template name="comment">
-  <view class="comment-box rl">
-    <view class="comment-user-img abs">
-      <image style="width:100%; height:100%;" src="http://wx.qlogo.cn/mmopen/wcLBdiaDTlsuqIj0ibFGANqlXpUKS7OTLG2wzfskAS08CziaqbZCJq85iaHZ4xHYribzntJyYoRGGVMkUQsT4fvAgVRka5qSDJUMp/132"></image>
+<!-- 点赞列表 -->
+<template name="praise-list">
+  <view class="rl" wx:if="{{PraiseUsers}}">
+    <view class="praise-icon abs"></view>
+    <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
+      <block wx:for="{{PraiseUsers}}" wx:for-item="praiseUsers" wx:key="Id">
+        <view class="article-img-box">
+          <image style="width:100%;height:100%" src="{{praiseUsers.Headimgurl}}"></image>
+        </view>
+      </block>
     </view>
-    <view class="comment-content-box border-box">
-      <view class="comment-name-box f-f f-14rem ">活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活活着≠生活</view>
+  </view>
+</template>
 
-      <!-- 回复文本 -->
-      <view class="f-f f-14rem">电脑版页面目前很丑陋，电脑端扫码登陆后用户微信直接关注的是威赞公众号，跟个人创建的微赞论坛关联不大。</view>
+<!-- 赞赏列表 -->
+<template name="reward">
+  <view class="rl" wx:if="{{RewardUsers}}">
+    <view class="reward-icon abs"></view>
+    <view style="padding:10rpx 66rpx; border-bottom:1px solid #858585;">
+      <block wx:for="{{RewardUsers}}" wx:for-item="rewardUser" wx:key="Id">
+        <view class="article-img-box">
+          <image style="width:100%;height:100%" src="{{rewardUser.Headimgurl}}"></image>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
 
-      <!-- 回复语音 -->
-      <include src="/template/voice-wrap.wxml" />
-
-      <!-- 回复图片 -->
-      <view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
-        <view class="comment-content-img">
-          <image style="width:100%; height:100%;" src="http://i.pengxun.cn/thumb/articles/20160318/28734476@200x200.jpg"></image>
-        </view>
+<!-- 评论信息 -->
+<template name="comment-wrap">
+  <view>
+    <view class="comments-box rl">
+      <view class="comment-icon abs">
       </view>
+      <block wx:for="{{articleComments}}" wx:for-item="comment" wx:key="Id">
+        <view class=" rl {{index == (articleComments.length - 1)?'last-comment-box':'comment-box'}}">
+          <view class="comment-user-img abs">
+            <image style="width:100%; height:100%;" src="{{comment.ComUser.Headimgurl}}"></image>
+          </view>
+          <view class="comment-content-box border-box" catchtap="showComment" data-to-user-id="{{comment.ComUser.Id}}" data-art-id="{{Id}}" data-comment-id="{{comment.Id}}" data-comment-name="{{comment.ComUser.NickName}}">
+            <view class="comment-user-box">
+              <view class="inline-block comment-name-box f-f f-14rem">{{comment.ComUser.NickName || comment.ComUser.Nickname}}</view>
+              <view class="fr f-11rem ccc">{{comment.CreateDate}}</view>
+            </view>
+            <!-- 回复文本 -->
+            <view class="f-f f-14rem">
+            <text wx:if="{{comment.DUser && comment.DUser.Id != user.Id }}" class="f-f f-14rem">回复</text>
+            <text wx:if="{{comment.DUser && comment.DUser.Id != user.Id }}" class="f-f f-14rem comment-duser-box">@{{comment.DUser.NickName}} :</text>
+            <text class="f-f f-14rem">{{comment.Content}}</text>
+            </view>
+            <!-- 回复语音 -->
+            <!--<include src="/template/voice-wrap.wxml" />-->
+            <template is="comment-voice" data="...{{comment}}" />
+            <!-- 回复图片 -->
+            <template is="comment-imgs" data="...{{comment}}" />
+          </view>
+        </view>
+      </block>
     </view>
+    <view wx:if="{{articleComments  && CommentCount && articleComments.length < CommentCount }}" class="more-comment-box f-14rem f-f">更多{{CommentCount - articleComments.length}}条回复</view>
+  </view>
+</template>
+
+<!-- 评论图片 -->
+<template name="comment-imgs">
+  <view>
+    <block wx:for="{{Images}}" wx:for-item="image" wx:key="filepath">
+      <view class="comment-content-img" data-filepath="{{image.filepath}}">
+        <image style="width:100%; height:100%;" src="{{image.Thumbnail}}"></image>
+      </view>
+    </block>
   </view>
 </template>

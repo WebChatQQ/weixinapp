@@ -57,6 +57,9 @@ function getartlistbykeyword(data, filepath, cb) {
 }
 
 
+
+
+
 /**
  * 获取用户信息
  */
@@ -148,6 +151,97 @@ function articles(data) {
 }
 
 /**
+ * 评论帖子
+ */
+function commentartbyid(data) {
+    let tmpFile = wx.getStorageSync('tmpFile')
+    return new Promise((resolve, reject) => {
+        wx.uploadFile({
+            url: 'https://snsapi.vzan.com/minisnsapp/commentartbyid',
+            filePath: tmpFile,
+            name: 'name',
+            // header: {}, // 设置请求的 header
+            formData: data, // HTTP 请求中其他额外的 form data
+            success: function (res) {
+                let result = JSON.parse(res.data)
+                if (result.result) {
+                    console.log("评论帖子成功", result)
+                    resolve(result)
+                } else {
+                    console.log("评论帖子失败", result)
+                    reject(result)
+                }
+            },
+            fail: function (result) {
+                console.log("评论帖子失败", result)
+                reject(result)
+            }
+        })
+    })
+}
+
+/**
+ * 回复帖子评论
+ */
+function replyartcommentbyid(data) {
+    let tmpFile = wx.getStorageSync('tmpFile')
+    return new Promise((resolve, reject) => {
+        wx.uploadFile({
+            url: 'https://snsapi.vzan.com/minisnsapp/replyartcommentbyid',
+            filePath: tmpFile,
+            name: 'name',
+            // header: {}, // 设置请求的 header
+            formData: data, // HTTP 请求中其他额外的 form data
+            success: function (res) {
+                let result = JSON.parse(res.data)
+                if (result.result) {
+                    console.log("回复帖子评论成功", data, result)
+                    resolve(result)
+                } else {
+                    console.log("回复帖子评论失败", data, result)
+                    reject(result)
+                }
+            },
+            fail: function (result) {
+                console.log("回复帖子评论失败", data, result)
+                reject(result)
+            }
+        })
+    })
+}
+
+/**
+ * 帖子点赞
+ */
+function articlepraise(data) {
+    let tmpFile = wx.getStorageSync('tmpFile')
+    return new Promise((resolve, reject) => {
+        wx.uploadFile({
+            url: 'https://snsapi.vzan.com/minisnsapp/articlepraise',
+            filePath: tmpFile,
+            name: 'name',
+            // header: {}, // 设置请求的 header
+            formData: data, // HTTP 请求中其他额外的 form data
+            success: function (res) {
+                let result = JSON.parse(res.data)
+                if (result.result) {
+                    console.log("帖子点赞成功", result)
+                    resolve(result)
+                } else {
+                    console.log("帖子点赞失败", result)
+                    reject(result)
+                }
+            },
+            fail: function (result) {
+                console.log("帖子点赞失败", result)
+                reject(result)
+            }
+        })
+    })
+}
+
+
+/**
  * 获取帖子评论列表
  */
 function getComment(id, data = {}, success, fail) {
@@ -157,8 +251,12 @@ function getComment(id, data = {}, success, fail) {
         method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
         // header: {}, // 设置请求的 header
         success: function (res) {
-            console.log("获取帖子评论列表成功")
-            success(res)
+            var result = JSON.parse(res.data)
+            if (result.result) {
+
+                console.log("获取帖子评论列表成功")
+                success(res)
+            }
         },
         fail: function (res) {
             console.log("获取帖子评论列表失败")
@@ -166,8 +264,6 @@ function getComment(id, data = {}, success, fail) {
         }
     })
 }
-
-
 
 
 
@@ -226,4 +322,7 @@ module.exports = {
     "getComment": getComment,
     headInfo,
     articles,
+    commentartbyid,
+    replyartcommentbyid,
+    articlepraise,
 }

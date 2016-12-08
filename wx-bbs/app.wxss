@@ -1,5 +1,6 @@
 
 /**app.wxss**/
+@import '/common/common.wxss';
 page {
   width:100%;
   height: 100%;
@@ -91,6 +92,9 @@ page {
 }
 .aricle-user-wrap {
   position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .index-poster-name {
   color:#5a85ce;
@@ -242,6 +246,7 @@ page {
 }
 .res-content-name {
   color: #5a85ce;
+  max-width:220rpx; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -346,18 +351,23 @@ page {
 .recommend-container{
   width: 100%;
   height: 100%;
-  position: fixed;
+  padding: 10rpx 30rpx 16rpx 30rpx;
+  border-bottom: 1px solid #d6d6d6;
+  /*position: fixed;
   top: 0;
   left: 0;
-  background-color:  rgba(0, 0, 0, 0.3);/* #fafafa;*/
-  z-index: 5;
-  }
-.recomment-wrap{
-  position: absolute;
   bottom: 0;
+
+  z-index: 5;*/
+  }
+  
+  
+.recomment-wrap{
+  position: relative;
+  /*bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: #fff;*/
 }
 .recommend-line-container{
   height: 40px;
@@ -403,7 +413,6 @@ page {
     position: relative;
     font-size: 14px;
     text-align: justify;
-    border: 1px solid #d6d6d6;
     height: 80px;
     width: 100%;
 }
@@ -460,6 +469,11 @@ page {
   background-color: #17b5ee;
   color: #fff;
 }
+
+.comment-head-box{
+  overflow: hidden
+}
+
 
 view, textarea, scroll-view,swiper,swiper-item,icon,text,progress,button,checkbox-group,checkbox,form,input,label,picker,radio-group,radio,slider,switch,action-sheet,action-sheet-item,action-sheet-cancel,modal,toast,loading,navigator,audio,image,video,map,canvas {
   -webkit-box-sizing: border-box;
