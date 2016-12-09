@@ -12,7 +12,9 @@
 .f-13rem {
   font-size: 26rpx;
 }
-
+.f-10rem {
+  font-size: 20rpx;
+}
 .f-14rem {
   font-size: 28rpx;
 }

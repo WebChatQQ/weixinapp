@@ -67,7 +67,7 @@
     <view class="fr res" catchtap="showReComment" data-id="{{Id}}">
       <view class="icon-ping"></view><em class="em">评 {{CommentCount}}</em>  </view>
 
-    <!--<view class="fr res" catchtap="zhuan" data-id="{{item.Id}}"><view class="icon-zhuan"></view><em class="em">转</em>     </view>-->
+    <!--<view class="fr res" catchtap="zhuan" data-id="{{item.Id}}"><view class="icon-zhuan"></view><em class="em">转</em>      </view>-->
     <view class="fr res" catchtap="reward" data-id="{{Id}}">
       <view class="icon-reward"></view><em class="em">赏 {{Reward}}</em>  </view>
     <view style="clear:both"></view>
@@ -108,7 +108,7 @@
 
 <!-- 评论信息 -->
 <template name="commentcontent">
-  <view>
+  <view class="comment-head-box">
     <view class="res-content-name">{{ComUser.NickName || ComUser.Nickname}}</view>
     <view class="res-content-time">{{CreateDate}}</view>
     <view style="clear:both"></view>
@@ -116,8 +116,8 @@
 
   <!-- 文字回复 -->
   <view class="res-content">
-      <text wx:if="{{DUser}}">回复</text>
-      <text wx:if="{{DUser}}" style="color:#5a85ce;max-width:110px;">@{{DUser.NickName}} : </text>
+    <text wx:if="{{DUser}}">回复</text>
+    <text wx:if="{{DUser}}" style="color:#5a85ce;max-width:110px;">@{{DUser.NickName}} : </text>
     <text>{{Content}}</text>
   </view>
 
@@ -151,3 +151,5 @@
     <image style="width:47px;height:47px;padding:6px" src="{{ComUser.Headimgurl}}"></image>
   </view>
 </template>
+
+<!-- 评论帖子 -->
