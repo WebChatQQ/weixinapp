@@ -10,6 +10,7 @@ Page({
     "location": "点击发送地理位置",
     "selectedImgs": null, //[{"id":id,"url":url}]
     "redioVoice": null,//{"id":id, "url":url}
+    "showVedio": false,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -101,7 +102,32 @@ Page({
         break
       }
     }
-    that.setData({"selectedImgs": imgs})
+    that.setData({ "selectedImgs": imgs })
   },
+  /**
+   * 选择位置
+   */
+  selectLocation: function (e) {
+    console.info("定位")
+    wx.chooseLocation({
+      success: function (res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        var address = res.address;
+        that.setData({
+          "address": { "hidlat": latitude, "hidlng": longitude, "hidaddress": address },
+          "location": address
+        });
+        console.log(that.data.address);
+      }
+    })
+  },
+  /**
+   * 打开视频选择框
+   */
+  selectVdeio: function () {
+    this.setData({ "showVedio": !this.data.showVedio })
+  }
+
 
 })

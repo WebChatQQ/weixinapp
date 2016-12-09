@@ -27,7 +27,7 @@ Page({
     recordTime: 0,
     formatedRecordTime: "00:00:00",
     voiceSelected: 0,
-    vedio:null,
+    vedio: null,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -99,11 +99,13 @@ Page({
       let tmpFile = result.obj.tmpFile;
       let verifyModel = util.primaryLoginArgs(unionid);
       let imgs = "";
-      for (let i = 0; i < that.data.selectedImgs.length; i++) {
-        if (i == 0) {
-          imgs = imgs + that.data.selectedImgs[i].id;
-        } else {
-          imgs = imgs + "," + that.data.selectedImgs[i].id
+      if (that.data.selectedImgs) {
+        for (let i = 0; i < that.data.selectedImgs.length; i++) {
+          if (i == 0) {
+            imgs = imgs + that.data.selectedImgs[i].id;
+          } else {
+            imgs = imgs + "," + that.data.selectedImgs[i].id
+          }
         }
       }
       let data = {
@@ -145,8 +147,13 @@ Page({
         // header: {}, // 设置请求的 header
         formData: data, // HTTP 请求中其他额外的 form data
         success: function (res) {
-          console.log("发帖成功", res);
-          wx.navigateTo({ "url": "/pages/index/index" });
+          let result = JSON.parse(res.data)
+          if (result.result) {
+            console.log("发帖成功", res);
+            wx.navigateTo({ "url": "/pages/index/index" });
+          } else{
+            console.log("发帖失败", res)
+          }
         },
         complete: function () { // 重置数据
           that.resetData();
@@ -176,10 +183,10 @@ Page({
         var longitude = res.longitude;
         var address = res.address;
         that.setData({
-          address: { "hidlat": latitude, "hidlng": longitude, "hidaddress": address },
-          locationMsg: address
+          "address": { "hidlat": latitude, "hidlng": longitude, "hidaddress": address },
+          "locationMsg": address
         });
-        console.log(that.data.address);
+        console.log("that.data.address", that.data.address, "locationMsg", that.data.locationMsg);
       }
     })
   },
@@ -366,7 +373,7 @@ Page({
             let result = JSON.parse(r.data)
             if (result.result == true) {
               console.log("上传视频成功", res)
-              that.setData({ vedio: { "id": result.obj.id, "src": result.obj.url} })
+              that.setData({ vedio: { "id": result.obj.id, "src": result.obj.url } })
             } else {
               console.log("上传视频失败")
             }

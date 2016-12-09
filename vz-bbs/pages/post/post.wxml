@@ -33,9 +33,9 @@
         <image style="width:100%;max-height:80px;" src="{{vedio.src}}" />
       </view>
 
-      <!-- 文字 -->
+      <!-- 位置 -->
       <view class="comment-submit-box">
-        <view class="position-box">
+        <view class="position-box" catchtap="selectLocation">
           <image class="position-icon" mode="scaleToFill" src="http://qty83k.creatby.com/materials/origin/0024e9b38e605192d94951ce3dffe8ae_origin.png" style="background-size: 100% 100%; background-position: 0% 0%; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0024e9b38e605192d94951ce3dffe8ae_origin.png); "
           />
           <text class="location-msg-box">{{location}}</text>
@@ -82,7 +82,7 @@
     </block>
 
     <!-- 视频 -->
-    <block>
+    <block wx:if="{{showVedio}}">
       <view class="post-video-box">
         <form>
           <view>

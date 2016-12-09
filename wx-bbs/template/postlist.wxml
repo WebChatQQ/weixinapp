@@ -5,15 +5,15 @@
     <view style="padding:30rpx 24rpx 16rpx; float:left" catchtap="navicateToUser" data-id="{{user.Id}}">
       <image style="width:40px;height:40px;overflow:hidden;" src="{{user.Headimgurl}}">{{articles}}</image>
     </view>
-    <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">
+    <view class="border-box-none" style="padding:30rpx 0px 0px; overflow:hidden; height:80rpx;">
       <view class="aricle-user-wrap">
         <text class="index-poster-name">{{user.NickName}}</text>
         <text class="index-poster-kind">V.{{user.Level}}</text>
         <view class="index-poster-arrow" catchtap="openArrow" data-art-id="{{Id}}" data-user-id="{{user.Id}}"></view>
       </view>
-      <view style="height:40rpx">
-        <text class="index-post-info">{{CreateDate}}</text>
-        <text class="index-post-info">浏览{{Click}}</text>
+      <view class="border-box-none" style="height:32rpx">
+        <view class="border-box-none index-post-info f-11rem">{{CreateDate}}</view>
+        <view class="border-box-none index-post-info f-11rem">浏览{{Click}}</view>
       </view>
     </view>
   </view>

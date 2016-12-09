@@ -1,4 +1,4 @@
-const minisnsId = 1
+const minisnsId = 3
 
 
 module.exports={

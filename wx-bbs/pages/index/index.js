@@ -25,7 +25,8 @@ Page({
     currentMoreComment: "",
     headInfo: {},
     categories: [],
-    hideTop: false
+    hideTop: false,
+    scrollPosition: 0,
   },
 
   onLoad: function () {
@@ -76,6 +77,7 @@ Page({
     } else {
       this.setData({ "hideTop": false })
     }
+    this.setData({ "scrollPosition": scrollTop })
   },
 
 
@@ -410,10 +412,11 @@ Page({
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
     var id = e.currentTarget.dataset.id; // 帖子ID
-    var verifyModel = util.primaryLoginArgs(unionid);
+    var tmpFile = that.data.tmpFile;
 
     api.snsApi({
       "url": "https://snsapi.vzan.com/minisnsapp/articlepraise",
+      "filePath": tmpFile,
       "name": "file",
       "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
@@ -427,8 +430,8 @@ Page({
       if (tmpArticles) {
         for (let i = 0; i < tmpArticles.length; i++) {
           if (tmpArticles[i].Id == id) {
-            tmp[i].IsPraise = true;
-            tmp[i].Praise = tmp[i].Praise + 1;
+            tmpArticles[i].IsPraise = true;
+            tmpArticles[i].Praise = tmpArticles[i].Praise + 1;
           }
         }
         that.setData({ "articles": tmpArticles })
@@ -449,11 +452,11 @@ Page({
     var that = this;
     var id = e.currentTarget.dataset.id;  // 帖子ID
     let showRecomment = that.data.showRecomment;
-    if (showRecomment != null) { // 关闭评论
+    if (showRecomment != null && showRecomment.id == id) { // 关闭评论
       that.setData({ "showRecomment": null })
       that.initRecomment();
     } else { // 打开评论
-      that.setData({ "showRecomment": { "id": id } })
+      that.setData({ "showRecomment": { "id": id }, "scrollPosition": that.data.scrollPosition + 200 })
       that.initRecomment();
     }
   },
@@ -462,15 +465,15 @@ Page({
    */
   commentUser: function (e) {
     var that = this;
+    let artId = e.currentTarget.dataset.artid;
+    let uid = e.currentTarget.dataset.uid;
+    let name = e.currentTarget.dataset.name;
+    let id = e.currentTarget.dataset.id;
     let showRecomment = that.data.showRecomment;
-    if (showRecomment != null) { // 关闭评论
+    if (showRecomment != null && 　showRecomment.id == artId && showRecomment.commontId == id) { // 关闭评论
       that.setData({ "showRecomment": null })
       that.initRecomment();
     } else {
-      let artId = e.currentTarget.dataset.artid;
-      let uid = e.currentTarget.dataset.uid;
-      let name = e.currentTarget.dataset.name;
-      let id = e.currentTarget.dataset.id;
       that.setData({
         "showRecomment": { "id": artId, "toUserId": uid, "commontId": id, "toUserName": name }
       })
@@ -611,6 +614,8 @@ Page({
       }
     }, function (success) {
       console.log("回复帖子成功", success)
+      // 关闭评论
+      that.setData({ "commentText": "", "emoij": false, "selectedImgs": [], "showRecomment": null })
       // 更新帖子评论信息
       api.getComment(
         id,

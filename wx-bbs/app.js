@@ -41,12 +41,16 @@ App({
             .then(function (loginRes) {
                 return "https://api.weixin.qq.com/sns/jscode2session?" + "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&" +
                     "js_code=" + loginRes.code + "&grant_type=authorization_code";
+            }, function (fail) {
+                console.log("微信登陆失败", fail)
             })
             .then(function (url) {
                 return api.wxApi(wx.request)({ "url": url, "method": "GET" })
                     .then(function (sessionRes) {
                         return sessionRes
                     })
+            }, function (fail) {
+                console.log("登陆微信服务器失败", fail)
             })
             .then(function (sessionRes) {
                 return api.wxApi(wx.getUserInfo)({})
@@ -57,6 +61,8 @@ App({
                         wx.setStorageSync('userInfo', userInfo)
                         return userInfo
                     })
+            }, function (fail) {
+                console.log("获取用户信息失败", fail)
             })
             .then(function (userInfo) {
                 return api.wxApi(wx.downloadFile)({ "url": "https://snsapi.vzan.com/images/vzan.jpg", "type": "image" })
@@ -64,6 +70,8 @@ App({
                         console.log("下载文件成功")
                         return res.tempFilePath
                     })
+            }, function (fail) {
+                console.log("下载文件失败", fail)
             })
             .then(function (tmpFile) {
                 return api.wxApi(wx.saveFile)({ "tempFilePath": tmpFile })
@@ -72,6 +80,8 @@ App({
                         wx.setStorageSync('tmpFile', res.savedFilePath);
                         return res.savedFilePath
                     })
+            }, function (fail) {
+                console.log("保存文件到本地失败", fail)
             })
             .then(function (tmpFile) {
                 let verifyModel = util.primaryLoginArgs(wx.getStorageSync('userInfo').unionId);
@@ -84,6 +94,7 @@ App({
                 })
                     .then(function (res) {
                         console.log("APP.js 初始化", res)
+                        console.log("请求参数", fid, verifyModel)
                         var result = JSON.parse(res.data);
                         wx.setStorageSync('user', result.obj._LookUser);
                         wx.setStorageSync('minisns', result.obj._Minisns);
@@ -97,6 +108,8 @@ App({
                         if (typeof cb == "function") {
                             cb(result);
                         }
+                    }, function (fail) {
+                        console.log("获取用户信息失败", fail)
                     })
             })
 

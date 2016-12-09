@@ -13,7 +13,7 @@
     </view>
     <form bindsubmit="commentSubmit" bindreset="commentCancle">
       <view style="width:100%; padding:10rpx;background-color:#fff;border: 1px solid #d6d6d6;">
-        <textarea name="content" class="recommend-text" placeholder="{{showRecomment.toUserName?'回复'+showRecomment.toUserName+':':'回复帖子:'}}" value="{{commentText}}" />
+        <textarea bindblur="saveTextValue" name="content" class="recommend-text" placeholder="{{showRecomment.toUserName?'回复'+showRecomment.toUserName+':':'回复帖子:'}}" value="{{commentText}}" />
       </view>
       <view class="recommend-line-container">
         <view class="recommend-icon-container">

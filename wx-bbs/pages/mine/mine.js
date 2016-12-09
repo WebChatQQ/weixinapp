@@ -64,5 +64,14 @@ Page({
         console.log("跳转到我的发帖");
       }
     })
+  },
+  /**
+   * 修改用户信息
+   */
+  modifyUserInfo: function(){
+    wx.navigateTo({
+      url: '',
+    })
   }
+
 })

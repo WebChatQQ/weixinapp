@@ -13,7 +13,7 @@ Page({
     selectedImgs: [],
     currentMoreComment: null,
     articles: [], // 我的发帖
-    payArticles:[], // 我的付费贴
+    payArticles: [], // 我的付费贴
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -36,24 +36,27 @@ Page({
 
   init: function (uid) {
     var that = this;
-    that.setData({"loading":true})
+    that.setData({ "loading": true })
+
     app.getInit(function (result) {
       that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": result.obj.tmpFile })
       if (result.obj._LookUser.Id != that.data.uid) {
-        wx.setNavigationBarTitle({"tilte":"TA的发帖"})
+        wx.setNavigationBarTitle({ "tilte": "TA的发帖" })
       }
+      that.getArticles(uid);
     })
-    
-    that.getArticles(uid);
+
 
   },
 
   /**
    * 重置数据
    */
-  resetData: function() {
-    this.setData({"showRecomment":{}, "emoij":false, "commentText":"", "selectedImgs":[]
-    , "currentMoreComment":null })
+  resetData: function () {
+    this.setData({
+      "showRecomment": {}, "emoij": false, "commentText": "", "selectedImgs": []
+      , "currentMoreComment": null
+    })
   },
 
   /**
@@ -81,6 +84,7 @@ Page({
     var minisId = that.data.minisns.Id;
     var unionid = that.data.user.unionid;
     var verifyModel = util.primaryLoginArgs(unionid);
+    util.showLoading()
     wx.uploadFile({
       url: 'https://snsapi.vzan.com/minisnsapp/myarticles',
       filePath: tmpFile,
@@ -93,24 +97,27 @@ Page({
       success: function (res) {
         var result = JSON.parse(res.data);
         let list = []
-        for (let i = 0; i < result.objArray.length; i++) {
-          let article = result.objArray[i]
-          if (article.Address) {
-            let address = JSON.parse(article.Address);
-            article.Address = address;
+        if (result.objArray.length) {
+          for (let i = 0; i < result.objArray.length; i++) {
+            let article = result.objArray[i]
+            if (article.Address) {
+              let address = JSON.parse(article.Address);
+              article.Address = address;
+            }
+            let articleComments = article.articleComments;
+            if (articleComments) {
+              articleComments = articleComments.reverse()
+              article.articleComments = articleComments;
+            }
+            list.push(article)
+            console.log("获取我的发帖列表", list);
+            that.setData({ articles: list })
           }
-          let articleComments = article.articleComments;
-          if (articleComments) {
-            articleComments = articleComments.reverse()
-            article.articleComments = articleComments;
-          }
-          list.push(article)
         }
-        console.log("获取我的发帖列表", list);
-        that.setData({ articles: list })
       },
-      complete: function() {
-        that.setData({"loading":false})
+      complete: function () {
+        that.setData({ "loading": false })
+        util.endLoading()
       }
     })
 
@@ -123,7 +130,7 @@ Page({
   getChargeArt: function () {
     let that = this
     that.resetData()
-    
+
   },
 
   /**
@@ -544,7 +551,7 @@ Page({
     let that = this;
     if (uid == that.data.user.Id) {
       // 回退
-      wx.navigateBack({"delta":1})
+      wx.navigateBack({ "delta": 1 })
     } else {
       wx.redirectTo({
         url: '/pages/user/user?uid=' + uid,

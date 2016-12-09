@@ -141,15 +141,7 @@
 .aricle-user-wrap {
   position: relative;
 }
-.index-poster-name {
-  color:#5a85ce;
-  font-weight:bold;
-  font-size:31rpx;
-  font-family: "Microsoft YaHei",Arial;
-  width: 200rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 
 .icon-reward {
   vertical-align: -4px;

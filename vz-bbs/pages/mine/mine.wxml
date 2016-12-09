@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="border-slice"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-article-icon"></view>
+      </view>
+      <view class="weui-cell__bd">我的发帖</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{}}</view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-join-icon"></view>
+      </view>
+      <view class="weui-cell__bd">我参与的</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+  <view class="border-slice"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-post-chat"></view>
+      </view>
+      <view class="weui-cell__bd">消息中心</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{}}</view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-post-credit"></view>
+      </view>
+      <view class="weui-cell__bd">我的积分</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+  <view class="border-slice"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-post-gift"></view>
+      </view>
+      <view class="weui-cell__bd">礼品兑换</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{}}</view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <view class="mine-post-aboutus"></view>
+      </view>
+      <view class="weui-cell__bd">关于我们</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+</view>
