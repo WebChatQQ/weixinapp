@@ -1,6 +1,8 @@
 
 
 var util = require("../../utils/util.js")
+var api = require("../../utils/api.js")
+var constant = require("../../utils/constant.js")
 
 var app = getApp()
 var that;
@@ -140,24 +142,16 @@ Page({
       if (that.data.address.hidaddress != "") {
         data.hidaddress = that.data.address.hidaddress
       }
-      wx.uploadFile({
-        url: 'https://snsapi.vzan.com/minisnsapp/addart',
-        filePath: tmpFile,
-        name: 'file',
-        // header: {}, // 设置请求的 header
-        formData: data, // HTTP 请求中其他额外的 form data
-        success: function (res) {
-          let result = JSON.parse(res.data)
-          if (result.result) {
-            console.log("发帖成功", res);
-            wx.navigateTo({ "url": "/pages/index/index" });
-          } else{
-            console.log("发帖失败", res)
-          }
-        },
-        complete: function () { // 重置数据
-          that.resetData();
-        }
+
+      api.snsApi({
+        "url": "https://snsapi.vzan.com/minisnsapp/addart",
+        "formData": data
+      }, function (success) {
+        console.log("发帖成功", success)
+        that.resetData()
+      }, function (fail) {
+        console.log("发帖失败", fail)
+        that.resetData()
       })
     })
   },
@@ -183,8 +177,8 @@ Page({
         var longitude = res.longitude;
         var address = res.address;
         that.setData({
+          "locationMsg": address,
           "address": { "hidlat": latitude, "hidlng": longitude, "hidaddress": address },
-          "locationMsg": address
         });
         console.log("that.data.address", that.data.address, "locationMsg", that.data.locationMsg);
       }
@@ -222,28 +216,15 @@ Page({
           var unionid = result.obj._LookUser.unionid;
           var verifyModel = util.primaryLoginArgs(unionid);
           for (let i = 0; i < imgs.length; i++) {
-            wx.uploadFile({
-              url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
-              filePath: imgs[i],
-              name: 'file',
-              // header: {}, // 设置请求的 header
-              formData: {
-                "fid": minisId, "uploadType": "img", "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
-                "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign
-              }, // HTTP 请求中其他额外的 form data
-              success: function (res) {
-                console.log("Post.js 上传图片", res)
-                var result = JSON.parse(res.data);
-                if (result.result == true) {
-                  // 刷新页面
-                  var rtmp = that.data.selectedImgs;
-                  rtmp = rtmp.concat({ id: result.obj.id, src: result.obj.url });
-                  that.setData({ selectedImgs: rtmp });
-                } else {
-                  console.log("Post.js 上传图片失败", res)
-                }
-              }
-            })
+            api.uplodaImg({
+              "fid": minisId, "uploadType": "img", "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
+              "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign
+            }, imgs[i])
+              .then(function (success) {
+                var rtmp = that.data.selectedImgs;
+                rtmp = rtmp.concat({ id: result.obj.id, src: result.obj.url });
+                that.setData({ selectedImgs: rtmp });
+              })
           }
         })
       }
@@ -288,6 +269,7 @@ Page({
     wx.startRecord({
       success: function (res) {
         var user = that.data.user;
+        console.log("录音结束", res)
         // 上传到服务器
         wx.uploadFile({
           url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
@@ -296,11 +278,16 @@ Page({
           // header: {}, // 设置请求的 header
           formData: { "uploadType": "audio", "fid": that.data.minisns.Id }, // HTTP 请求中其他额外的 form data
           success: function (res) {
-            let result = JSON.parse(res)
-            console.log("上传录音成功", res)
-            that.setData({ "voice": { "id": result.obj.id, "src": result.obj.url } })
+            let result = JSON.parse(res.data)
+            if (result.result) {
+              console.log("上传录音成功", result)
+              that.setData({ "voice": { "id": result.obj.id, "src": result.obj.url } })
+            } else {
+              console.log("上传录音失败", result)
+            }
           },
-          complete: function () {
+          fail: function (res) {
+            console.log("上传录音失败", res)
             that.setData({ hasRecorded: 1, recording: 0, recordTime: 0, })
           }
         })
@@ -362,6 +349,7 @@ Page({
       camera: ['front', 'back'],
       success: function (res) {
         var user = wx.getStorageSync('user')
+        console.log("视频选择成功", res)
         // 上传到服务器
         wx.uploadFile({
           url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
@@ -375,9 +363,11 @@ Page({
               console.log("上传视频成功", res)
               that.setData({ vedio: { "id": result.obj.id, "src": result.obj.url } })
             } else {
-              console.log("上传视频失败")
+              console.log("上传视频失败", result)
             }
-
+          },
+          fail: function (res) {
+            console.log("上传视频失败", res)
           }
         })
       }

@@ -27,6 +27,7 @@ Page({
     categories: [],
     hideTop: false,
     scrollPosition: 0,
+    isConcern:false,
   },
 
   onLoad: function () {
@@ -35,35 +36,6 @@ Page({
   onShow: function () {
     this.resetData()
     this.init();
-
-    // let formData = new FormData();
-    // formData.append("deviceType", "ios9.0")
-    // formData.append("uid", "oW2wBwUJF_7pvDFSPwKfSWzFbc5o")
-    // formData.append("sign", "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82")
-    // formData.append("timestamp", 1479174892808)
-    // formData.append("fid", "3")
-    // formData.append("pageIndex", "1")
-    // formData.append("categoryId", "0")
-    // formData.append("hotshow", "0")
-    // let data = "deviceType=ios9.0&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&sign=817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82" + 
-    // "&timestamp=1479174892808&fid=3&pageIndex=1&categoryId=0&hotshow=0"
-    // wx.request({
-    //   url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
-    //   data: formData,
-    //   method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    //   // header: { "content-type": "multipart/form-data;charset=UTF-8" }, // 设置请求的 header
-    //   success: function (res) {
-    //     console.log("loginByWeiXin success", res);
-    //   },
-    //   fail: function (res) {
-    //     console.log("loginByWeiXin fail", res);
-    //   },
-    //   complete: function (res) {
-    //     console.log("loginByWeiXin complete", res);
-    //   }
-    // })
-
-
   },
 
   /**
@@ -123,8 +95,9 @@ Page({
       var minisId = result.obj._Minisns.Id;
       var unionid = result.obj._LookUser.unionid;
       var verifyModel = util.primaryLoginArgs(unionid);
+      let isConcern = result.obj.IsConcern
       // 设置全局数据
-      that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": tmpFile })
+      that.setData({ "user": result.obj._LookUser, "minisns": result.obj._Minisns, "tmpFile": tmpFile, "isConcern":isConcern })
       // 设置头部信息
       api.snsApi({
         "url": 'https://snsapi.vzan.com/minisnsapp/getminisnsheadinfo', "filePath": tmpFile, "name": "file", "formData": {
@@ -380,25 +353,16 @@ Page({
         "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, "fid": minisId
       }
     }, function (result) {
-      console.log("签到成功", result)
-      wx.showToast({
-        "title": "签到成功,连续签到" + result.obj.SigDays + "天",
-        "icon": "success"
-      })
-      api.snsApi({
-        "url": "https://snsapi.vzan.com/minisnsapp/userinfo",
-        "filePath": tmpFile,
-        "name": "file",
-        "formData": {
-          "fid": minisId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,
-          "sign": verifyModel.sign, "timestamp": verifyModel.timestamp, "versionCode": verifyModel.versionCode
-        }
-      }, function (result) {
-        console.log("更新用户信息成功", result)
-        that.setData({ "user": result.obj._LookUser })
-      }, function (error) {
-        console.log("签到后更新用户信息失败", error)
-      })
+      if (result.result) {
+        console.log("签到成功", result)
+        wx.showToast({
+          "title": "签到成功,连续签到" + result.obj.SigDays + "天",
+          "icon": "success"
+        })
+        let user = that.data.user
+        user.IsSign = true
+        that.setData({"user":user})
+      }
     }, function (error) {
       console.log("签到失败", error)
     })
@@ -470,7 +434,7 @@ Page({
     let name = e.currentTarget.dataset.name;
     let id = e.currentTarget.dataset.id;
     let showRecomment = that.data.showRecomment;
-    if (showRecomment != null && 　showRecomment.id == artId && showRecomment.commontId == id) { // 关闭评论
+    if (showRecomment != null && showRecomment.id == artId && showRecomment.commontId == id) { // 关闭评论
       that.setData({ "showRecomment": null })
       that.initRecomment();
     } else {
@@ -672,6 +636,7 @@ Page({
     api.snsApi({
       "url": "https://snsapi.vzan.com/minisnsapp/replyartcommentbyid",
       "filePath": tmpFile,
+      "name":"name",
       "formData": {
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": unionid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
@@ -688,7 +653,7 @@ Page({
           if (articles) {
             for (let i = 0; i < articles.length; i++) {
               let tmp = articles[i]
-              if (tmp.Id == id) {
+              if (tmp.Id == showRecomment.id) {
                 tmp.articleComments = that.generateComments(success.data.CommentList);
                 articles[i] = tmp
                 break

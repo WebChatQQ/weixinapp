@@ -8,7 +8,7 @@
         <textarea class="c-fullwidth post-title" name="title" value="{{title}}" placeholder="标题，可以不填..." />
       </view>
       <view class="post-mainbody-wrap">
-        <textarea class="c-fullwidth post-mainbody" name="artContent" value="{{artContent}}" placeholder="这一刻的想法..." />
+        <textarea bindblur="saveContent" class="c-fullwidth post-mainbody" name="artContent" value="{{artContent}}" placeholder="这一刻的想法..." />
       </view>
 
       <!-- 发帖图片 -->

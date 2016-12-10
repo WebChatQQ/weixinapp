@@ -38,22 +38,12 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
-function getData() {
-  wx.request({
-    url: 'http://apptest.vzan.com/f/s-1',
-    data: {},
-    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    // header: {}, // 设置请求的 header
-    success: function (res) {
-      // success
-    },
-    fail: function () {
-      // fail
-    },
-    complete: function () {
-      // complete
-    }
-  })
+function json2FormData(json) {
+  let result = []
+  for(let prop in json) {
+    result.push(prop + "=" +json[prop])
+  }
+  return result.join("&")
 }
 
 // 举报
@@ -177,6 +167,7 @@ module.exports = {
   "htmlFilter": htmlFilter,
   "articleFilter": articleFilter,
   "showLoading": showLoading,
-  "endLoading": endLoading
+  "endLoading": endLoading,
+  json2FormData,
 }
 

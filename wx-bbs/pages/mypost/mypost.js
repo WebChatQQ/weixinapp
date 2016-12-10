@@ -70,7 +70,6 @@ Page({
       that.getArticles();
     } else {
       that.setData({ "selected": 2 })
-
       that.getChargeArt();
     }
   },
@@ -97,31 +96,36 @@ Page({
       success: function (res) {
         var result = JSON.parse(res.data);
         let list = []
-        if (result.objArray.length) {
-          for (let i = 0; i < result.objArray.length; i++) {
-            let article = result.objArray[i]
-            if (article.Address) {
-              let address = JSON.parse(article.Address);
-              article.Address = address;
+        if (result.result) {
+          console.log("获取我的发帖成功", result)
+          if (result.objArray) {
+            for (let i = 0; i < result.objArray.length; i++) {
+              let article = result.objArray[i]
+              if (article.Address) {
+                let address = JSON.parse(article.Address);
+                article.Address = address;
+              }
+              let articleComments = article.articleComments;
+              if (articleComments) {
+                articleComments = articleComments.reverse()
+                article.articleComments = articleComments;
+              }
+              list.push(article)
+              console.log("获取我的发帖列表", list);
+              that.setData({ articles: list })
             }
-            let articleComments = article.articleComments;
-            if (articleComments) {
-              articleComments = articleComments.reverse()
-              article.articleComments = articleComments;
-            }
-            list.push(article)
-            console.log("获取我的发帖列表", list);
-            that.setData({ articles: list })
           }
+        } else {
+          console.log("获取我的发帖失败", result)
         }
+        util.endLoading()
       },
-      complete: function () {
+      fail: function (res) {
+        console.log("获取我的发帖失败", res)
         that.setData({ "loading": false })
         util.endLoading()
       }
     })
-
-
   },
 
   /**

@@ -16,8 +16,11 @@
       <view wx:if="{{user.IsSign == false}}" class="flex " catchtap="sign">
         <view class="index-sign "></view>签到</view>
       <view wx:else="{{user.IsSign == true}}" class="flex ">已签到</view>
-      <view class="flex " catchtap="concern">
+
+      <view wx:if="{{isConcern == false}}" class="flex " catchtap="concern">
         <view class="index-focus "></view>关注</view>
+      <view wx:if="{{isConcern == true}}" class="flex">已关注</view>
+
       <view wx:if="{{user.IsWholeAdmin == true}}" class="flex">
         <view class="index-set "></view>管理员</view>
     </view>

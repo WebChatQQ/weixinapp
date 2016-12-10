@@ -25,6 +25,29 @@ App({
      */
     getInit: function (cb) {
         var that = this;
+        let verifyModel = util.primaryLoginArgs(wx.getStorageSync('userInfo').unionId);
+        var formData = new FormData()
+        formData.append("deviceType", "ios9.0")
+        formData.append("sign", "oW2wBwUJF_7pvDFSPwKfSWzFbc5o")
+        formData.append("versionCode", "1.0")
+        formData.append("timestamp", "1479174892808")
+        formData.append("sign", "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82")
+        formData.append("fid", "1")
+        formData.append("pageIndex", "1")
+        formData.append("categoryId", "2")
+        formData.append("hotshow", "0")
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
+            data: "deviceType=ios9.0&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&versionCode=1.0&timestamp=1479174892808&sign=817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82&fid=3",
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+            success: function (res) {
+                console.log("测试Requst成功", res)
+            },
+            fail: function (res) {
+                console.log("测试Requst失败", res)
+            }
+        })
         var init = wx.getStorageSync('init');
         if (typeof init == 'undefined' || init == '') {
             that.init(cb);
@@ -33,10 +56,12 @@ App({
         }
     },
 
+
     /**
      * 初始化数据
      */
     init: function (cb) {
+
         api.wxApi(wx.login)({})
             .then(function (loginRes) {
                 return "https://api.weixin.qq.com/sns/jscode2session?" + "appid=wx61575c2a72a69def&secret=442cc056f5824255611bef6d3afe8d33&" +
