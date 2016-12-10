@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/post/post",
     "pages/mine/mine",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/score/score",
+    "pages/articles/articles"
   ],
   "window": {
     "backgroundTextStyle": "light",

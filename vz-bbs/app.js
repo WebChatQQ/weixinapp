@@ -60,22 +60,6 @@ App({
             })
         })
         .then(function (userInfo) {
-          return api.wxApi(wx.downloadFile)({ "url": "https://snsapi.vzan.com/images/vzan.jpg", "type": "image" })
-            .then(function (res) {
-              console.log("下载文件成功", res)
-              wx.setStorageSync('tmpFile', res.tempFilePath)
-              return res.tempFilePath
-            })
-        })
-        .then(function (tmpFile) {
-          return api.wxApi(wx.saveFile)({ "tempFilePath": tmpFile })
-            .then(function (res) {
-              console.log("保存下载文件到本地成功", res)
-              wx.setStorageSync('tmpFile', res.savedFilePath);
-              return res.savedFilePath
-            })
-        })
-        .then(function (tmpFile) {
           let verifyModel = util.primaryLoginArgs();
           let data = {
             "fid": constdata.minisnsId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,

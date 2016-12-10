@@ -1,0 +1,19 @@
+<import src="/template/emoij" />
+<view class="page-container">
+  <view class="bg-fff tab-box">
+    <view style="border-right:1px solid #eee; " class="tab-item-box {{selected==1?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="1">{{uid==user.Id?"我的":"TA的"}}发帖</view>
+    <view class="tab-item-box {{selected==2?'tabbar-wrap-selected':''}}" catchtap="showList" data-id="2">{{uid==user.Id?"我的":"TA的"}}付费贴</view>
+  </view>
+  <view class="post-container">
+    <scroll-view scroll-y="true"  bindscrolltolower="nextPage" class="articles-box">
+      <include src="/template/article-content.wxml" />
+      <view class="border-slice"></view>
+    </scroll-view>
+
+    <!-- 正在加载 
+    <view class="loading" style="display:{{loading?'block':'none'}}">
+      <image style="height:16px; width:16px;" src="http://i.pengxun.cn/content/images/loading.gif"></image>
+      <view class="loading">正在加载...</view>
+    </view>
+    -->
+  </view>

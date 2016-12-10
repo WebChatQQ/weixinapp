@@ -4,10 +4,10 @@
 <view>
   <form bindsubmit="submit">
     <view class="post-title-box">
-      <input name="title" class="post-title f-f f-16rem" placeholder="标题,可以不填..." />
+      <input name="title" value="{{title}}" class="post-title f-f f-16rem" placeholder="标题,可以不填..." />
     </view>
     <view>
-      <textarea content="content" class="border-box post-content f-f f-16rem" placeholder="这一刻的想法..." />
+      <textarea name="artContent" value="{{artContent}}" class="border-box post-content f-f f-16rem" placeholder="这一刻的想法..." />
 
       <!-- 图片 -->
       <view class="rl comment-re-imgs-box" wx:if="{{selectedImgs}}">
@@ -49,23 +49,23 @@
 
   <!-- 图片 -->
   <view class="post-icon-container">
-    <view class="post-icon-emoj-wrap" catchtap="showEmoijBox">
+    <view class="post-icon-emoj-wrap border-box" catchtap="showEmoijBox">
       <view class="post-icon-emoj"> </view>
       <text class="post-icon-desc f-f f-10rem">表情</text>
     </view>
-    <view class="post-icon-emoj-wrap" catchtap="selectImg">
+    <view class="post-icon-emoj-wrap border-box" catchtap="selectImg">
       <view class="post-icon-img"></view>
       <text class="post-icon-desc f-f f-10rem">图片</text>
     </view>
-    <view class="post-icon-emoj-wrap" catchtap="selectVoice">
+    <view class="post-icon-emoj-wrap border-box" catchtap="selectVoice">
       <view class="post-icon-voice"></view>
       <text class="post-icon-desc f-f f-10rem">语音</text>
     </view>
-    <view class="post-icon-emoj-wrap" catchtap="selectVdeio">
+    <view class="post-icon-emoj-wrap border-box" catchtap="selectVdeio">
       <view class="post-icon-vedio"></view>
       <text class="post-icon-desc f-f f-10rem">视频</text>
     </view>
-    <view class="post-icon-emoj-wrap" catchtap="selectReward">
+    <view class="post-icon-emoj-wrap border-box" catchtap="selectReward">
       <view class="post-icon-reward"></view>
       <text class="post-icon-desc f-f f-10rem">悬赏</text>
     </view>
@@ -77,7 +77,7 @@
       <text class="post-type-wrap f-12rem f-f" catchtap="selectCategory" data-id="{{type.Id}}" data-name="{{type.Title}}">{{type.Title}}</text>
     </block>
     <block wx:if="{{categories && selectedCateogry}}">
-      <text class="post-type-wrap f-12rem f-f" catchtap="selectCategory" data-id="{{selectedCateogry.Id}}" data-name="{{selectedCateogry.Title}}">{{selectedCateogry.Title}}</text>
+      <text class="post-selected-type-wrap f-12rem f-f" catchtap="selectCategory" data-id="{{selectedCateogry.Id}}" data-name="{{selectedCateogry.Title}}">{{selectedCateogry.Title}}</text>
       <view class="category-selected-delete" catchtap="deleteCategory"></view>
     </block>
 
@@ -97,4 +97,7 @@
       </view>
     </block>
   </view>
+
+  <!-- 录音页面 -->
+  <include src="/template/record.wxml" />
 </view>

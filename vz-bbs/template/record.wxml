@@ -1,0 +1,21 @@
+
+<!-- 录音页面 -->
+<view class="z5 pop" style="{{voiceSelected==0?'display:none':''}}">
+  <view class="record-container">
+    <view class="recored-cancle-wrap f-13rem" catchtap="cancleRecord">取消</view>
+    <view wx:if="{{recording==0}}" class="record-wrap">
+      <view class="start-record" catchtap="startRecord">
+        <image style="width:150rpx;height:150rpx" src="/images/record.png" />
+      </view>
+      <view class="record-tip-wrap">点一下录音</view>
+    </view>
+    <view wx:if="{{recording==1}}" class="record-wrap">
+      <view>
+        <view class="stop-record" catchtap="stopRecord"></view>
+      </view>
+      <view class="record-tip-wrap">点击结束</view>
+    </view>
+  </view>
+   <view style="width:100%; height:100%" catchtap="cancleRecord">
+  </view>
+</view>

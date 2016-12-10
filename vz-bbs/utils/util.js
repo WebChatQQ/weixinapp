@@ -38,6 +38,17 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
+/**
+ * json 2 string
+ */
+function json2String(json) {
+  let reply = []
+  for (let prop in json) {
+    reply.push(prop + "=" + json[prop])
+  }
+  return reply.join("&")
+}
+
 
 // 举报
 function tipOff(user) {
@@ -122,6 +133,10 @@ function htmlFilter(content) {
 function articleFilter(articles) {
   let that = this
   articles.forEach(function (article) {
+    // if (article.Address) {
+    //   let address = JSON.parse(article.Address);
+    //   article.Address = address;
+    // }
     article.ContentDesc = that.htmlFilter(article.ContentDesc)
     if (article.articleComments) {
       article.articleComments.forEach(function (comment) {
@@ -158,7 +173,7 @@ function imgArrayToString(imgsArray) {
   var imgs = "";
   if (imgsArray) {
     for (var i = 0; i < imgsArray.length; i++) {
-      if (i = 0) {
+      if (i == 0) {
         imgs = imgsArray[i].id;
       } else {
         imgs = imgs + "," + imgsArray[i].id;
@@ -178,5 +193,6 @@ module.exports = {
   "showLoading": showLoading,
   "endLoading": endLoading,
   imgArrayToString,
+  json2String
 }
 

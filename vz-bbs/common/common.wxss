@@ -102,6 +102,9 @@
 .bg-f5 {
   background-color: #f5f5f5;
 }
+.bg-fff{
+  background-color: #ffffff;
+}
 
 /*** 删除 ***/
 

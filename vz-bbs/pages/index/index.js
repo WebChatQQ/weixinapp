@@ -17,7 +17,8 @@ Page({
     "commentReImgs": null, // [{'id':id,'url':url}]
     "record": null, // {'tmpFile':tmpfile,'id':id, 'url':url}
     "comment": null, // { "artId": artId, "commentId": commentId, "commentName": commentName }
-    "searchComment":null, //
+    "searchComment": null, //
+    "showAddress":false,
   },
   //事件处理函数
   bindViewTap: function () {
@@ -31,6 +32,14 @@ Page({
     //调用应用实例的方法获取全局数据
     that.init()
   },
+
+  /**
+   * 下拉刷新
+   */
+  onPullDownRefresh: function() {
+    that.init()
+  },
+
   /**
    * 顶部版块显示
    */
@@ -131,6 +140,7 @@ Page({
     })
   },
 
+
   /**
    * 评论框选择图片 
    */
@@ -177,6 +187,21 @@ Page({
         }
       }
     })
+  },
+
+  /**
+   * 评论框删除图片
+   */
+  removeImg: function (e) {
+    let id = e.currentTarget.dataset.id
+    let imgs = this.data.commentReImgs || []
+    for (let i = 0; i < imgs.length; i++) {
+      if (imgs[i].id == id) {
+        imgs.splice(i, 1)
+        break
+      }
+    }
+    that.setData({ "commentReImgs": imgs })
   },
 
   /**
@@ -259,7 +284,7 @@ Page({
     }).then(function (success) {
       pageIndex = success.pageIndex
       let currentArticles = that.data.articles || []
-      let articles = util.articleFilter( (success.objArray || []) ) 
+      let articles = util.articleFilter((success.objArray || []))
       currentArticles = currentArticles.concat(articles)
       that.setData({ "articles": currentArticles, "pageIndex": success.pageIndex })
       util.endLoading()
@@ -284,13 +309,21 @@ Page({
       let articles = success.objArray || []
       articles = util.articleFilter(articles)
       that.setData({ "articles": articles, "pageIndex": success.pageIndex })
-      that.setData({"currentCategory":{"id": id, "hot": hot}})
+      that.setData({ "currentCategory": { "id": id, "hot": hot } })
       util.endLoading();
-    }, function(fail){
+    }, function (fail) {
       util.endLoading();
     })
 
-  }
+  },
+  /**
+   * 播放语音
+   */
+  playAudio: function (e) {
+    let vid = e.currentTarget.dataset.id;
+    let vSrc = e.currentTarget.dataset.vSrc;
+    util.playVoice(vid, vSrc)
+  },
 
 
 })
