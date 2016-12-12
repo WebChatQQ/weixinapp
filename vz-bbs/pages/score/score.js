@@ -39,14 +39,18 @@ Page({
 
     app.getInitData(function (result) {
       var tmpFile = result.obj.tmpFile;
-      var minisId = result.obj._Minisns.Id;
+      var minisId = result.obj._Minisns.Id+"";
       var unionid = result.obj._LookUser.unionid;
       var verifyModel = util.primaryLoginArgs(unionid);
       api.integralLog({
         "deviceType": verifyModel.deviceType, "uid": verifyModel.uid, "versionCode": verifyModel.versionCode,
         "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, fid: minisId
       }).then(function (success) {
-        that.setData({ "scoreList": success.objArray })
+        let scoreList = success.objArray || []
+        scoreList.forEach(function (item) {
+          item.CreateDate = item.CreateDate.replace("T", " ")
+        })
+        that.setData({ "scoreList": scoreList })
       })
     })
   },
@@ -73,14 +77,18 @@ Page({
   getScoreList: function () {
     var that = this;
     app.getInit(function (result) {
-      var minisId = result.obj._Minisns.Id;
+      var minisId = result.obj._Minisns.Id+"";
       var unionid = result.obj._LookUser.unionid;
       var verifyModel = util.primaryLoginArgs(unionid);
       api.integralLog({
         "deviceType": verifyModel.deviceType, "uid": verifyModel.uid, "versionCode": verifyModel.versionCode,
         "timestamp": verifyModel.timestamp, "sign": verifyModel.sign, fid: minisId
       }).then(function (success) {
-        that.setData({ "scoreList": success.objArray })
+        let scoreList = success.objArray || []
+        scoreList.forEach(function (item) {
+          item.CreateDate = item.CreateDate.replace("T", " ")
+        })
+        that.setData({ "scoreList": scoreList })
       })
     })
   },
@@ -92,7 +100,7 @@ Page({
     var that = this;
     app.getInit(function (result) {
       var tmpFile = result.obj.tmpFile;
-      var minisId = result.obj._Minisns.Id;
+      var minisId = result.obj._Minisns.Id+"";
       var unionid = result.obj._LookUser.unionid;
       var verifyModel = util.primaryLoginArgs(unionid);
       api.integralexLog({

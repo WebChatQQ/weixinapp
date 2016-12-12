@@ -8,9 +8,9 @@
         <view class="show-rule">查看积分获取规则</view>
         <view class="score-container">
             <view class="score-head">
-                <view class="score-head-num-warp">积分数</view>
-                <view class="score-head-opera-wrap">操作</view>
-                <view class="score-head-data-wrap">日期</view>
+                <view class="score-head-num-warp f-14rem f-f-s f-w-blod">积分数</view>
+                <view class="score-head-opera-wrap f-14rem f-f-s f-w-blod">操作</view>
+                <view class="score-head-data-wrap f-14rem f-f-s f-w-blod">日期</view>
             </view>
             <view >
                 <block wx:for="{{scoreList}}" wx:for-item="score">

@@ -119,6 +119,7 @@ image {
   white-space: nowrap;
   position: relative;
   top: 0;
+  height: 44rpx;
   z-index: 1;
 }
 
@@ -750,3 +751,23 @@ image {
     color:#5a85ce;
     font-size: 24rpx;
 }
+
+.user-info-box{
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+}
+
+.modify-user-box{
+  display: flex;
+  line-height: 84rpx;
+  color: #888888;
+  margin-right: 4rpx;
+}
+
+.user-info{
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-box-box: 1;
+}
+

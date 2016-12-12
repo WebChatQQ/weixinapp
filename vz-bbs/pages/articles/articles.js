@@ -56,7 +56,7 @@ Page({
     api.myArticles({
       "userid": uid, "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "fid": minisId, "pageIndex": 1
+      "fid": minisId, "pageIndex": 1+""
     }).then(function (success) {
       let articles = success.objArray || []
       articles = util.articleFilter(articles)
@@ -80,7 +80,7 @@ Page({
     api.myArticles({
       "userid": uid, "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "fid": minisId, "pageIndex": 1
+      "fid": minisId, "pageIndex": pageIndex+""
     }).then(function (success) {
       pageIndex = success.pageIndex
       let currentArticles = that.data.articles || []
@@ -92,4 +92,36 @@ Page({
       util.endLoading();
     })
   },
+
+  /**
+   * 点击显示大图
+   */
+  previewImage: function (e) {
+    let url = e.currentTarget.dataset.url
+    if (url) {
+      wx.previewImage({
+        // current: 'String', // 当前显示图片的链接，不填则默认为 urls 的第一张
+        urls: [url],
+        success: function (res) {
+          console.log("展示大图成功", res)
+        },
+        fail: function (res) {
+          console.log("展示大图失败", res)
+        }
+      })
+    } else {
+      console.log("显示大图的URL为", url)
+    }
+  },
+  /**
+    * 播放语音
+    */
+  playAudio: function (e) {
+    let vid = e.currentTarget.dataset.id
+    let vSrc = e.currentTarget.dataset.vSrc
+    util.playVoice(vid, vSrc)
+  },
+
+
+
 })

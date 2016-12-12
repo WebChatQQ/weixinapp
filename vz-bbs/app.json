@@ -5,6 +5,8 @@
     "pages/mine/mine",
     "pages/article/article",
     "pages/score/score",
+    "pages/search/search",
+    "pages/usermodify/usermodify",
     "pages/articles/articles"
   ],
   "window": {

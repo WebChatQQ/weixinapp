@@ -1,0 +1,58 @@
+/* pages/usermodify/usermodify.wxss */
+
+page {
+  background-color: #f5f5f5;
+}
+
+.nickname-box {
+  height: 90rpx;
+  background-color: #fff;
+  padding: 0 30rpx;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.nickname {
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.nickname-input {
+  height: 90rpx;
+  line-height: 90rpx;
+  width: 100%;
+}
+.nickname-input-box{
+    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex:1;
+}
+
+.avatar {
+  height: 90rpx;
+  line-height: 90rpx;
+  right: 30rpx;
+  position: absolute;
+}
+
+.avatar::after {
+  content: " ";
+  display: inline-block;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  height: 7px;
+  width: 7px;
+  border-width: 1px 1px 0 0;
+  border-color: #888;
+  border-style: solid;
+  position: relative;
+  top: -1px;
+  margin-left: 0.3em;
+}
+.img-box{
+    padding: 30rpx;
+    height: 280rpx;
+    width: 280rpx;
+}
+.btn-box{
+  padding: 30rpx;
+}

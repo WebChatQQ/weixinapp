@@ -1,5 +1,5 @@
 <view wx:if="{{Voice}}">
-  <view class="voice-icon">
+  <view class="voice-icon" catchtap="playAudio" data-id="{{Voice.Id}}" data-v-src="{{Voice.TransFilePath}}">
     <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
     <audio class="audio" id="{{Voice.Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{Voice.TransFilePath}}"></audio>
   </view>
@@ -7,7 +7,7 @@
 </view>
 
 
-<template name="article-voice">
+<template name="article-voice" catchtap="playAudio" data-id="{{Id}}" data-v-src="{{TransFilePath}}">
   <view class="voice-icon">
     <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
     <audio class="audio" id="{{Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{TransFilePath}}"></audio>
@@ -15,14 +15,14 @@
 </template>
 
 
-<template name="comment-voice">
+<template name="comment-voice" catchtap="playAudio" data-id="{{Id}}" data-v-src="{{TransFilePath}}">
   <view class="voice-icon" wx:if="{{Voice}}">
     <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
     <audio class="audio" id="{{Voice.Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{Voice.TransFilePath}}"></audio>
   </view>
 </template>
 
-<template name="redio-voice" >
+<template name="redio-voice" catchtap="playAudio" data-id="{{Id}}" data-v-src="{{TransFilePath}}">
   <view class="voice-icon" >
     <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
     <audio class="audio" id="id" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="url"></audio>

@@ -7,6 +7,7 @@ var app = getApp()
  */
 function myArticles(data) {
     let d = util.json2String(data)
+    console.log("获取发帖列表参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/myarticles',
@@ -33,34 +34,70 @@ function myArticles(data) {
 /**
  * 搜索帖子
  */
-function getartlistbykeyword(data, filepath, cb) {
-    wx.uploadFile({
-        url: 'https://snsapi.vzan.com/minisnsapp/getartlistbykeyword',
-        filePath: filepath,
-        name: 'file',
-        // header: {}, // 设置请求的 header
-        formData: data, // HTTP 请求中其他额外的 form data
-        success: function (res) {
-            let result = JSON.parse(res.data);
-            if (result.result) {
-                cb.success(result);
+function getartlistbykeyword(data) {
+    let d = util.json2String(data)
+    console.log("搜索帖子参数", d)
+    return new Promise((resolve, reject) => {
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/getartlistbykeyword',
+            data: d,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+            success: function (res) {
+                let result = res.data
+                if (result.result) {
+                    console.log("搜索帖子成功", result)
+                    resolve(result)
+                } else {
+                    console.log("搜索帖子失败", result)
+                    reject(result)
+                }
+            },
+            fail: function (res) {
+                console.log("搜索帖子失败", res)
+                reject(res)
             }
-        },
-        fail: function (res) {
-            console.log("搜索帖子失败", res)
-        },
-        complete: function () {
-            cb.complete();
-        }
+        })
     })
 }
 
+/**
+ * 登陆服务器
+ */
+function loginByWeiXin(data) {
+    let d = util.json2String(data)
+    console.log("登陆服务器参数", d)
+    return new Promise((resolve, reject) => {
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/loginByWeiXin',
+            data: d,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+            success: function (res) {
+                let result = res.data
+                if (result.result) {
+                    console.log("登陆服务器成功", result)
+                    resolve(res.data)
+                } else {
+                    console.log("登陆服务器失败", result)
+                    reject(res.data)
+                }
+            },
+            fail: function (res) {
+                console.log("登陆服务器失败", res)
+                reject(res)
+            }
+        })
+    })
+}
 
 /**
  * 获取用户信息
  */
 function user(data) {
     let d = util.json2String(data)
+        console.log("获取用户信息参数", d)
+
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/userinfo',
@@ -93,6 +130,8 @@ function user(data) {
  */
 function headInfo(data) {
     let d = util.json2String(data)
+            console.log("获取头部信息参数", d)
+
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/getminisnsheadinfo',
@@ -122,6 +161,7 @@ function headInfo(data) {
  */
 function articles(data) {
     let d = util.json2String(data)
+    console.log("获取帖子列表参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/getartlistbyminisnsid',
@@ -151,6 +191,7 @@ function articles(data) {
  */
 function commentartbyid(data) {
     let d = util.json2String(data)
+    console.log("评论帖子参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/commentartbyid',
@@ -180,6 +221,7 @@ function commentartbyid(data) {
  */
 function replyartcommentbyid(data) {
     let d = util.json2String(data)
+    console.log("回复帖子评论参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/replyartcommentbyid',
@@ -209,6 +251,7 @@ function replyartcommentbyid(data) {
  */
 function articlepraise(data) {
     let d = util.json2String(data)
+    console.log("帖子点赞参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/articlepraise',
@@ -238,6 +281,7 @@ function articlepraise(data) {
  */
 function addArt(data) {
     let d = util.json2String(data)
+    console.log("发帖API参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/addart',
@@ -267,6 +311,7 @@ function addArt(data) {
  */
 function integralLog(data) {
     let d = util.json2String(data)
+    console.log("获取我的积分列表参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/integralLog',
@@ -296,6 +341,7 @@ function integralLog(data) {
  */
 function integralexLog(data) {
     let d = util.json2String(data)
+    console.log("获取我的积分兑换列表参数", d)
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'https://snsapi.vzan.com/minisnsapp/integralexLog',
@@ -408,5 +454,6 @@ module.exports = {
     articlepraise,
     addArt,
     integralLog,
-    integralexLog,   
+    integralexLog,
+    loginByWeiXin
 }

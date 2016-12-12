@@ -1,5 +1,4 @@
 //app.js
-
 var api = require("/utils/api.js")
 var util = require("/utils/util.js");
 var crypt = require("/utils/crypt.js");
@@ -32,10 +31,14 @@ App({
    */
   getInitData: function (cb) {
     let that = this
+    // wx.clearStorageSync()
     let init = wx.getStorageSync('init')
-    if (init && typeof cb == "function") {
-      cb(init)
-    } else {
+
+    console.log("显示初始数据", init)
+
+    // if (init && typeof cb == "function") {
+    //   cb(init)
+    // } else {
       util.showLoading("初始化数据")
       api.wxApi(wx.login)({})
         .then(function (loginRes) {
@@ -61,29 +64,47 @@ App({
         })
         .then(function (userInfo) {
           let verifyModel = util.primaryLoginArgs();
+          /**
+          * loginByWeiXin
+          */
+          // let u = wx.getStorageSync('userInfo')
           let data = {
-            "fid": constdata.minisnsId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,
-            "sign": verifyModel.sign, "timestamp": verifyModel.timestamp, "versionCode": verifyModel.versionCode
+            "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
+            "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
+
+            "openid": userInfo.openId, "nickname": userInfo.nickName, "sex": userInfo.gender,
+            "province": userInfo.province, "city": userInfo.city, "country": userInfo.country,
+            "headimgurl": userInfo.avataUrl, "unionid": userInfo.unionId
           }
-          return api.user(data)
-            .then(function (success) {
-              wx.setStorageSync('user', success.obj._LookUser);
-              wx.setStorageSync('minisns', success.obj._Minisns);
-              wx.setStorageSync('myArtCount', success.obj._MyArtCount);
-              wx.setStorageSync('myMinisnsCount', success.obj._MyMinisnsCount);
-              wx.setStorageSync('concernCount', success.obj.ConcernCount);
-              wx.setStorageSync('myConcernCount', success.obj.MyConcernCount);
-              wx.setStorageSync('unionId', success.obj._LookUser.unionid)
-              // result.obj.tmpFile = wx.getStorageSync('tmpFile');
-              wx.setStorageSync('init', success);
-              util.endLoading()
-              if (typeof cb == "function"){
-                cb(success);
-              }
-              console.log("初始化数据完成")
-            })
+          api.loginByWeiXin(data)
+          .then(function(success){
+            return success
+          })
+          .then(function(success) {
+            data = {
+              "fid": constdata.minisnsId, "deviceType": verifyModel.deviceType, "uid": verifyModel.uid,
+              "sign": verifyModel.sign, "timestamp": verifyModel.timestamp, "versionCode": verifyModel.versionCode
+            }
+            return api.user(data)
+              .then(function (success) {
+                wx.setStorageSync('user', success.obj._LookUser);
+                wx.setStorageSync('minisns', success.obj._Minisns);
+                wx.setStorageSync('myArtCount', success.obj._MyArtCount);
+                wx.setStorageSync('myMinisnsCount', success.obj._MyMinisnsCount);
+                wx.setStorageSync('concernCount', success.obj.ConcernCount);
+                wx.setStorageSync('myConcernCount', success.obj.MyConcernCount);
+                wx.setStorageSync('unionId', success.obj._LookUser.unionid)
+                // result.obj.tmpFile = wx.getStorageSync('tmpFile');
+                wx.setStorageSync('init', success);
+                util.endLoading()
+                if (typeof cb == "function") {
+                  cb(success);
+                }
+                console.log("初始化数据完成")
+              })
+          })
         })
-    }
+    // }
   },
   globalData: {
     userInfo: null

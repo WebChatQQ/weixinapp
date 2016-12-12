@@ -59,17 +59,19 @@ function tipOff(user) {
 function primaryLoginArgs() {
   let unionid = wx.getStorageSync('unionId')
   let sysInfo = wx.getSystemInfoSync()
-  let versionCode = 1
+  let versionCode = "1.0"
   let deviceType = sysInfo.model
+  deviceType = deviceType.toLowerCase().indexOf("iphone") > -1 ? "iPhone":deviceType
+  console.log("设备", deviceType, deviceType.toLowerCase(), deviceType.toLowerCase().indexOf("iphone"))
   let timestamp = (new Date()).getTime()
   // let timestamp = Math.round(timestamp);
   let sign = crypt.getVerifyModel(unionid, versionCode, deviceType, timestamp);
   let verifyModel = {};
-  verifyModel.deviceType = "ios9.0";//deviceType;
-  verifyModel.timestamp = 1479174892808;//timestamp;
-  verifyModel.uid = "oW2wBwUJF_7pvDFSPwKfSWzFbc5o"//unionid;
-  verifyModel.versionCode = "1.0"//versionCode;
-  verifyModel.sign = "817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82"//sign;
+  verifyModel.deviceType = deviceType //"ios9.0"
+  verifyModel.timestamp = timestamp + ""// 1479174892808
+  verifyModel.uid = unionid//"oW2wBwUJF_7pvDFSPwKfSWzFbc5o"
+  verifyModel.versionCode = versionCode +""//"1.0"
+  verifyModel.sign = sign//"817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82"
   return verifyModel;
 }
 

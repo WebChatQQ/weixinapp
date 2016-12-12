@@ -21,7 +21,7 @@
       </view>
       <view class="comment-re-op-box">
         <view class="fl">
-          <view class="record-icon"></view>
+          <view class="record-icon" catchtap="selectVoice"></view>
           <view class="img-icon" catchtap="commentReImage"></view>
           <view class="emoij-icon" catchtap="showEmoijBox"></view>
         </view>

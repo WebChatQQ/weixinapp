@@ -12,9 +12,12 @@
     <include src="/template/comment.wxml" />
   </block>
 
+   <include src="/template/record.wxml" />
+
+
   <!-- 评论框 -->
   <view>
-    <scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="nextPage" class="articles-box">
+    <scroll-view scroll-y="true" bindscroll="scroll" scroll-top="{{scrollTop}}" bindscrolltolower="nextPage" class="articles-box">
       <view class="{{hidTop?'':''}}">
         <include src="/template/index-head.wxml" />
         <include src="/template/head-category.wxml" />
