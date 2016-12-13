@@ -62,51 +62,30 @@ Page({
    * 选择图片
    */
   selectImg: function (e) {
-    wx.chooseImage({
-      count: 9, // 最多可以选择的图片张数，默认9
-      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
-      success: function (res) {
-        console.log("选择图片成功", res)
+
+    util.chooseImg()
+      .then(function (res) {
         let imgFiles = res.tempFilePaths || []
         let selectedImgs = that.data.selectedImgs || []
-        let uploading = false;
         util.showLoading("正在上传图片")
-        for (let i = 0; i < imgFiles.length && !uploading; i++) {
-          uploading = true
+        for (let i = 0; i < imgFiles.length; i++) {
+          // uploading = true
           let verifyModel = util.primaryLoginArgs()
-          wx.uploadFile({
-            url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
-            filePath: imgFiles[i],
-            name: 'file',
-            // header: {}, // 设置请求的 header
-            formData: {
-              "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp, "uid": verifyModel.uid,
-              "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-              "fid": constdata.minisnsId, "uploadType": "img"
-            }, // HTTP 请求中其他额外的 form data
-            success: function (res) {
-              console.log(res)
-              let result = JSON.parse(res.data)
-              if (result.result) {
-                console.log("上传图片成功", imgFiles[i], result)
-                selectedImgs.push({ "id": result.obj.id, "url": result.obj.url })
-                that.setData({ "selectedImgs": selectedImgs })
-              } else {
-                console.log("上传图片失败", imgFiles[i], res)
-              }
+          let formData = {
+            "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp, "uid": verifyModel.uid,
+            "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
+            "fid": constdata.minisnsId, "uploadType": "img"
+          }
+          api.uploadImg(imgFiles[i], formData)
+            .then(function (success) {
+              selectedImgs.push({ "id": success.obj.id, "url": success.obj.url })
+              that.setData({ "selectedImgs": selectedImgs })
               util.endLoading()
-              uploading = false
-            },
-            fail: function (res) {
-              console.log("上传图片失败", imgFiles[i], res)
+            }, function (fail) {
               util.endLoading()
-              uploading = false
-            }
-          })
+            })
         }
-      }
-    })
+      })
   },
   /**
    * 删除图片
@@ -200,7 +179,7 @@ Page({
       let unionid = result.obj._LookUser.unionid;
       let tmpFile = result.obj.tmpFile;
       let verifyModel = util.primaryLoginArgs(unionid);
-      
+
       let imgs = "";
       if (that.data.selectedImgs) {
         for (let i = 0; i < that.data.selectedImgs.length; i++) {
@@ -217,7 +196,7 @@ Page({
         "uid": unionid,
         "versionCode": verifyModel.versionCode,
         "sign": verifyModel.sign,
-        "id": minisId+"", "txtContentAdd": content
+        "id": minisId + "", "txtContentAdd": content
       }
       if (that.data.voice) {
         data.hidrecordId = that.data.voice.id;
@@ -233,16 +212,16 @@ Page({
       }
       if (that.data.address) {
         if (that.data.address.hidlat != "") {
-          data.hidlat = that.data.address.hidlat +""
+          data.hidlat = that.data.address.hidlat + ""
         }
         if (that.data.address.hidlng != "") {
-          data.hidlng = that.data.address.hidlng+""
+          data.hidlng = that.data.address.hidlng + ""
         }
         if (that.data.address.hidspeed != "") {
-          data.hidspeed = that.data.address.hidspeed+""
+          data.hidspeed = that.data.address.hidspeed + ""
         }
         if (that.data.address.hidaddress != "") {
-          data.hidaddress = that.data.address.hidaddress+""
+          data.hidaddress = that.data.address.hidaddress + ""
         }
       }
 

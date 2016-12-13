@@ -12,6 +12,7 @@
     <include src="/template/comment.wxml" />
   </block>
 
+  <!-- 展示录音框 -->
    <include src="/template/record.wxml" />
 
 

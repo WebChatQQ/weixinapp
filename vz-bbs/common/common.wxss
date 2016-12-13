@@ -132,3 +132,13 @@
   top: 0;
   right: 0;
 }
+
+.all-loaded-box {
+  font-family: "Microsoft YaHei", Arial;
+  font-size: 28rpx;
+  
+  padding: 10px 0;
+  background-color: #f5f5f5;
+  text-align: center;
+  color: #858585;
+}

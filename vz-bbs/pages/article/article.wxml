@@ -1,2 +1,34 @@
+
 <!--pages/article/article.wxml-->
-<text>pages/article/article.wxml</text>
+<import src="/template/voice-wrap.wxml" />
+<import src="/template/article-content.wxml" />
+
+<!-- 展示评论框 -->
+<block wx:if="{{showComment}}">
+  <include src="/template/comment.wxml" />
+</block>
+
+<!-- 展示录音框 -->
+<include src="/template/record.wxml" />
+
+
+<scroll-view class="article-box" scroll-y="true" style="height:1334rpx;" bindscrolltolower="nextPage">
+  <template is="article-head" data="{{...article}}" />
+  <template is="article-content" data="{{...article}}" />
+
+  <!--
+    赏列表
+  -->
+  <template is="reward" data="{{...article}}" />
+
+  <!--
+  点赞列表
+  -->
+  <template is="praise-list" data="{{...article}}" />
+
+  <!--
+    回复信息
+  -->
+  <template is="comment-detail-wrap" data="{{...article}}" />
+  <view class="all-loaded-box" style="display:{{allLoad?'block':'none'}}">已加载全部数据</view>
+</scroll-view>

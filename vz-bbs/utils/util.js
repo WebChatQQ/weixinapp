@@ -1,4 +1,6 @@
 var crypt = require("./crypt.js")
+import Promise from './es6-promise.min.js';
+
 var app = getApp();
 
 function formatDate(date) {
@@ -31,7 +33,46 @@ function formatTime(time) {
   }).join(':')
 }
 
-
+/**
+ * 解析时间
+ */
+function dataStrFormater(data) {
+  let nowIndex = data.indexOf("刚刚")
+  let mIndex = data.indexOf("分钟")
+  let hIndex = data.indexOf("小时")
+  let sIndex = data.indexOf("秒")
+  let dIndex = data.indexOf("天")
+  let tIndex = data.indexOf("-")
+  let result = 0;
+  let numStr = ""
+  if (nowIndex > -1) {
+    result = 0;
+  }
+  if (sIndex > -1) { // Second
+    numStr = data.substring(0, sIndex)
+    result = parseInt(numStr)
+  }
+  if (mIndex > -1) { // Minute
+    numStr = data.substring(0, mIndex)
+    result = parseInt(numStr) * 60
+  }
+  if (hIndex > -1) { // Hour
+    numStr = data.substring(0, hIndex)
+    result = parseInt(numStr) * 3600
+  }
+  if (dIndex > -1) { // Day
+    numStr = data.substring(0, dIndex)
+    result = parseInt(numStr) * 3600 * 24
+  }
+  if (tIndex > -1 && tIndex < 3) {
+    data = new Date().getFullYear() + "-" + data
+    result = Date.parse(data) / 1000
+  }
+  if (tIndex > 3) {
+    result = Date.parse(data) / 1000
+  }
+  return result
+}
 
 function formatNumber(n) {
   n = n.toString()
@@ -61,7 +102,7 @@ function primaryLoginArgs() {
   let sysInfo = wx.getSystemInfoSync()
   let versionCode = "1.0"
   let deviceType = sysInfo.model
-  deviceType = deviceType.toLowerCase().indexOf("iphone") > -1 ? "iPhone":deviceType
+  deviceType = deviceType.toLowerCase().indexOf("iphone") > -1 ? "iPhone" : deviceType
   console.log("设备", deviceType, deviceType.toLowerCase(), deviceType.toLowerCase().indexOf("iphone"))
   let timestamp = (new Date()).getTime()
   // let timestamp = Math.round(timestamp);
@@ -70,7 +111,7 @@ function primaryLoginArgs() {
   verifyModel.deviceType = deviceType //"ios9.0"
   verifyModel.timestamp = timestamp + ""// 1479174892808
   verifyModel.uid = unionid//"oW2wBwUJF_7pvDFSPwKfSWzFbc5o"
-  verifyModel.versionCode = versionCode +""//"1.0"
+  verifyModel.versionCode = versionCode + ""//"1.0"
   verifyModel.sign = sign//"817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82"
   return verifyModel;
 }
@@ -170,6 +211,68 @@ function endLoading() {
   wx.hideToast()
 }
 
+/**
+ * 模态框
+ */
+function modelBox(title = "提示", content = "暂不支持", showCancel = false) {
+  return new Promise((resolve, reject) => {
+    wx.showModal({
+      "title": title,
+      "content": content,
+      "showCancel": showCancel,
+      "success": function (res) {
+        if (res.confirm) {
+          resolve(res)
+        } else {
+          reject(res)
+        }
+      },
+      "fail": function (res) {
+        reject(res)
+      }
+    })
+  })
+}
+
+/**
+ * 帖子评论过滤
+ */
+function commentFilter(commentList) {
+  let array = commentList
+  if (commentList) {
+    commentList.forEach(function (item) {
+      if (item.Content) {
+        item.Content = htmlFilter(item.Content)
+      }
+      if (item.SubArticleComments) {
+        for (let idx in item.SubArticleComments) {
+          if (item.SubArticleComments[idx] && item.SubArticleComments[idx].Content) {
+            item.SubArticleComments[idx].Content = htmlFilter(item.SubArticleComments[idx].Content)
+            array.push(item.SubArticleComments[idx])
+          } else {
+            array.push(item.SubArticleComments[idx])
+          }
+        }
+      }
+    })
+    // 按时间排序
+    array.sort(function (a, b) {
+      let aTime = dataStrFormater(a.CreateDate)
+      let bTime = dataStrFormater(b.CreateDate)
+      if (aTime > bTime) {
+        return 1
+      }
+      if (aTime = bTime) {
+        return 0
+      }
+      if (aTime < bTime) {
+        return -1
+      }
+    })
+  }
+  return array
+}
+
 
 function imgArrayToString(imgsArray) {
   var imgs = "";
@@ -187,6 +290,7 @@ function imgArrayToString(imgsArray) {
 
 
 module.exports = {
+  dataStrFormater,
   "formatTime": formatTime,
   "primaryLoginArgs": primaryLoginArgs,
   "playVoice": playVoice,
@@ -195,6 +299,8 @@ module.exports = {
   "showLoading": showLoading,
   "endLoading": endLoading,
   imgArrayToString,
-  json2String
+  json2String,
+  modelBox,
+  commentFilter,
 }
 

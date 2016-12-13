@@ -1,0 +1,180 @@
+
+/**
+	获取帖子详情
+	https://snsapi.vzan.com/minisnsapp/getarticle
+
+	deviceType=ios9.0&uid=oW2wBwUJF_7pvDFSPwKfSWzFbc5o&versionCode=1.0&timestamp=1479174892808&sign=817AF07823E5CF86031A8A34FB593D1EC12A5499D66EBA10E7C4B6D034EF1C67A9C8FE9FF2A33F82&fid=3&artid=8554402
+**/
+
+{
+	"result": true,
+	"msg": "查询成功",
+	"obj": {
+		"Id": 8554402,
+		"Title": "测试投票帖子",
+		"CreateDate": "9-12",
+		"Click": 2985,
+		"ContentDesc": "",
+		"Content": null,
+		"ContentDescAll": "",
+		"Address": "",
+		"IsPraise": false,
+		"Praise": 4580,
+		"Reward": 0,
+		"CommentCount": 54,
+		"ShareCount": 0,
+		"IsNew": 1,
+		"ArticleTypeID": 223738,
+		"ArticleTypeName": "新板块12",
+		"VideoList": "",
+		"IsAdv": false,
+		"IsTop": 1,
+		"IsSubTop": 0,
+		"IsHot": false,
+		"IsGuerdon": 40,
+		"GuerdonMoney": 0,
+		"user": {
+			"Id": 42962090,
+			"Headimgurl": "http://wx.qlogo.cn/mmopen/7hINACNJlZjQmHibJCwAVwCmzzZiaElXV6icSCWEvAJUEcGIicrrKQNYTULl3uhKQAWUUaFPU55oNzNiaEFPXHwypRwaicOd3dicIUp/132",
+			"NickName": "美美144",
+			"Level": 0
+		},
+		"RewardUsers": null,
+		"PraiseUsers": [],
+		"articleComments": [{
+			"Id": 24997766,
+			"IsShowBest": 0,
+			"IsPraise": 0,
+			"Praise": 0,
+			"PraiseCount": 0,
+			"CreateDate": "12-6",
+			"Content": "[大哭][大哭][大哭][大哭][大哭][大哭][大哭]😠😓😒😒😒😒👿👿👿😄😄😃😂😂😂😌😌😞😓😔",
+			"ContentHtml": "[大哭][大哭][大哭][大哭][大哭][大哭][大哭]😠😓😒😒😒😒👿👿👿😄😄😃😂😂😂😌😌😞😓😔",
+			"ComUser": {
+				"Id": 483604,
+				"Headimgurl": "http://i.pengxun.cn/userlogo/2016/10/161028120446201682c334a5-6ea2-4990-9379-932446236d9b.jpg",
+				"NickName": "J",
+				"Level": 1
+			},
+			"DUser": {
+				"Id": 10475223,
+				"Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+				"NickName": "zmx'",
+				"Level": 0
+			},
+			"Voice": null,
+			"Images": null,
+			"Video": null,
+			"SubArticleComments": null
+		}, {
+			"Id": 25016982,
+			"IsShowBest": 0,
+			"IsPraise": 0,
+			"Praise": 0,
+			"PraiseCount": 0,
+			"CreateDate": "6天前",
+			"Content": "[尴尬][发怒][抓狂]",
+			"ContentHtml": "[尴尬][发怒][抓狂]",
+			"ComUser": {
+				"Id": 483604,
+				"Headimgurl": "http://i.pengxun.cn/userlogo/2016/10/161028120446201682c334a5-6ea2-4990-9379-932446236d9b.jpg",
+				"NickName": "J",
+				"Level": 1
+			},
+			"DUser": {
+				"Id": 42962090,
+				"Headimgurl": "http://wx.qlogo.cn/mmopen/7hINACNJlZjQmHibJCwAVwCmzzZiaElXV6icSCWEvAJUEcGIicrrKQNYTULl3uhKQAWUUaFPU55oNzNiaEFPXHwypRwaicOd3dicIUp/132",
+				"NickName": "美美144",
+				"Level": 0
+			},
+			"Voice": null,
+			"Images": null,
+			"Video": null,
+			"SubArticleComments": null
+		}, {
+			"Id": 25354870,
+			"IsShowBest": 0,
+			"IsPraise": 0,
+			"Praise": 0,
+			"PraiseCount": 0,
+			"CreateDate": "2天前",
+			"Content": "发个贴试试",
+			"ContentHtml": "发个贴试试",
+			"ComUser": {
+				"Id": 10475223,
+				"Headimgurl": "http://wx.qlogo.cn/mmopen/tZOqj4KIx0hUglACMt0LKibI0aFfNpz7otTfNg5BmHjvic4QFL6gZ5oFcYQQuso90tZt5eZcibgwbpbnpakSR4X7UE6na6oVP3z/132",
+				"NickName": "zmx'",
+				"Level": 0
+			},
+			"DUser": {
+				"Id": 483604,
+				"Headimgurl": "http://i.pengxun.cn/userlogo/2016/10/161028120446201682c334a5-6ea2-4990-9379-932446236d9b.jpg",
+				"NickName": "J",
+				"Level": 1
+			},
+			"Voice": null,
+			"Images": null,
+			"Video": null,
+			"SubArticleComments": null
+		}, {
+			"Id": 25577354,
+			"IsShowBest": 0,
+			"IsPraise": 0,
+			"Praise": 0,
+			"PraiseCount": 0,
+			"CreateDate": "1小时前",
+			"Content": "sbbxbxhdnknnnmmmmmmmm",
+			"ContentHtml": "sbbxbxhdnknnnmmmmmmmm",
+			"ComUser": {
+				"Id": 175294143,
+				"Headimgurl": "http://wx.qlogo.cn/mmopen/7hINACNJlZiaiac6zMvb4GhE7vL88UT70MW01AOPUWoHZsf2DX94dLkJicITeY0sSdtdvPWNTGwI9iaSvpkCueNkl7iceiczTRfLA3/0",
+				"NickName": "尹金权",
+				"Level": 0
+			},
+			"DUser": {
+				"Id": 483604,
+				"Headimgurl": "http://i.pengxun.cn/userlogo/2016/10/161028120446201682c334a5-6ea2-4990-9379-932446236d9b.jpg",
+				"NickName": "J",
+				"Level": 1
+			},
+			"Voice": null,
+			"Images": null,
+			"Video": null,
+			"SubArticleComments": null
+		}, {
+			"Id": 25577355,
+			"IsShowBest": 0,
+			"IsPraise": 0,
+			"Praise": 0,
+			"PraiseCount": 0,
+			"CreateDate": "1小时前",
+			"Content": "sbbxbxhdnknnnmmmmmmmm",
+			"ContentHtml": "sbbxbxhdnknnnmmmmmmmm",
+			"ComUser": {
+				"Id": 175294143,
+				"Headimgurl": "http://wx.qlogo.cn/mmopen/7hINACNJlZiaiac6zMvb4GhE7vL88UT70MW01AOPUWoHZsf2DX94dLkJicITeY0sSdtdvPWNTGwI9iaSvpkCueNkl7iceiczTRfLA3/0",
+				"NickName": "尹金权",
+				"Level": 0
+			},
+			"DUser": {
+				"Id": 483604,
+				"Headimgurl": "http://i.pengxun.cn/userlogo/2016/10/161028120446201682c334a5-6ea2-4990-9379-932446236d9b.jpg",
+				"NickName": "J",
+				"Level": 1
+			},
+			"Voice": null,
+			"Images": null,
+			"Video": null,
+			"SubArticleComments": null
+		}],
+		"Voice": null,
+		"Images": null,
+		"video": null,
+		"Type": null
+	},
+	"objArray": null,
+	"errcode": 0,
+	"pageIndex": 0,
+	"totalPage": 0,
+	"totalCount": 0
+}

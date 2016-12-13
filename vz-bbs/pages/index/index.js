@@ -134,7 +134,7 @@ Page({
       api.articles({
         "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
         "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-        "fid": constdata.minisnsId, "hotshow": 0+"", "categoryId": 0+"", "pageIndex": 1+""
+        "fid": constdata.minisnsId, "hotshow": 0 + "", "categoryId": 0 + "", "pageIndex": 1 + ""
       }).then(function (success) {
         let articles = success.objArray || []
         articles = util.articleFilter(articles)
@@ -163,7 +163,7 @@ Page({
     api.articles({
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "fid": constdata.minisnsId, "hotshow": hot+"", "categoryId": currentCategoryId+"", "pageIndex": 1+""
+      "fid": constdata.minisnsId, "hotshow": hot + "", "categoryId": currentCategoryId + "", "pageIndex": 1 + ""
     }).then(function (success) {
       console.log("下拉刷新成功", success)
       let articles = success.objArray || []
@@ -182,51 +182,29 @@ Page({
    * 评论框选择图片 
    */
   commentReImage: function (e) {
-    wx.chooseImage({
-      count: 9, // 最多可以选择的图片张数，默认9
-      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
-      success: function (res) {
-        console.log("选择图片成功", res)
+    api.chooseImg()
+      .then(function (res) {
         let imgFiles = res.tempFilePaths || []
         let commentReImgs = that.data.commentReImgs || []
-        let uploading = false
         util.showLoading("正在上传图片")
-        for (let i = 0; i < imgFiles.length && !uploading; i++) {
-          uploading = true
+        for (let i = 0; i < imgFiles.length; i++) {
+          // uploading = true
           let verifyModel = util.primaryLoginArgs()
-          wx.uploadFile({
-            url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
-            filePath: imgFiles[i],
-            name: 'file',
-            // header: {}, // 设置请求的 header
-            formData: {
-              "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp, "uid": verifyModel.uid,
-              "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-              "fid": constdata.minisnsId, "uploadType": "img"
-            }, // HTTP 请求中其他额外的 form data
-            success: function (res) {
-              console.log(res)
-              let result = JSON.parse(res.data)
-              if (result.result) {
-                console.log("上传图片成功", imgFiles[i], result)
-                commentReImgs.push({ "id": result.obj.id, "url": result.obj.url })
-                that.setData({ "commentReImgs": commentReImgs })
-              } else {
-                console.log("上传图片失败", imgFiles[i], res)
-              }
+          let formData = {
+            "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp, "uid": verifyModel.uid,
+            "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
+            "fid": constdata.minisnsId, "uploadType": "img"
+          }
+          api.uploadImg(imgFiles[i], formData)
+            .then(function (success) {
+              commentReImgs.push({ "id": success.obj.id, "url": success.obj.url })
+              that.setData({ "commentReImgs": commentReImgs })
               util.endLoading()
-              uploading = false
-            },
-            fail: function (res) {
-              console.log("上传图片失败", imgFiles[i], res)
+            }, function (fail) {
               util.endLoading()
-              uploading = false
-            }
-          })
+            })
         }
-      }
-    })
+      })
   },
 
   /**
@@ -255,10 +233,16 @@ Page({
     let comment = that.data.comment
     let voice = that.data.voice
 
+    let getArtData = {
+      "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
+      "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
+      "fid": constdata.minisnsId, "artid": comment.artId + ""
+    }
+
     let data = {
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "artId": comment.artId+""
+      "artId": comment.artId + ""
     }
     let imgs = util.imgArrayToString(commentReImgs)
     if (!content && !commentReImgs) {
@@ -278,16 +262,44 @@ Page({
         data.toUserId = comment.toUserId
         data.commontId = comment.commentId
 
-        api.replyartcommentbyid(data).then(function (success) {
-          // 关闭评论框
-          that.cancleComment()
-        })
+        api.replyartcommentbyid(data)
+          .then(function (success) {
+            // 关闭评论框
+            that.cancleComment()
+            return true
+          }).then(function (res) {
+            // 刷新帖子
+            api.getarticle(getArtData)
+              .then(function (success) {
+                let articles = that.data.articles || []
+                for (let i = 0; i < articles.length; i++) {
+                  if (articles[i] == comment.artId) {
+                    articles.splice(i, 1, success.obj)
+                    break
+                  }
+                }
+              })
+          })
 
       } else { // 回复帖子评论
-        api.commentartbyid(data).then(function (success) {
-          // 关闭评论框
-          that.cancleComment()
-        })
+        api.commentartbyid(data)
+          .then(function (success) {
+            // 关闭评论框
+            that.cancleComment()
+            return true
+          }).then(function (res) {
+            // 刷新帖子
+            api.getarticle(getArtData)
+              .then(function (success) {
+                let articles = that.data.articles || []
+                for (let i = 0; i < articles.length; i++) {
+                  if (articles[i] == comment.artId) {
+                    articles.splice(i, 1, success.obj)
+                    break
+                  }
+                }
+              })
+          })
       }
     }
   },
@@ -301,7 +313,7 @@ Page({
     api.articlepraise({
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "artId": artId+""
+      "artId": artId + ""
     }).then(function (success) {
       // 更新点赞状态
       let articles = that.data.articles || []
@@ -317,6 +329,14 @@ Page({
 
   },
 
+  /**
+   * 赞赏
+   */
+  rewardArticle: function (e) {
+    let artId = e.currentTarget.dataset.artId
+    console.log("赞赏" + artId)
+    util.modelBox()
+  },
 
 
   /**
@@ -330,7 +350,7 @@ Page({
     api.articles({
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "fid": constdata.minisnsId, "hotshow": currentCategory.hot+"", "categoryId": currentCategory.id+"", "pageIndex": pageIndex+""
+      "fid": constdata.minisnsId, "hotshow": currentCategory.hot + "", "categoryId": currentCategory.id + "", "pageIndex": pageIndex + ""
     }).then(function (success) {
       pageIndex = success.pageIndex
       let currentArticles = that.data.articles || []
@@ -354,7 +374,7 @@ Page({
     api.articles({
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
       "uid": verifyModel.uid, "versionCode": verifyModel.versionCode, "sign": verifyModel.sign,
-      "fid": constdata.minisnsId, "hotshow": hot+"", "categoryId": id+"", "pageIndex": 1+""
+      "fid": constdata.minisnsId, "hotshow": hot + "", "categoryId": id + "", "pageIndex": 1 + ""
     }).then(function (success) {
       let articles = success.objArray || []
       articles = util.articleFilter(articles)
@@ -421,7 +441,7 @@ Page({
    * 录音 
    */
   selectVoice: function () {
-    that.setData({ "voiceSelected": 1, "showComment":false })
+    that.setData({ "voiceSelected": 1, "showComment": false })
   },
   /**
    * 开始录音
@@ -463,12 +483,12 @@ Page({
               console.log("上传录音失败", result)
             }
             util.endLoading()
-            that.setData( {"showComment":true} )
+            that.setData({ "showComment": true })
           },
           fail: function (res) {
             console.log("上传录音失败", res)
             that.setData({ hasRecorded: 1, recording: 0, recordTime: 0, })
-            that.setData( {"showComment":true} )
+            that.setData({ "showComment": true })
             util.endLoading()
           }
         })
@@ -477,7 +497,7 @@ Page({
         console.info("录音失败", res);
         that.setData({ recording: 0, voiceSelected: 0, formatedRecordTime: "00:00:00" })
         // clearInterval(recordTimeInterval);
-        that.setData( {"showComment":true} )
+        that.setData({ "showComment": true })
       }
     })
   },/**
@@ -489,30 +509,6 @@ Page({
         console.log("结束录音成功", res)
         that.setData({ recording: 0, hasRecorded: 1, formatedRecordTime: util.formatTime(that.data.recordTime) })
         that.setData({ voiceSelected: 0, recording: 0, hasRecorded: 1, recordTime: 0, formatedRecordTime: "00:00:00" })
-        // 上传录音
-        // util.showLoading("正在上传")
-        // wx.uploadFile({
-        //   url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
-        //   filePath: res.tempFilePath,
-        //   name: "file",
-        //   // header: {}, // 设置请求的 header
-        //   formData: { "uploadType": "audio", "fid": that.data.minisns.Id }, // HTTP 请求中其他额外的 form data
-        //   success: function (res) {
-        //     let result = JSON.parse(res.data);
-        //     if (result.result) {
-        //       console.log("上传录音成功", result)
-        //       that.setData({ "voice": { "id": result.obj.id, "udl": res.obj.url } })
-        //     } else {
-        //       console.log("上传录音失败", result)
-        //     }
-        //     util.endLoading()
-        //   },
-        //   fail: function (res) {
-        //     console.log("上传录音失败", res)
-        //     that.setData({ "recording": 0, hasRecorded: 1, formatedRecordTime: util.formatTime(that.data.recordTime) })
-        //     util.endLoading()
-        //   }
-        // })
       },
       fail: function (res) {
         console.info("停止录音失败", res);
@@ -530,11 +526,11 @@ Page({
     wx.stopRecord({
       success: function (res) {
         console.log("取消录音成功", res)
-        that.setData( {"showComment":true} )
+        that.setData({ "showComment": true })
       },
       fail: function (res) {
         console.log("取消录音失败", res)
-        that.setData( {"showComment":true} )
+        that.setData({ "showComment": true })
       }
     })
     this.setData({ "voiceSelected": 0, "recording": 0 })

@@ -2,6 +2,12 @@
 import Promise from './es6-promise.min.js';
 var util = require("./util.js")
 var app = getApp()
+
+
+/**************************************************************************************************************
+ *  服务器API
+ * 
+ ***************************************************************************************************************/
 /**
  * 获取发帖列表
  */
@@ -33,8 +39,7 @@ function myArticles(data) {
 
 /**
  * 搜索帖子
- */
-function getartlistbykeyword(data) {
+ */function getartlistbykeyword(data) {
     let d = util.json2String(data)
     console.log("搜索帖子参数", d)
     return new Promise((resolve, reject) => {
@@ -96,7 +101,7 @@ function loginByWeiXin(data) {
  */
 function user(data) {
     let d = util.json2String(data)
-        console.log("获取用户信息参数", d)
+    console.log("获取用户信息参数", d)
 
     return new Promise((resolve, reject) => {
         wx.request({
@@ -130,7 +135,7 @@ function user(data) {
  */
 function headInfo(data) {
     let d = util.json2String(data)
-            console.log("获取头部信息参数", d)
+    console.log("获取头部信息参数", d)
 
     return new Promise((resolve, reject) => {
         wx.request({
@@ -391,6 +396,91 @@ function getComment(id, data = {}, success, fail) {
     })
 }
 
+/**
+ * 上传图片
+ */
+function uploadImg(filePath, data, fileName = "file") {
+    return new Promise((resolve, reject) => {
+        wx.uploadFile({
+            url: 'https://snsapi.vzan.com/minisnsapp/uploadfilebytype',
+            filePath: filePath,
+            name: fileName,
+            // header: {}, // 设置请求的 header
+            formData: data, // HTTP 请求中其他额外的 form data
+            success: function (res) {
+                let result = JSON.parse(res.data)
+                if (result.result) {
+                    console.log("上传图片成功", data, filePath, result)
+                    resolve(result)
+                } else {
+                    console.log("上传图片失败", data, filePath, result)
+                    reject(result)
+                }
+            },
+            fail: function (res) {
+                console.log("上传图片失败", data, filePath, res)
+                reject(res)
+            }
+        })
+    })
+}
+
+/**
+ * 获取帖子详情
+ */
+function getarticle(data) {
+    let d = util.json2String(data)
+    return new Promise((resolve, reject) => {
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/getarticle',
+            data: d,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+            success: function (res) {
+                let result = res.data
+                if (result.result) {
+                    console.log("获取单个帖子成功", d, result)
+                    resolve(result)
+                } else {
+                    console.log("获取单个帖子失败", d, result)
+                    reject(result)
+                }
+            },
+            fail: function (res) {
+                reject(res)
+            }
+        })
+    })
+}
+
+/**
+ * 获取帖子评论
+ */
+function getCommentList(data) {
+    let d = util.json2String(data)
+    return new Promise((resolve, reject) => {
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/getcmt-' + data.id,
+            data: d,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+            success: function (res) {
+                let result = res.data
+                if (result != "") {
+                    console.log("获取帖子评论信息成功", d, result)
+                    resolve(result)
+
+                } else {
+                    console.log("获取帖子评论信息失败", d, result)
+                    reject(result)
+                }
+            },
+            fail: function (res) {
+                reject(res)
+            }
+        })
+    })
+}
 
 
 
@@ -420,9 +510,10 @@ function snsApi(data, success, fail) {
 }
 
 
-/**
- * 微信API
- */
+/**************************************************************************************************************
+ *  微信API
+ * 
+ ***************************************************************************************************************/
 function wxApi(wxFn) {
     return function (data = {}) {
         return new Promise((resolve, reject) => {
@@ -438,6 +529,30 @@ function wxApi(wxFn) {
         })
     }
 }
+/**
+ *    count: 1, // 最多可以选择的图片张数，默认9
+      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+      sourceType: ['album', 'camera'],
+ */
+function chooseImg(count = 1, sizeType = ['original'], sourceType = ['album', 'camera']) {
+    return new Promise((resolve, reject) => {
+        wx.chooseImage({
+            count: count, // 最多可以选择的图片张数，默认9
+            sizeType: sizeType, // original 原图，compressed 压缩图，默认二者都有
+            sourceType: sourceType, // album 从相册选图，camera 使用相机，默认二者都有
+            success: function (res) {
+                console.log("选择图片成功", res)
+                resolve(res)
+            },
+            fail: function (res) {
+                console.log("选择图片失败", res)
+                reject(res)
+            }
+        })
+    })
+}
+
+
 
 
 module.exports = {
@@ -455,5 +570,9 @@ module.exports = {
     addArt,
     integralLog,
     integralexLog,
-    loginByWeiXin
+    loginByWeiXin,
+    uploadImg,
+    chooseImg,
+    getarticle,
+    getCommentList,
 }

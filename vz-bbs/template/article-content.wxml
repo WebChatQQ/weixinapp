@@ -1,23 +1,25 @@
 <import src="/template/voice-wrap.wxml" />
 <view class="article-box">
   <block wx:for="{{articles}}" wx:for-item="article" wx:key="Id">
-    <template is="article-head" data="{{...article}}" />
-    <template is="article-content" data="{{...article}}" />
+    <navigator url="/pages/article/article?artId={{article.Id}}">
+      <template is="article-head" data="{{...article}}" />
+      <template is="article-content" data="{{...article}}" />
 
-    <!--
+      <!--
     赏列表
   -->
-    <template is="reward" data="{{...article}}" />
+      <template is="reward" data="{{...article}}" />
 
-    <!--
+      <!--
   点赞列表
   -->
-    <template is="praise-list" data="{{...article}}" />
+      <template is="praise-list" data="{{...article}}" />
 
-    <!--
+      <!--
     回复信息
   -->
-    <template is="comment-wrap" data="{{...article}}" />
+      <template is="comment-wrap" data="{{...article}}" />
+    </navigator>
     <view class="border-slice"></view>
   </block>
 </view>
@@ -75,11 +77,11 @@
       <video wx:if="{{VideoList}}" style="width:100%;" src="{{VideoList}}" controls="false"></video>
       <video wx:elif="{{video}}" style="width:100%;" src="{{video.TransFilePath}}" controls="false"></video>
     </view>
+    <view class="address-box" wx:if="showAddress && article.Address">{{article.Address}}</view>
 
-    <view class="address-box" wx:if="showAddress && article.Address" >{{article.Address}}</view>
     <!-- 转赞评 -->
     <view class="article-content-share-box">
-      <view class="article-content-share-reward article-content-share c858 f-12rem f-f">赏 {{Reward}}</view>
+      <view class="article-content-share-reward article-content-share c858 f-12rem f-f" catchtap="rewardArticle" data-art-id="{{Id}}">赏 {{Reward}}</view>
       <view class="article-content-share-comment article-content-share c858 f-12rem f-f" catchtap="showComment" data-art-id="{{Id}}">评 {{CommentCount}}</view>
       <view class="{{IsPraise?'c5a85ce zand-article-content-share-praise':'article-content-share-praise'}}   article-content-share c858 f-12rem f-f" catchtap="praise" data-art-id="{{Id}}">赞 {{Praise}}</view>
     </view>
@@ -174,5 +176,56 @@
         <image style="width:100%; height:100%;" src="{{image.Thumbnail}}"></image>
       </view>
     </block>
+  </view>
+</template>
+
+<!-- 全部评论信息 -->
+<template name="comment-detail-wrap">
+  <view wx:if="{{articleComments && articleComments.length > 0}}">
+    <view class="comments-box rl">
+      <view class="comment-icon abs">
+      </view>
+      <block wx:for="{{articleComments}}" wx:for-item="comment" wx:key="Id">
+        <view class=" rl {{index == (articleComments.length - 1)?'last-comment-box':'comment-box'}}">
+          <view class="comment-user-img abs">
+            <image style="width:100%; height:100%;" src="{{comment.ComUser.Headimgurl}}"></image>
+          </view>
+          <view class="comment-content-box border-box" catchtap="showComment" data-to-user-id="{{comment.ComUser.Id}}" data-art-id="{{Id}}" data-comment-id="{{comment.Id}}" data-comment-name="{{comment.ComUser.NickName}}">
+            <view class="comment-user-box">
+              <view class="inline-block comment-name-box f-f f-14rem">{{comment.ComUser.NickName || comment.ComUser.Nickname}}</view>
+              <view class="fr f-11rem ccc">{{comment.CreateDate}}</view>
+            </view>
+
+            <!-- 回复文本 -->
+            <view class="f-f f-14rem">
+              <text wx:if="{{comment.DUser && comment.DUser.Id != user.Id }}" class="f-f f-14rem">回复</text>
+              <text wx:if="{{comment.DUser && comment.DUser.Id != user.Id }}" class="f-f f-14rem comment-duser-box">@{{comment.DUser.NickName}} :</text>
+              <text class="f-f f-14rem">{{comment.Content}}</text>
+            </view>
+
+            <!-- 回复语音 -->
+
+            <!--<include src="/template/voice-wrap.wxml" />-->
+
+            <!--<template is="comment-voice" data="...{{comment}}" />-->
+            <view class="voice-icon" wx:if="{{comment.Voice}}" catchtap="e" data-id="{{comment.Voice.Id}}">
+              <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
+              <audio class="audio" id="{{comment.Voice.Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{comment.Voice.TransFilePath}}"></audio>
+            </view>
+
+            <!-- 回复图片 -->
+
+            <!--<template is="comment-imgs" data="...{{comment}}" />-->
+            <view>
+              <block wx:for="{{comment.Images}}" wx:for-item="image" wx:key="filepath">
+                <view class="comment-content-img" data-filepath="{{image.filepath}}">
+                  <image style="width:100%; height:100%;" src="{{image.filepath}}"></image>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
   </view>
 </template>
