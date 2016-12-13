@@ -1,6 +1,6 @@
 
 <!-- 录音页面 -->
-<view class="z5 pop" style="{{voiceSelected==0?'display:none':''}}">
+<view class="z9 pop" style="{{voiceSelected==0?'display:none':''}}">
   <view class="record-container">
     <view class="recored-cancle-wrap f-13rem" catchtap="cancleRecord">取消</view>
     <view wx:if="{{recording==0}}" class="record-wrap">

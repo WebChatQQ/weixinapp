@@ -301,6 +301,9 @@ image {
   -webkit-box-flex: 1;
   padding-left: 80rpx;
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 .comment-name-box {

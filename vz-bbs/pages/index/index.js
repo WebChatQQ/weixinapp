@@ -253,6 +253,7 @@ Page({
     let commentReImgs = that.data.commentReImgs
     let verifyModel = util.primaryLoginArgs()
     let comment = that.data.comment
+    let voice = that.data.voice
 
     let data = {
       "deviceType": verifyModel.deviceType, "timestamp": verifyModel.timestamp,
@@ -420,7 +421,7 @@ Page({
    * 录音 
    */
   selectVoice: function () {
-    that.setData({ "voiceSelected": 1 })
+    that.setData({ "voiceSelected": 1, "showComment":false })
   },
   /**
    * 开始录音
@@ -462,10 +463,12 @@ Page({
               console.log("上传录音失败", result)
             }
             util.endLoading()
+            that.setData( {"showComment":true} )
           },
           fail: function (res) {
             console.log("上传录音失败", res)
             that.setData({ hasRecorded: 1, recording: 0, recordTime: 0, })
+            that.setData( {"showComment":true} )
             util.endLoading()
           }
         })
@@ -474,7 +477,7 @@ Page({
         console.info("录音失败", res);
         that.setData({ recording: 0, voiceSelected: 0, formatedRecordTime: "00:00:00" })
         // clearInterval(recordTimeInterval);
-
+        that.setData( {"showComment":true} )
       }
     })
   },/**
@@ -527,9 +530,11 @@ Page({
     wx.stopRecord({
       success: function (res) {
         console.log("取消录音成功", res)
+        that.setData( {"showComment":true} )
       },
       fail: function (res) {
         console.log("取消录音失败", res)
+        that.setData( {"showComment":true} )
       }
     })
     this.setData({ "voiceSelected": 0, "recording": 0 })

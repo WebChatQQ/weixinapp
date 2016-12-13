@@ -200,6 +200,7 @@ Page({
       let unionid = result.obj._LookUser.unionid;
       let tmpFile = result.obj.tmpFile;
       let verifyModel = util.primaryLoginArgs(unionid);
+      
       let imgs = "";
       if (that.data.selectedImgs) {
         for (let i = 0; i < that.data.selectedImgs.length; i++) {

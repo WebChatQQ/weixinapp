@@ -35,7 +35,7 @@
         <text class="f-c-blue f-14rem f-f">{{user.NickName || user.Nickname}}</text>
         <text class="article-level-box">V.{{user.Level}}</text>
         <text class=""></text>
-        <text class="article-open-arrow"></text>
+        <text class="article-open-arrow" catchtap="articleOperation" data-id="{{Id}}"></text>
       </view>
       <view class="article-head-t">
         <text class="f-f f-11rem c858">{{CreateDate}} </text>
