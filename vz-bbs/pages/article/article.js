@@ -338,6 +338,7 @@ Page({
             }
             util.endLoading()
             that.setData({ "showComment": true })
+            console.log(that.data)
           },
           fail: function (res) {
             console.log("上传录音失败", res)

@@ -1,8 +1,8 @@
 <import src="/template/voice-wrap.wxml" />
 <view class="z5 pop">
   <view class="comment-re-box border-box">
-    <block wx:if="{{record}}">
-      <template is="redio-voice" data="{{...record}}"/>
+    <block wx:if="{{voice}}" catchtap="playAudio" data-id="{{voice.id}}" data-v-src="{{voice.url}}">
+      <template is="redio-voice" data="{{...voice}}"/>
     </block>
     <view wx:if="{{commentReImgs}}" class="rl bg-f5 comment-re-imgs-box">
       <block wx:for="{{commentReImgs}}" wx:for-item="img" wx:key="id">

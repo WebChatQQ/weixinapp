@@ -23,7 +23,7 @@ Page({
     "scrollTop": 1000,
     "voiceSelected": 0,
     "recording": 0,
-    "voice": null,
+    "voice": {"id":6017724, "url":"http://m10.music.126.net/20161214114539/7b3bd1653a71466603d841bf5ca9fe67/ymusic/f972/f22a/2eab/a86f84b177c122c899f9a36231b81d95.mp3"},
   },
   //事件处理函数
   bindViewTap: function () {
@@ -88,8 +88,7 @@ Page({
   cancleComment: function (e) {
     console.log("关闭评论框", e)
     this.setData({ "showComment": false })
-    this.setData({ "commentReImgs": null, "comment": null })
-
+    this.setData({ "commentReImgs": null, "comment": null, "voice": null, "voiceSelected": 0, "recording": 0 })
   },
   /**
    * 展示表情框
@@ -390,6 +389,7 @@ Page({
    * 播放语音
    */
   playAudio: function (e) {
+    console.log("播放语音事件", e)
     let vid = e.currentTarget.dataset.id
     let vSrc = e.currentTarget.dataset.vSrc
     util.playVoice(vid, vSrc)
@@ -477,18 +477,18 @@ Page({
           success: function (res) {
             let result = JSON.parse(res.data)
             if (result.result) {
-              console.log("上传录音成功", result)
               that.setData({ "voice": { "id": result.obj.id, "url": result.obj.url } })
+              console.log("上传录音成功", result, that.data)
             } else {
-              console.log("上传录音失败", result)
+              console.log("上传录音失败", result, that.data)
             }
             util.endLoading()
-            that.setData({ "showComment": true })
+            that.setData({ "showComment": true, "voiceSelected": 0, "recording": 0 })
           },
           fail: function (res) {
             console.log("上传录音失败", res)
             that.setData({ hasRecorded: 1, recording: 0, recordTime: 0, })
-            that.setData({ "showComment": true })
+            that.setData({ "showComment": true, "voice": null, "voiceSelected": 0, "recording": 0 })
             util.endLoading()
           }
         })
@@ -497,7 +497,7 @@ Page({
         console.info("录音失败", res);
         that.setData({ recording: 0, voiceSelected: 0, formatedRecordTime: "00:00:00" })
         // clearInterval(recordTimeInterval);
-        that.setData({ "showComment": true })
+        that.setData({ "showComment": true, "voice": null, "voiceSelected": 0, "recording": 0 })
       }
     })
   },/**
@@ -526,15 +526,13 @@ Page({
     wx.stopRecord({
       success: function (res) {
         console.log("取消录音成功", res)
-        that.setData({ "showComment": true })
+        that.setData({ "showComment": true, "voice": null, "voiceSelected": 0, "recording": 0 })
       },
       fail: function (res) {
         console.log("取消录音失败", res)
-        that.setData({ "showComment": true })
+        that.setData({ "showComment": true, "voice": null, "voiceSelected": 0, "recording": 0 })
       }
     })
-    this.setData({ "voiceSelected": 0, "recording": 0 })
   },
-
 
 })

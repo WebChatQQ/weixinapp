@@ -181,6 +181,10 @@ function articleFilter(articles) {
     //   article.Address = address;
     // }
     article.ContentDesc = that.htmlFilter(article.ContentDesc)
+    // if (article.ContentDesc) {
+    // article.ContentDesc = article.ContentDesc.replace(/<\s*span/g,"<text")
+    // article.ContentDesc = article.ContentDesc.replace(/<\s*\/\s*span\s*>/g,"</text>")
+    // }
     if (article.articleComments) {
       article.articleComments.forEach(function (comment) {
         if (comment) {

@@ -23,8 +23,8 @@
       </view>
 
       <!-- 语音 -->
-      <block wx:if="{{redioVoice}}">
-        <template is="redio-voice" data="{{...redioVoice}}" />
+      <block wx:if="{{voice}}">
+        <template is="redio-voice" data="{{...voice}}" />
       </block>
 
       <!-- 视频 -->

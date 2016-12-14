@@ -281,10 +281,10 @@ Page({
           success: function (res) {
             let result = JSON.parse(res.data)
             if (result.result) {
-              console.log("上传录音成功", result)
               that.setData({ "voice": { "id": result.obj.id, "url": result.obj.url } })
+              console.log("上传录音成功", result, that.data)
             } else {
-              console.log("上传录音失败", result)
+              console.log("上传录音失败", result, that.data)
             }
           },
           fail: function (res) {
