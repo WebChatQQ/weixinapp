@@ -1,37 +1,37 @@
 
 <!--pages/usermodify/usermodify.wxml-->
 <form bindsubmit="submit">
-<view class="bg-fff">
-  <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-      <image class="weui-media-box__thumb" src="{{user.Headimgurl}}" />
+  <view class="bg-fff">
+    <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" src="{{user.Headimgurl}}" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg flex">
+        <view class="user-info">
+          <view class="weui-media-box__title f-16rem f-f">{{user.Nickname}}</view>
+        </view>
+      </view>
     </view>
-    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg flex">
-      <view class="user-info">
-        <view class="weui-media-box__title f-16rem f-f">{{user.Nickname}}</view>
+    <view class="border-slice"></view>
+    <view>
+      <view class="nickname-box flex">
+        <view class=" nickname f-16rem f-f"> 昵称 : </view>
+        <view class="nickname-input-box">
+          <input name="nickName" class="nickname-input f-16rem f-f" placeholder=" {{user.Nickname}}" />
+        </view>
+      </view>
+      <view class="nickname-box flex" catchtap="uploadImg">
+        <view class=" nickname f-16rem f-f"> 头像 : </view>
+        <view>
+          <view class="avatar f-16rem f-f">选择图片</view>
+        </view>
+      </view>
+      <view class="img-box">
+        <image src="{{ (uploadImg && uploadImg.url)  || user.Headimgurl}}"></image>
       </view>
     </view>
   </view>
-  <view class="border-slice"></view>
-  <view>
-    <view class="nickname-box flex">
-      <view class=" nickname f-16rem f-f"> 昵称 : </view>
-      <view class="nickname-input-box">
-        <input name="nickName" class="nickname-input f-16rem f-f" placeholder=" {{user.Nickname}}" />
-      </view>
-    </view>
-    <view class="nickname-box flex" catchtap="uploadImg">
-      <view class=" nickname f-16rem f-f"> 头像 : </view>
-      <view>
-        <view class="avatar f-16rem f-f">选择图片</view>
-      </view>
-    </view>
-    <view class="img-box">
-      <image src="{{ (uploadImg && uploadImg.url)  || user.Headimgurl}}"></image>
-    </view>
+  <view class="btn-box">
+    <button form-type="submit" class="weui-btn" type="primary">确定修改</button>
   </view>
-</view>
-<view class="btn-box">
-  <button form-type="submit" class="weui-btn" type="primary">确定修改</button>
-</view>
 </form>

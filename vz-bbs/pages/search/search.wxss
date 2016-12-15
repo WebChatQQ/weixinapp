@@ -1,1 +1,4 @@
 /* pages/search/search.wxss */
+
+@import '/template/search.wxss';
+@import '/template/article-content.wxss';

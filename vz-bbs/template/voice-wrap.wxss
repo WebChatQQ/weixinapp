@@ -1,0 +1,14 @@
+
+/*** 语音 ***/
+
+.voice-icon {
+  width: 150px;
+  height: 22px;
+  text-align: middle;
+  background-color: #fff;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 0;
+  margin: 10rpx 14rpx;
+}

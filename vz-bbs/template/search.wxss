@@ -1,0 +1,30 @@
+.search-input-box {
+  display: inline-block;
+  border-radius: 3px;
+  padding-left: 32px;
+  background: #f1f1f3 url(http://i.pengxun.cn/static/vzan/web/index/images/searh-gray.png) no-repeat top left;
+  background-size: 32px 32px;
+  color: #ccc;
+  height: 28px;
+  line-height: 32px;
+  width: 500rpx;
+  padding-top: 6rpx;
+}
+.search-box {
+  height: 101rpx;
+  width: 100%;
+  background-color: #fff;
+  padding: 18rpx 20rpx 18rpx 30rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.search-btn-box {
+  display: inline-block;
+  margin-left: 13rpx;
+  vertical-align: top;
+}
+.search-input {
+  background-color: #f1f1f3;
+  height: 32px;
+}

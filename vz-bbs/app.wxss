@@ -26,321 +26,34 @@ image {
 
 /*** 文章 ***/
 
-.article-head-box {
-  height: 80rpx;
-  padding: 30rpx 24rpx 16rpx;
-  display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-}
-
-.article-head-img {
-  height: 80rpx;
-  width: 80rpx;
-  margin-right: 20rpx;
-}
-
-.article-head-desc {
-  flex: 1;
-  -webkit-flex: 1;
-  -webkit-box-flex: 1;
-  height: 80rpx;
-}
-
-.article-head-name {
-  height: 40rpx;
-  width: 100%;
-}
-
-.article-open-arrow {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.article-open-arrow::after {
-  content: " ";
-  display: inline-block;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  height: 7px;
-  width: 7px;
-  border-width: 0 1px 1px 0;
-  border-color: #c8c8cd;
-  border-style: solid;
-  position: relative;
-  top: -2px;
-  top: -1px;
-  margin-left: 0.3em;
-}
-
-.article-level-box {
-  font-size: 26rpx;
-  color: #fff;
-  padding: 0 10rpx;
-  border-radius: 5px;
-  background-color: #5bc3ff;
-  margin-left: 8rpx;
-  height: 26rpx;
-  line-height: 26rpx;
-  vertical-align: 2rpx;
-}
-
-.article-head-t {
-  height: 34rpx;
-}
-
-.article-content-box {
-  padding: 0 24rpx;
-}
-
-.article-category {
-  color: #17b5ee;
-  border: 1px solid #17b5ee;
-  border-radius: 2px;
-  margin-right: 5px;
-  padding: 0 5px;
-  height: 14px;
-  line-height: 14px;
-  max-width: 100px;
-  margin-top: 4px;
-}
-
-.article-content-img-box {
-  margin: 10rpx 0;
-}
 
 
-/*** 隐藏顶部选择 ***/
 
-.top-category-box {
-  background: #fff;
-  width: 100%;
-  white-space: nowrap;
-  position: relative;
-  top: 0;
-  height: 44rpx;
-  z-index: 1;
-}
 
-.topCateogry {
-  padding: 0 24rpx;
-  display: table-cell;
-  text-align: center;
-  vertical-align: bottom;
-}
 
-.category-selected {
-  background-color: #17b5ee;
-  color: white;
-}
 
-.top-category-selected {
-  color: #17b5ee;
-}
 
-/*** 语音 ***/
 
-.voice-icon {
-  width: 150px;
-  height: 22px;
-  text-align: middle;
-  background-color: #fff;
-  border: 1px solid #d6d6d6;
-  border-radius: 5px;
-  display: inline-block;
-  padding: 3px 0;
-  margin: 10rpx 14rpx;
-}
 
-/*** 转 赞 评 ***/
 
-.article-content-share-box {
-  width: 100%;
-  height: 40rpx;
-  padding: 12rpx 0;
-  display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-}
 
-.article-content-share {
-  flex: 1;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  text-align: center;
-}
 
-.article-content-share-reward::before {
-  content: " ";
-  vertical-align: -4px;
-  width: 17px;
-  height: 17px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png) no-repeat 0 0;
-  background-size: 100%;
-  display: inline-block;
-  margin-right: 10rpx;
-}
 
-.article-content-share-comment::before {
-  content: " ";
-  vertical-align: -4px;
-  width: 17px;
-  height: 17px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/icon1.png) no-repeat 62% 37%;
-  background-size: 735%;
-  display: inline-block;
-  margin-right: 10rpx;
-}
 
-.article-content-share-praise::before {
-  content: " ";
-  vertical-align: -3px;
-  width: 17px;
-  height: 17px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/icon1.png) no-repeat 34% 67%;
-  background-size: 735%;
-  display: inline-block;
-  margin-right: 10rpx;
-}
 
-.zand-article-content-share-praise::before {
-  content: " ";
-  margin-right: 10rpx;
-  vertical-align: -3px;
-  width: 16px;
-  border: 0;
-  height: 16px;
-  background: url(http://i.pengxun.cn//content/images/imgpost2/01/zaned.png) no-repeat;
-  background-size: 16px 16px;
-  display: inline-block;
-}
 
-/*** 图标 ***/
 
-.reward-icon {
-  top: 0;
-  left: 0;
-  margin: 4px 0;
-  margin-left: 12px;
-  width: 15px;
-  height: 15px;
-  border: 0;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -15px;
-  background-size: 100%;
-}
 
-.praise-icon {
-  top: 0;
-  left: 0;
-  margin-top: 4px;
-  margin-left: 12px;
-  width: 15px;
-  height: 15px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -105px;
-  background-size: 100%;
-}
 
-.article-img-box {
-  padding-left: 2rpx;
-  padding-bottom: 2rpx;
-  width: 33px;
-  height: 33px;
-  display: inline-block;
-  vertical-align: middle;
-}
 
-/*** 评论信息 ***/
 
-.comment-icon {
-  top: 0;
-  left: 0;
-  margin-top: 10px;
-  margin-left: 12px;
-  width: 15px;
-  height: 15px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -90px;
-  background-size: 100%;
-  display: inline-block;
-}
 
-.comments-box {
-  padding-left: 66rpx;
-}
 
-.comment-box {
-  padding: 20rpx 24rpx 20rpx 0;
-  min-height: 84rpx;
-  border-bottom: 1px solid #858585;
-  display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-}
 
-.last-comment-box {
-  padding: 20rpx 24rpx 20rpx 0;
-  display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-}
 
-/*** 用户评论头像 ***/
 
-.comment-user-img {
-  width: 35px;
-  height: 35px;
-}
 
-.comment-user-box {
-  height: 44rpx;
-}
 
-.comment-content-box {
-  flex: 1;
-  -webkit-flex: 1;
-  -webkit-box-flex: 1;
-  padding-left: 80rpx;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-}
-
-.comment-name-box {
-  color: #5a85ce;
-  max-width: 220rpx;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-/*** 回复用户 ***/
-
-.comment-duser-box {
-  color: #5a85ce;
-  max-width: 220rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/*** 评论图片 ***/
-
-.comment-content-img {
-  width: 132rpx;
-  height: 132rpx;
-  margin-right: 5rpx;
-  display: inline-block;
-}
-
-.more-comment-box {
-  text-align: center;
-  height: 80rpx;
-  line-height: 80rpx;
-  padding: 0 24rpx;
-  border-top: 1px solid #858585;
-  color: #5a85ce;
-}
 
 /*** 搜索 ***/
 
@@ -353,90 +66,17 @@ image {
   right: 0;
 }
 
-.search-box {
-  height: 101rpx;
-  width: 100%;
-  background-color: #fff;
-  padding: 18rpx 20rpx 18rpx 30rpx;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
-.search-input-box {
-  display: inline-block;
-  border-radius: 3px;
-  padding-left: 32px;
-  background: #f1f1f3 url(http://i.pengxun.cn/static/vzan/web/index/images/searh-gray.png) no-repeat top left;
-  background-size: 32px 32px;
-  color: #ccc;
-  height: 28px;
-  line-height: 32px;
-  width: 500rpx;
-  padding-top: 6rpx;
-}
+
+
 
 .search-input {
   color: #000;
 }
 
-.search-btn-box {
-  display: inline-block;
-  margin-left: 13rpx;
-  vertical-align: top;
-}
 
-/** 回复评论 **/
 
-.comment-re-box {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: #fafafa;
-  width: 100%;
-  padding: 30rpx 30rpx 16rpx 30rpx;
-}
 
-.comment-re-content-box {
-  border: 1px solid #d6d6d6;
-  padding: 10rpx;
-}
-
-.tarea {
-  width: 100%;
-  height: 200rpx;
-}
-
-.comment-re-op-box {
-  width: 100%;
-  height: 48rpx;
-  margin-top: 12rpx;
-}
-
-.comment-re-btn-box {
-  display: inline-block;
-}
-
-.comment-re-btn {
-  font-size: 12px;
-  height: 20px;
-  width: 40px;
-  box-sizing: content-box;
-  line-height: 20px;
-  margin-left: 10rpx;
-}
-
-.comment-re-imgs-box {
-  padding-left: 7rpx;
-  margin-bottom: 7rpx;
-}
-
-.comment-re-img-box {
-  width: 18%;
-  height: 60px;
-  margin: 7rpx;
-  display: inline-block;
-}
 
 /*** 发帖 ***/
 
@@ -689,49 +329,7 @@ image {
   padding: 0;
 }
 
-/*** 录音 ***/
-.record-container {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #4d4d4d;
-  position: absolute;
-  height: 40%;
-}
-.recored-cancle-wrap {
-  color:red;
-  padding: 20rpx;
-  text-align: right;
-}
-.record-wrap{
-  position: relative;
-  top: 40%;
-  margin-top: -150rpx;
-}
-.record-time{
-  display: block;
-  text-align: center;
-  margin: 100px 0;
-}
-.start-record {
-  width: 100%;
-  margin: auto 0;
-  text-align: center;
-}
-.record-tip-wrap {
-  width: 100%;
-  text-align: center;
-  color: #ffffff;
-  margin-top: 20rpx;
-}
-.stop-record{
-  width: 150rpx;
-  height: 150rpx;
-  border: 20rpx solid #ffffff;
-  background-color: #f55c23;
-  border-radius: 130rpx;
-  margin: 0 auto;
-}
+
 
 /********/
 .tab-box {
@@ -749,11 +347,7 @@ image {
     -webkit-box-flex: 1;    
 }
 
-/********* 地址************/
-.address-box {
-    color:#5a85ce;
-    font-size: 24rpx;
-}
+
 
 .user-info-box{
   display: flex;

@@ -1,0 +1,21 @@
+.category-box {
+  height: 120rpx;
+  margin-top: 20rpx;
+  background-color: #fff;
+}
+
+.cateogry {
+  height: 44rpx;
+  width: 21%;
+  margin: 8rpx 1.5%;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #17b5ee;
+  border-radius: 3px;
+  line-height: 44rpx;
+}
+
+.category-selected {
+  background-color: #17b5ee;
+  color: white;
+}

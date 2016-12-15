@@ -185,14 +185,7 @@ page {
   border: 1px solid #17b5ee;
 }
 
-.article-content {
-  margin-left: 2px;
-  font-family: "Microsoft YaHei", Arial;
-  font-size: 30rpx;
-  height: 26px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 
 .comment-voice-container {
   margin-top: 4px;
@@ -330,16 +323,7 @@ page {
   right: 0;
 }
 
-.comment-icon {
-  top: 0;
-  left: 0;
-  margin-top: 10px;
-  margin-left: 12px;
-  width: 15px;
-  height: 15px;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/post-big-pic-06.png?v=1) no-repeat 0 -90px;
-  background-size: 100%;
-}
+
 
 /* 状态 */
 
@@ -629,10 +613,7 @@ page {
   vertical-align: middle;
 }
 
-.search-input {
-  background-color: #f1f1f3;
-  height: 32px;
-}
+
 
 .search-btn-wrap {
   display: inline-block;

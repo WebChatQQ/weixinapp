@@ -1,0 +1,22 @@
+/*** 隐藏顶部选择 ***/
+
+.top-category-box {
+  background: #fff;
+  width: 100%;
+  white-space: nowrap;
+  position: relative;
+  top: 0;
+  height: 44rpx;
+  z-index: 1;
+}
+
+.topCateogry {
+  padding: 0 24rpx;
+  display: table-cell;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.top-category-selected {
+  color: #17b5ee;
+}

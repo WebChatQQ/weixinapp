@@ -1,0 +1,91 @@
+.head-box {
+  height: 280rpx;
+  width: 100%;
+  background-color: #fff;
+}
+.head-desc-box {
+  padding-top: 60rpx;
+  width: 100%;
+  z-index: 4;
+}
+.head-desc-box-info {
+  width: 100%;
+  height: 120rpx;
+  padding: 0 36rpx;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.head-img-box {
+  height: 120rpx;
+  width: 120rpx;
+  margin-right: 30rpx;
+}
+.head-desc {
+  height: 120rpx;
+  flex: 1;
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+  line-height: 120rpx;
+}
+.head-bg-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 220rpx;
+  z-index: 3;
+}
+.head-bottom-box {
+  height: 60rpx;
+  width: 100%;
+  text-align: center;
+  line-height: 60rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.head-bottom {
+  text-align: center;
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+}
+
+.head-sign::before {
+  content: ' ';
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 33% 2%;
+  background-size: 552%;
+  vertical-align: -5px;
+}
+
+/*** 搜索框 ***/
+
+.search-icon-box {
+  z-index: 4;
+  top: 20rpx;
+  right: 36rpx;
+}
+.search-icon-box::after {
+  content: " ";
+  background: url(http://j.pengxun.cn/content/images/index/searh.png) no-repeat;
+  background-size: 100%;
+  width: 18px;
+  height: 18px;
+  display: block;
+  right: 18px;
+  top: 10px;
+  cursor: pointer;
+}
+.head-concern::before {
+  content: ' ';
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: -6px;
+  background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 62% 2%;
+  background-size: 552%;
+}

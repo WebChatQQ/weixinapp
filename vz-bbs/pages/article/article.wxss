@@ -1,1 +1,5 @@
 /* pages/article/article.wxss */
+@import '/template/voice-wrap.wxss';
+@import '/template/article-content.wxss';
+@import '/template/comment.wxss';
+@import '/template/record.wxss';

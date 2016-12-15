@@ -1,82 +1,19 @@
 /**index.wxss**/
 
+@import '/template/top-category.wxss';
+@import '/template/search.wxss';
+@import '/template/comment.wxss';
+@import '/template/record.wxss';
+@import '/template/index-head.wxss';
+@import '/template/head-category.wxss';
+@import '/template/article-content.wxss';
+
 page {
   background-color: #f8f8f8;
   font-size: 16px;
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
   width: 100%;
   height: 100%;
-}
-
-.head-box {
-  height: 280rpx;
-  width: 100%;
-  background-color: #fff;
-}
-
-.head-desc-box {
-  padding-top: 60rpx;
-  width: 100%;
-  z-index: 4;
-}
-
-.head-desc-box-info {
-  width: 100%;
-  height: 120rpx;
-  padding: 0 36rpx;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.head-img-box {
-  height: 120rpx;
-  width: 120rpx;
-  margin-right: 30rpx;
-}
-
-.head-desc {
-  height: 120rpx;
-  flex: 1;
-  -webkit-flex: 1;
-  -webkit-box-flex: 1;
-  line-height: 120rpx;
-}
-
-.head-bg-box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 220rpx;
-  z-index: 3;
-}
-
-.head-bottom-box {
-  height: 60rpx;
-  width: 100%;
-  text-align: center;
-  line-height: 60rpx;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.head-bottom {
-  text-align: center;
-  flex: 1;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-}
-
-.head-sign::before {
-  content: ' ';
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 33% 2%;
-  background-size: 552%;
-  vertical-align: -5px;
 }
 
 .head-concern::before {
@@ -87,23 +24,6 @@ page {
   vertical-align: -6px;
   background: url(http://i.pengxun.cn/static/vzan/web/index/images/01/icon1.png) no-repeat 62% 2%;
   background-size: 552%;
-}
-
-.category-box {
-  height: 120rpx;
-  margin-top: 20rpx;
-  background-color: #fff;
-}
-
-.cateogry {
-  height: 44rpx;
-  width: 21%;
-  margin: 8rpx 1.5%;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid #17b5ee;
-  border-radius: 3px;
-  line-height: 44rpx;
 }
 
 

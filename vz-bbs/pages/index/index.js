@@ -98,8 +98,6 @@ Page({
     wx.showModal({ "title": "提示", "content": "暂不支持", "showCancel": false })
   },
 
-
-
   /**
    * 初始化
    */
