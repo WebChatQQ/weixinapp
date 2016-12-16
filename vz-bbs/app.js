@@ -36,9 +36,9 @@ App({
 
     console.log("显示初始数据", init)
 
-    // if (init && typeof cb == "function") {
-    //   cb(init)
-    // } else {
+    if (init && typeof cb == "function") {
+      cb(init)
+    } else {
       util.showLoading("初始化数据")
       api.wxApi(wx.login)({})
         .then(function (loginRes) {
@@ -104,8 +104,17 @@ App({
               })
           })
         })
-    // }
+    }
   },
+  /**
+   * 获取最新用户信息
+   */
+  getNewInitData(cb) {
+    let that = this
+    wx.clearStorageSync()
+    that.getInitData(cb)
+  },
+  
   globalData: {
     userInfo: null
   }

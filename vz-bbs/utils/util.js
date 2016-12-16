@@ -120,7 +120,7 @@ function primaryLoginArgs() {
 /**
  * 播放声音
  */
-function playVoice(vId, vSrc) {
+function playVoice(vId, vSrc, that) {
   console.info("播放声音", vId, vSrc);
   var storageVoice = wx.getStorageSync('playingVoice');
   var audioContext = wx.createAudioContext(vId + "");
@@ -128,6 +128,7 @@ function playVoice(vId, vSrc) {
   if (typeof storageVoice == "undefined" || storageVoice == "" || storageVoice == null) {
     // 当前未播放
     audioContext.play();
+    that.setData({"voicePlaying": true})
     storageVoice = new Object();
     storageVoice.id = vId;
     storageVoice.status = 2;
@@ -136,11 +137,13 @@ function playVoice(vId, vSrc) {
     // 暂定状态
     if (storageVoice.status == 1) {
       audioContext.play();
+      that.setData({"voicePlaying": true})
       storageVoice.status = 2;
     } else
       // 播放状态 - 转为暂停
       if (storageVoice.status == 2) {
         audioContext.pause();
+        that.setData({"voicePlaying": false})
         storageVoice.status = 1;
       }
   } else {
@@ -148,6 +151,7 @@ function playVoice(vId, vSrc) {
     var usingAudioContext = wx.createAudioContext(storageVoice.id + "")
     usingAudioContext.seek(0)
     usingAudioContext.pause()
+    that.setData({"voicePlaying": false})
     storageVoice = new Object()
     storageVoice.id = vId
     storageVoice.status = 2
@@ -214,6 +218,18 @@ function showLoading(title = "加载中", duration = 10000) {
 function endLoading() {
   wx.hideToast()
 }
+
+/**
+ * 加载结束提醒
+ */
+function loadedSuccess(title = "加载成功", duration = 1000) {
+  wx.showToast({
+    title: title,
+    icon: 'success',
+    duration: duration
+  })
+}
+
 
 /**
  * 模态框
@@ -306,5 +322,6 @@ module.exports = {
   json2String,
   modelBox,
   commentFilter,
+  loadedSuccess
 }
 

@@ -1,13 +1,29 @@
 /*** 隐藏顶部选择 ***/
 
+.top-box {
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+}
+
+.top-more {
+  width: 10%;
+  padding: 0;
+  display: table-cell;
+  text-align: center;
+  background-color: #fff;
+}
+
 .top-category-box {
+  flex: 1;
   background: #fff;
-  width: 100%;
+  width: 88%;
   white-space: nowrap;
   position: relative;
   top: 0;
   height: 44rpx;
   z-index: 1;
+  border-right: 1px solid #d6d6d6;
 }
 
 .topCateogry {

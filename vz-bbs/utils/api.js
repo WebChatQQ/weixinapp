@@ -6,7 +6,7 @@ var app = getApp()
 
 /**************************************************************************************************************
  *  服务器API
- * 
+ *
  ***************************************************************************************************************/
 /**
  * 获取发帖列表
@@ -482,6 +482,39 @@ function getCommentList(data) {
     })
 }
 
+function checkPermissionByUser(params) {
+    let d = util.json2String(params)
+    return new Promise((resolve, reject) => {
+        wx.request({
+            url: 'https://snsapi.vzan.com/minisnsapp/checkpermissionbyuser',
+            data: d,
+            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            header: { "content-type": "application/x-www-form-urlencoded" },
+            success: function (res) {
+                let result = res.data
+                if (result.result) {
+                    console.log("获取用户权限成功", result)
+                    resolve(result);
+                } else {
+                    console.log("获取用户权限失败", result)
+                    reject(result)
+                }
+            },
+            fail: function (fail) {
+                // fail
+                console.log("获取用户权限失败", fail)
+                reject(fail)
+            }
+        })
+    });
+}
+
+/**
+ * 操作帖子
+ */
+function operateArticle(operaName) {
+    // TODO
+}
 
 
 /**
@@ -512,7 +545,7 @@ function snsApi(data, success, fail) {
 
 /**************************************************************************************************************
  *  微信API
- * 
+ *
  ***************************************************************************************************************/
 function wxApi(wxFn) {
     return function (data = {}) {
@@ -531,8 +564,8 @@ function wxApi(wxFn) {
 }
 /**
  *    count: 1, // 最多可以选择的图片张数，默认9
-      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
-      sourceType: ['album', 'camera'],
+ sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+ sourceType: ['album', 'camera'],
  */
 function chooseImg(count = 1, sizeType = ['original'], sourceType = ['album', 'camera']) {
     return new Promise((resolve, reject) => {
@@ -551,8 +584,6 @@ function chooseImg(count = 1, sizeType = ['original'], sourceType = ['album', 'c
         })
     })
 }
-
-
 
 
 module.exports = {
@@ -575,4 +606,6 @@ module.exports = {
     chooseImg,
     getarticle,
     getCommentList,
+    checkPermissionByUser,
+    operateArticle,
 }

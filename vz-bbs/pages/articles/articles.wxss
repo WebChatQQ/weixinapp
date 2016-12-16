@@ -1,1 +1,17 @@
 /* pages/articles/articles.wxss */
+
+page {
+    background-color: #f5f5f5;
+}
+.more {
+  height: 40px;
+  line-height: 40px;
+  border-radius: 3px;
+  color: #666;
+  margin: 0 auto;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  font-family: '微软雅黑';
+  border: 0 none;
+}

@@ -22,10 +22,5 @@
   </view>
 </template>
 
-<template name="redio-voice" >
-  <view class="voice-icon" catchtap="playAudio" data-id="{{id}}" data-v-src="{{url}}">
-    <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
-    <audio class="audio" id="{{id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{url}}"></audio>
-  </view>
-</template>
+
 

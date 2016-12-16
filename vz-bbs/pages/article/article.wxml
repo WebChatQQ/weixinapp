@@ -11,7 +11,6 @@
 <!-- 展示录音框 -->
 <include src="/template/record.wxml" />
 
-
 <scroll-view class="article-box" scroll-y="true" style="height:1334rpx;" bindscrolltolower="nextPage">
   <template is="article-head" data="{{...article}}" />
   <template is="article-content" data="{{...article}}" />

@@ -30,7 +30,7 @@ Page({
    */
   init: function () {
     let that = this;
-    app.getInitData(function (result) {
+    app.getNewInitData(function (result) {
       var tmpFile = result.obj.tmpFile;
       var minisns = result.obj._Minisns;
       var user = result.obj._LookUser;

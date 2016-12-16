@@ -1,3 +1,3 @@
 /* pages/post/post.wxss */
 @import '/template/voice-wrap.wxss';
-
+@import '/template/record.wxss';

@@ -67,7 +67,7 @@
 
     <!-- 图片 -->
     <view class="article-content-img-box">
-      <block wx:for="{{Images}}" wx:for-item="image" wx:key="Id">
+      <block wx:if="{{Images}}" wx:for="{{Images}}" wx:for-item="image" wx:key="Id">
         <image style="height:200px; width:200px" src="{{image.filepath}}" catchtap="previewImage" data-url="{{image.filepath}}"></image>
       </block>
     </view>
@@ -146,7 +146,8 @@
 
             <!--<template is="comment-voice" data="...{{comment}}" />-->
             <view class="voice-icon" wx:if="{{comment.Voice}}" catchtap="playAudio" data-v-src="{{comment.Voice.TransFilePath}}" data-id="{{comment.Voice.Id}}">
-              <image style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
+              <image wx:if="{{!playing}}" style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
+              <image wx:if="{{playing}}" style="width:22px; height:22px;" src="http://i.pengxun.cn/images/voiceing-w2.gif"></image>
               <audio class="audio" id="{{comment.Voice.Id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{comment.Voice.TransFilePath}}"></audio>
             </view>
 

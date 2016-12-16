@@ -268,7 +268,7 @@ Page({
   playAudio: function (e) {
     let vid = e.currentTarget.dataset.id
     let vSrc = e.currentTarget.dataset.vSrc
-    util.playVoice(vid, vSrc)
+    util.playVoice(vid, vSrc, this)
   },
 
   /**

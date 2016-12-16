@@ -4,5 +4,5 @@
   <block wx:for="{{categories}}" wx:for-item="category" wx:key="Id">
     <view wx:if="{{index <= 6}}" class="cateogry f-14rem f-f {{(currentCategory&&currentCategory.id==category.Id)?'category-selected':''}}" catchtap="changeCategory" data-category-id="{{category.Id}}" data-hot="0">{{category.Title}}</view>
   </block>
-  <view wx:if="{{categories && categories.length > 8}}" class="cateogry f-14rem f-f">更多+</view>
+  <view wx:if="{{categories && categories.length > 8}}" class="cateogry f-14rem f-f" catchtap="moreCategory" >更多+</view>
 </view>

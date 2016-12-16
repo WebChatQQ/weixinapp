@@ -1,0 +1,5 @@
+  <view class="voice-icon" catchtap="playAudio" data-id="{{voice.id}}" data-v-src="{{voice.url}}">
+    <image wx:if="{{!voicePlaying}}" style="width:22px; height:22px;" src="http://i.pengxun.cn/content/images/voice/voiceplaying.png"></image>
+    <image wx:if="{{voicePlaying}}" style="width:22px; height:22px;" src="http://i.pengxun.cn/images/voiceing-w2.gif"></image>
+    <audio class="audio" id="{{voice.id}}" poster="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" src="{{voice.url}}"></audio>
+  </view>

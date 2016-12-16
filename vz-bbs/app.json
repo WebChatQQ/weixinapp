@@ -16,16 +16,16 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#dddddd",
-    "selectedColor": "#3cc51f",
+    "color": "#999999",
+    "selectedColor": "#0DB8F6",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "images/index.png",
-        "selectedIconPath": "images/index.png"
+        "iconPath": "images/index_default.png",
+        "selectedIconPath": "images/index_select.png"
       },
       {
         "pagePath": "pages/post/post",
