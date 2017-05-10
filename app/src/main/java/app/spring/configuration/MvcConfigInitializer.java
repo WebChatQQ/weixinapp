@@ -27,7 +27,6 @@ public class MvcConfigInitializer implements WebApplicationInitializer {
 		encodingFilter.setEncoding("UTF-8");
 		javax.servlet.FilterRegistration.Dynamic encodingFilterDynamic = context.addFilter("encodingFilter", encodingFilter);
 		encodingFilterDynamic.addMappingForUrlPatterns(null, false, "/*");
-		
 	}
 
 	private void initializeWebMvcConfig(ServletContext context) {

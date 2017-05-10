@@ -76,9 +76,11 @@
 			<version>2.5.0</version>
 		</dependency>
 
-
-
-
+		<dependency>
+			<groupId>zhangxw</groupId>
+			<artifactId>utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -89,6 +91,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>wechat</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

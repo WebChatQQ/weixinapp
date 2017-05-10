@@ -3,6 +3,7 @@ var api = require("/utils/api.js")
 var util = require("/utils/util.js");
 var crypt = require("/utils/crypt.js");
 var constdata = require("/utils/constdata.js");
+
 App({
   onLaunch: function () {
     let that = this

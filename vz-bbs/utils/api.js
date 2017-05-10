@@ -1,6 +1,7 @@
 // var Promise = require("./bluebird.js")
 import Promise from './es6-promise.min.js';
 var util = require("./util.js")
+var constdata = require("./constdata.js")
 var app = getApp()
 
 
@@ -512,8 +513,28 @@ function checkPermissionByUser(params) {
 /**
  * 操作帖子
  */
-function operateArticle(operaName) {
+function operateArticle(operaIndex) {
     // TODO
+    console.log("用户操作帖子"+constdata.permission[operaIndex])
+    switch (operaIndex) {
+        case 0 :
+            // 置顶帖子：
+            console.log("置顶帖子")
+            break
+        case 1 :
+            console.log("删除帖子")
+            break
+        case 2 :
+            console.log("禁言")
+            break
+        case 3 :
+            console.log("拉黑")
+            break
+        case 4 :
+            console.log("举报")
+            break
+    }
+    console.log("用户操作帖子")
 }
 
 
